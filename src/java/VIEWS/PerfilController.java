@@ -1,16 +1,22 @@
 package VIEWS;
 
+import ENTITIES.Archivo;
+import ENTITIES.ForoCategoria;
 import ENTITIES.Perfil;
 import VIEWS.util.JsfUtil;
 import VIEWS.util.PaginationHelper;
 import MODELS.PerfilFacade;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.SimpleTimeZone;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -19,6 +25,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
+import org.primefaces.event.RowEditEvent;
 
 @Named("perfilController")
 @SessionScoped
@@ -33,7 +40,80 @@ public class PerfilController implements Serializable {
 
     public PerfilController() {
     }
+    
+      public void prepararCrear()
+    {
+        current = null;
+    }
+      
+          public void precarga()
+    {
+        List<Perfil> arMe;
+        arMe = ejbFacade.findAll();
+       
+        for(int i =0;i<arMe.size();i++)
+        {
+            current = arMe.get(i);
+        }
+                
+    }
 
+public void cargaDatos(int id)
+    {
+        current = ejbFacade.find(id);
+    }
+
+    
+     public void creacionP()
+    {
+        System.out.println("Antes de Crear");
+          
+        try{
+   
+ 
+             current.setIdPerfil(null);
+            ejbFacade.create(current);
+            current = null;
+           
+         
+            
+        }catch(Exception e)
+        {
+            System.out.println("ERRRROOORR "+e);
+          
+        }
+    }
+     
+          
+         
+        public void onRowEdit(RowEditEvent event) 
+        {
+            FacesMessage msg = new FacesMessage("Car Edited", ((Perfil) event.getObject()).getIdPerfil().toString());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+
+            //((Curso) event.getObject()).setPublicacion(current.getPublicacion());
+            //((PublicacionPerfil) event.getObject()).setIdPublicacion(current.getIdPublicacion());
+            System.out.println("Imprime publicacion q llega por evento: "+((Perfil) event.getObject()).getIdPerfil());
+            //System.out.println("Imprime publicacion q llega por evento: "+((PublicacionPerfil) event.getObject()).getIdPublicacion());
+            //current = ((Curso) event.getObject());
+            ejbFacade.edit(current); //REFORMULAR?????
+        }
+          
+          
+        public void eliminarP(int id)
+        {
+            current.setIdPerfil(id);
+            ejbFacade.remove(current);
+        
+        }
+        
+            public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled", ((Perfil) event.getObject()).getIdPerfil().toString());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    
+    
     public Perfil getSelected() {
         if (current == null) {
             current = new Perfil();

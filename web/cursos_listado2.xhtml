@@ -15,7 +15,14 @@
     </h:head>
     <h:body>
          
-        
+        <style>
+            .event-full .event-info p{
+                color:#4ca20b;
+            }
+            
+            
+        </style>
+           
                                                     
        
         
@@ -27,8 +34,12 @@
             <h:outputText style="color: black" value="No se encontraron resultados" rendered="#{cursoController.mensajeVacio(cursoSubCatController.id_cSub_cat)}" />
                                         
             
-            <p:dataScroller   value="#{cursoController.listaCursos(cursoSubCatController.id_cSub_cat, cursoController.nombreCurso)}" var="lc" chunkSize="5" mode="inline" scrollHeight="600px ;border-color: white;"  >
-                                    
+            <p:dataScroller   value="#{cursoController.listaCursos(cursoSubCatController.id_cSub_cat, cursoController.nombreCurso)}" var="lc" chunkSize="5" mode="inline" scrollHeight="600px ;border-color: white; " style=" background: rgba(128, 234, 47, 0.09);" styleClass="miTabla"  >
+                <style>
+                    .ui-widget-content{
+                    background: rgba(128, 234, 47, 0.09);
+            }
+                </style>                  
 					<li class="event-wrapper event-full clearfix">
 					
 						<div class="event-date">
@@ -56,6 +67,7 @@
 					<!-- END .event-wrapper -->
 					</li>
                                        </p:dataScroller>
+            
 				</h:panelGroup>
         
         

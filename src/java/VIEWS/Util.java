@@ -10,18 +10,29 @@ package VIEWS;
  * @author hpulgar.externo
  */
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
- 
+import org.apache.commons.io.FilenameUtils;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
+import java.io.File;
 @Named("util")
 @SessionScoped
 public class Util implements Serializable {
     
      private boolean verCrear = false;
+     private boolean tabla;
+      
      
      public boolean getVerCrear() {
         return verCrear;
@@ -29,6 +40,14 @@ public class Util implements Serializable {
 
     public void setVerCrear(boolean verCrear) {
         this.verCrear = verCrear;
+    }
+    
+        public boolean isTabla() {
+        return tabla;
+    }
+
+    public void setTabla(boolean tabla) {
+        this.tabla = tabla;
     }
  
       public static HttpSession getSession() {
@@ -68,6 +87,10 @@ public class Util implements Serializable {
         else
             return null;
       }
+      
+    
+ 
+   
       
       
       

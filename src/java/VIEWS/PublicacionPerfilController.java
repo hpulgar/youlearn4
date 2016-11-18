@@ -505,6 +505,7 @@ public class PublicacionPerfilController extends AmigosController implements Ser
         
         current.setIdPublicacion(((PublicacionPerfil) event.getObject()).getIdPublicacion());
         ejbFacade.edit(current);
+        current = null;
       
         
     }
@@ -519,6 +520,7 @@ public class PublicacionPerfilController extends AmigosController implements Ser
     {
         current.setIdPublicacion(id);
         ejbFacade.remove(current);
+        current = null;
         
     }
     

@@ -130,7 +130,7 @@
                                         <label for="Buscar Por nombre">Subcategoria del curso</label>
                                         <h:inputText  value="#{foroPosteosController.tit}" required="false" />
                                         <p:commandButton  value="Buscar" update="foroListado"  process="@all" />
-                                        
+                                        <br></br>
                                         <p:commandButton  value="Limpiar" update="foroListado"  process="@all" action="#{foroPosteosController.setTit(null)}" actionListener="#{foroSubcategoriaController.setId_subCat(0)}">
                                             <p:ajax update="formulario_busqueda"/>
                                         </p:commandButton>

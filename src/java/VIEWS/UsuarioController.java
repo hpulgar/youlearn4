@@ -1,5 +1,7 @@
 package VIEWS;
 
+import ENTITIES.Archivo;
+import ENTITIES.ForoCategoria;
 import ENTITIES.Perfil;
 import ENTITIES.Usuario;
 import VIEWS.util.JsfUtil;
@@ -28,6 +30,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.primefaces.event.RowEditEvent;
 
 @Named("usuarioController")
 @SessionScoped
@@ -49,6 +52,28 @@ public class UsuarioController implements Serializable {
     
     
     public UsuarioController() {
+    }
+    
+     public void prepararCrear()
+    {
+        current = null;
+    }
+     
+          public void precarga()
+    {
+        List<Usuario> arMe;
+        arMe = ejbFacade.findAll();
+       
+        for(int i =0;i<arMe.size();i++)
+        {
+            current = arMe.get(i);
+        }
+                
+    }
+
+public void cargaDatos(int id)
+    {
+        current = ejbFacade.find(id);
     }
     
     public int getId_usuario_amigo() {
@@ -475,9 +500,61 @@ public class UsuarioController implements Serializable {
         return "List";
     }
 
-    public List<Usuario> tablaUsuario()
+    public void creacionU()
     {
-        return ejbFacade.findAll();
+        System.out.println("Antes de Crear");
+          
+        try{
+   
+        
+             SimpleDateFormat sdf = new SimpleDateFormat();
+                sdf.setTimeZone(new SimpleTimeZone(-3, "GMT"));
+                sdf.applyPattern("yyyy/mm/dd hh:mm:ss");
+                Date fecha = new Date();
+              current.setFechaCreacion(fecha);
+              System.out.println("Fecha "+current.getFechaCreacion());
+             current.setIdUsuario(null);
+            ejbFacade.create(current);
+            current = null;
+           
+         
+            
+        }catch(Exception e)
+        {
+            System.out.println("ERRRROOORR "+e);
+          
+        }
+    }
+     
+             public List<Usuario> tablaUsuario()
+         {
+             return ejbFacade.findAll();
+         }
+         
+        public void onRowEdit(RowEditEvent event) 
+        {
+            FacesMessage msg = new FacesMessage("Car Edited", ((Usuario) event.getObject()).getIdUsuario().toString());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+
+            //((Curso) event.getObject()).setPublicacion(current.getPublicacion());
+            //((PublicacionPerfil) event.getObject()).setIdPublicacion(current.getIdPublicacion());
+            System.out.println("Imprime publicacion q llega por evento: "+((Usuario) event.getObject()).getIdUsuario());
+            //System.out.println("Imprime publicacion q llega por evento: "+((PublicacionPerfil) event.getObject()).getIdPublicacion());
+            //current = ((Curso) event.getObject());
+            ejbFacade.edit(current); //REFORMULAR?????
+        }
+          
+          
+        public void eliminarU(int id)
+        {
+            current.setIdUsuario(id);
+            ejbFacade.remove(current);
+        
+        }
+        
+            public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled", ((Usuario) event.getObject()).getIdUsuario().toString());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
     

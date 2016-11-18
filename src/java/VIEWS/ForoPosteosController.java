@@ -1,5 +1,6 @@
 package VIEWS;
 
+import ENTITIES.ForoCategoria;
 import ENTITIES.ForoPosteos;
 import ENTITIES.ForoSubcategoria;
 import ENTITIES.Usuario;
@@ -14,9 +15,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.SimpleTimeZone;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -24,6 +27,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import org.primefaces.event.RowEditEvent;
 
 @Named("foroPosteosController")
 @SessionScoped
@@ -68,6 +72,31 @@ public class ForoPosteosController implements Serializable {
 
     public ForoPosteosController() {
     }
+    
+      public void prepararCrear()
+    {
+        current = null;
+    }
+      
+         public void precarga()
+    {
+        List<ForoPosteos> arMe;
+        arMe = ejbFacade.findAll();
+       
+        for(int i =0;i<arMe.size();i++)
+        {
+            current = arMe.get(i);
+        }
+                
+    }
+      
+      public void cargaDatos(int id)
+    {
+        current = ejbFacade.find(id);
+    }
+      
+      
+    
 
     public ForoPosteos getSelected() {
         if (current == null) {
@@ -371,11 +400,63 @@ public class ForoPosteosController implements Serializable {
     }
    
    
-   public List<ForoPosteos> tablaForo()
+   public List<ForoPosteos> tablaForoPosteos()
    {
        return ejbFacade.findAll();
    }
-       
+   
+     public void creacionP()
+    {
+        System.out.println("Antes de Crear");
+          
+        try{
+   
+        
+             SimpleDateFormat sdf = new SimpleDateFormat();
+                sdf.setTimeZone(new SimpleTimeZone(-3, "GMT"));
+                sdf.applyPattern("yyyy/mm/dd hh:mm:ss");
+                Date fecha = new Date();
+              current.setFecha(fecha);
+              System.out.println("Fecha "+current.getFecha());
+             current.setIdPost(null);
+            ejbFacade.create(current);
+            current = null;
+           
+         
+            
+        }catch(Exception e)
+        {
+            System.out.println("ERRRROOORR "+e);
+          
+        }
+    }
+   
+   
+         public void onRowEdit(RowEditEvent event) 
+        {
+            FacesMessage msg = new FacesMessage("Car Edited", ((ForoPosteos) event.getObject()).getIdPost().toString());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+
+            //((Curso) event.getObject()).setPublicacion(current.getPublicacion());
+            //((ForoPosteo) event.getObject()).setIdPublicacion(current.getIdPublicacion());
+            System.out.println("Imprime publicacion q llega por evento: "+((ForoPosteos) event.getObject()).getIdPost());
+            //System.out.println("Imprime publicacion q llega por evento: "+((ForoPosteos) event.getObject()).getIdPublicacion());
+            //current = ((Curso) event.getObject());
+            ejbFacade.edit(current); //REFORMULAR?????
+        }
+          
+          
+        public void eliminarForoPosteo(int id)
+        {
+            current.setIdPost(id);
+            ejbFacade.remove(current);
+        
+        }
+        
+            public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edicion cancelada", ((ForoPosteos) event.getObject()).getIdPost().toString());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
        
        
        

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+   
+    <h:head>
+        <title>Mantenedor</title>
+        
+          <meta name="viewport" content="width=device-width; initial-scale=1.0"></meta>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        
+         
+        
+        
+   </h:head>
+    <h:body  >
+        
+        <!--FORM GENERAL-->
+      <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.tabla}" action="#{foroPosteosController.prepararCrear()}" />
+        
+        <p:commandButton id="btoVerTabla" value="Tabla" actionListener="#{util.setTabla(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" action="#{foroPosteosController.precarga()}" />
+         
+         <p:commandButton value="Cancelar"  action="#{util.setTabla(false)}" update="paginas" process="@this" rendered="#{util.tabla}" />
+
+        
+     <h:form id="form">  
+      
+                       
+                    <p:outputLabel  value="ID Subcategoria" rendered="#{util.getVerCrear()}"/>
+                    <h:selectOneMenu value="#{foroPosteosController.selected.idSubcategoria}" rendered="#{util.getVerCrear()}">
+                        <f:selectItems value="#{foroSubcategoriaController.itemsAvailableSelectOne}" />
+                    </h:selectOneMenu>
+                    
+                     <p:outputLabel  value="ID User" rendered="#{util.getVerCrear()}"/>
+                     <h:selectOneMenu value="#{foroPosteosController.selected.idUser}" rendered="#{util.getVerCrear()}">
+                        <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}" />
+                    </h:selectOneMenu>
+                
+                     
+                     <p:outputLabel  value="Titulo" rendered="#{util.getVerCrear()}"/>
+                      <p:inputText value="#{foroPosteosController.selected.titulo}" rendered="#{util.getVerCrear()}"/>
+                         
+                     <p:outputLabel  value="Contenido" rendered="#{util.getVerCrear()}"/>
+                     <p:inputText value="#{foroPosteosController.selected.contenido}" rendered="#{util.getVerCrear()}"/>
+                     
+                   <p:outputLabel  value="Fecha" rendered="#{util.getVerCrear()}"/>
+                   <p:inputText value="#{foroPosteosController.selected.fecha}" rendered="#{util.getVerCrear()}">
+                       <f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" />
+                   </p:inputText>
+                   
+                    <p:outputLabel  value="Autorizado" rendered="#{util.getVerCrear()}"/>
+                    <p:inputText value="#{foroPosteosController.selected.autorizado}" rendered="#{util.getVerCrear()}"/>
+                      
+                    
+                    <p:outputLabel  value="Imagen" rendered="#{util.getVerCrear()}"/>
+                    <p:inputText value="#{foroPosteosController.selected.imagen_foro_posteos}" rendered="#{util.getVerCrear()}"/>
+
+                    
+                   <br/>
+                   <p:commandButton id="btoCrear" value="Crear"  action="#{foroPosteosController.creacionP()}" actionListener="#{util.setVerCrear(false)}" update="paginas" process="@all" rendered="#{util.getVerCrear()}">
+                     
+                 </p:commandButton>
+                    
+                   <p:commandButton value="Cancelar"  action="#{util.setVerCrear(false)}" update="paginas" process="@this" rendered="#{util.getVerCrear()}" />
+                 
+        
+           
+           
+        
+        
+        <!-- FIN FORMULARIO CREACION -->
+        
+       
+        <!-- INICIO DATATABLE -->
+            <p:growl id="msgs" showDetail="true"/>
+            
+            <p:dataTable id="general" var="fp" value="#{foroPosteosController.tablaForoPosteos()}" editable="true" style="margin-bottom:20px;width: 100%; height: 100%" 
+            rows="10"
+            paginator="true"
+            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+            rowsPerPageTemplate="5,10,15" rendered="#{util.tabla}">
+                <f:facet name="header">
+                Foro
+                </f:facet>
+
+                <p:ajax event="rowEditInit" listener="#{foroPosteosController.cargaDatos(fp.idPost)}" /> <!-- turirurururuu-->
+                <p:ajax event="rowEdit" listener="#{foroPosteosController.onRowEdit}" update="paginas:form:msgs" />
+                <p:ajax event="rowEditCancel" listener="#{foroPosteosController.onRowCancel}" update="paginas:form:msgs" />
+
+                <p:column headerText="Id Posteo" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{fp.idPost}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{fp.idPost}" readonly="true" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                    <p:column headerText="Id Subcategoria" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{fp.idSubcategoria}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{fp.idSubcategoria}" readonly="true" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                 <p:column headerText="Id Usuario" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{fp.idUser}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{fp.idUser}" readonly="true" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+               <p:column headerText="Titulo" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{fp.titulo}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{fp.titulo}" readonly="true" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                <p:column headerText="Contenido" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{fp.contenido}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{fp.contenido}" readonly="true" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                <p:column headerText="Fecha">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{fp.fecha}"/></f:facet>
+                        <f:facet name="input"><p:outputLabel for="popupFecha" value="Fecha" />
+                            <p:calendar id="popupFecha" value="#{foroPosteosController.selected.fecha}" /> 
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                
+                <p:column headerText="Autorizado" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{fp.autorizado}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{fp.autorizado}" readonly="true" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                <p:column headerText="Imagen" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{fp.imagen_foro_posteos}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{fp.imagen_foro_posteos}" readonly="true" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                
+                <p:column  headerText="Acciones" >
+                    
+                  
+                                <p:rowEditor/>
+                    
+                    <p:commandLink value="Eliminar" actionListener="#{foroPosteosController.eliminarForoPosteo(fp.idPost)}" update="general">
+                                <p:confirm header="Confirmation" message="¿Estas Seguro?" icon="ui-icon-alert" />
+                            </p:commandLink>
+                    
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                      
+                    
+                    
+                </p:column>
+            </p:dataTable>
+          <!-- FIN DATATABLE -->
+           
+        </h:form>
+        <!-- FIN FORM GENERAL -->
+           
+        </h:body>
+  
+</html>

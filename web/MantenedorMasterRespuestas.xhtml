@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+   
+    <h:head>
+        <title>Mantenedor</title>
+        
+          <meta name="viewport" content="width=device-width; initial-scale=1.0"></meta>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        
+         
+        
+        
+   </h:head>
+    <h:body  >
+        
+        <!--FORM GENERAL-->
+        <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.tabla}" action="#{masterRespuestasController.prepararCrear()}" />
+        
+        <p:commandButton id="btoVerTabla" value="Tabla" actionListener="#{util.setTabla(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" action="#{masterRespuestasController.precarga()}" />
+         
+         <p:commandButton value="Cancelar"  action="#{util.setTabla(false)}" update="paginas" process="@this" rendered="#{util.tabla}" />
+
+
+        
+     <h:form id="form"  >  
+       
+        <!-- INICIO DE FORMULARIO CREACION -->
+
+                    <p:outputLabel  value="ID Comentario" rendered="#{util.getVerCrear()}"/>
+                    <h:selectOneMenu value="#{masterRespuestasController.selected.idComentario}" rendered="#{util.getVerCrear()}">
+                        <f:selectItems value="#{masterComentarioController.itemsAvailableSelectOne}" />
+                    </h:selectOneMenu>
+                    
+                      <p:outputLabel  value="Respuesta" rendered="#{util.getVerCrear()}"/>
+                      <p:inputText  value="#{masterRespuestasController.selected.respuesta}" rendered="#{util.getVerCrear()}"/>
+                    
+                      
+                       <p:outputLabel  value="ID Usuario" rendered="#{util.getVerCrear()}"/>
+                       <h:selectOneMenu value="#{masterRespuestasController.selected.idUsuario}" rendered="#{util.getVerCrear()}">
+                        <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}" />
+                    </h:selectOneMenu>
+                       
+                       
+                     <p:outputLabel  value="Fecha" rendered="#{util.getVerCrear()}"/>
+                     <p:inputText value="#{masterRespuestasController.selected.fechaRespuesta}" rendered="#{util.getVerCrear()}">
+                       <f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" />
+                   </p:inputText>
+
+                     
+                   
+                    
+                   <br/>
+                   <p:commandButton id="btoCrear" value="Crear"  action="#{masterRespuestasController.creacionMR()}" actionListener="#{util.setVerCrear(false)}" update="paginas" process="@all" rendered="#{util.getVerCrear()}">
+                     
+                 </p:commandButton>
+                    
+                   <p:commandButton value="Cancelar"  action="#{util.setVerCrear(false)}" update="paginas" process="@this" rendered="#{util.getVerCrear()}" />
+                 
+        
+           
+           
+        
+        
+        <!-- FIN FORMULARIO CREACION -->
+        
+       
+        <!-- INICIO DATATABLE -->
+            <p:growl id="msgs" showDetail="true"/>
+            
+            <p:dataTable id="general" var="mr" value="#{masterRespuestasController.tablaMasterR()}" editable="true" style="margin-bottom:20px;width: 100%; height: 100%" 
+            rows="10"
+            paginator="true"
+            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+            rowsPerPageTemplate="5,10,15" rendered="#{util.tabla}">
+                <f:facet name="header">
+                Ciudad
+                </f:facet>
+
+                <p:ajax event="rowEditInit" listener="#{masterRespuestasController.cargaDatos(mr.idRespuestas)}" /> <!-- turirurururuu-->
+                <p:ajax event="rowEdit" listener="#{masterRespuestasController.onRowEdit}" update="paginas:form:msgs" />
+                <p:ajax event="rowEditCancel" listener="#{masterRespuestasController.onRowCancel}" update="paginas:form:msgs" />
+
+                <p:column headerText="ID Respuesta" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{mr.idRespuestas}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{mr.idRespuestas}" readonly="true" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                     <p:column headerText="ID Comentario" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{mr.idComentario}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{mr.idComentario}" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                 <p:column headerText="Respuesta" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{mr.respuesta}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{mr.respuesta}" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                <p:column headerText="ID Usuario" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{mr.idUsuario}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{mr.idUsuario}" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+               
+                <p:column headerText="Fecha" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{mr.fechaRespuesta}" /></f:facet>
+                          <f:facet name="input"><p:outputLabel for="popupFecha" value="Fecha" />
+                              <p:calendar id="popupFecha" value="#{masterRespuestasController.selected.fechaRespuesta}" /> 
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                  
+             
+                
+                
+                <p:column  headerText="Acciones" >
+           
+                    <p:rowEditor/>
+
+                    
+                    <p:commandLink value="Eliminar" actionListener="#{masterRespuestasController.eliminaMasterRespuesta(mr.idRespuestas)}" update="general">
+                                <p:confirm header="Confirmation" message="¿Estas Seguro?" icon="ui-icon-alert" />
+                            </p:commandLink>
+                    
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                      
+                    
+                    
+                </p:column>
+            </p:dataTable>
+          <!-- FIN DATATABLE -->
+           
+        </h:form>
+        <!-- FIN FORM GENERAL -->
+           
+        </h:body>
+  
+</html>

@@ -1,16 +1,20 @@
 package VIEWS;
 
+import ENTITIES.Curso;
 import ENTITIES.ForoCategoria;
 import VIEWS.util.JsfUtil;
 import VIEWS.util.PaginationHelper;
 import MODELS.ForoCategoriaFacade;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,6 +22,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import org.primefaces.event.RowEditEvent;
 
 @Named("foroCategoriaController")
 @SessionScoped
@@ -30,9 +35,33 @@ public class ForoCategoriaController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private int id_cat;
+    private boolean verCrear = false;
 
     public ForoCategoriaController() {
     }
+    
+     public void prepararCrear()
+    {
+        current = null;
+    }
+     
+        public void precarga()
+    {
+        List<ForoCategoria> arMe;
+        arMe = ejbFacade.findAll();
+       
+        for(int i =0;i<arMe.size();i++)
+        {
+            current = arMe.get(i);
+        }
+                
+    }
+     
+     public void cargaDatos(int id)
+    {
+        current = ejbFacade.find(id);
+    }
+     
 
     public ForoCategoria getSelected() {
         if (current == null) {
@@ -214,6 +243,73 @@ public class ForoCategoriaController implements Serializable {
     {
         System.out.println("aca el valor del select "+ this.getId_cat());
     }
+
+    public boolean getVerCrear() {
+        return verCrear;
+    }
+
+    public void setVerCrear(boolean verCrear) {
+        this.verCrear = verCrear;
+    }
+    
+    
+     public void creacionFC()
+    {
+        System.out.println("Antes de Crear");
+          
+        try{
+   
+        
+             SimpleDateFormat sdf = new SimpleDateFormat();
+                sdf.setTimeZone(new SimpleTimeZone(-3, "GMT"));
+                sdf.applyPattern("yyyy/mm/dd hh:mm:ss");
+                Date fecha = new Date();
+              current.setCateFecha(fecha);
+              System.out.println("fecha publicacion "+current.getCateFecha());
+              current.setIdCategoria(null);
+            ejbFacade.create(current);
+            current = null;
+           
+         
+            
+        }catch(Exception e)
+        {
+            System.out.println("ERRRROOORR "+e);
+          
+        }
+    }
+     
+             public List<ForoCategoria> tablaForoCategoria()
+         {
+             return ejbFacade.findAll();
+         }
+         
+        public void onRowEdit(RowEditEvent event) 
+        {
+            FacesMessage msg = new FacesMessage("Car Edited", ((ForoCategoria) event.getObject()).getIdCategoria().toString());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+
+            //((Curso) event.getObject()).setPublicacion(current.getPublicacion());
+            //((PublicacionPerfil) event.getObject()).setIdPublicacion(current.getIdPublicacion());
+            System.out.println("Imprime publicacion q llega por evento: "+((ForoCategoria) event.getObject()).getIdCategoria());
+            //System.out.println("Imprime publicacion q llega por evento: "+((PublicacionPerfil) event.getObject()).getIdPublicacion());
+            //current = ((Curso) event.getObject());
+            ejbFacade.edit(current); //REFORMULAR?????
+        }
+          
+          
+        public void eliminarForo(int id)
+        {
+            current.setIdCategoria(id);
+            ejbFacade.remove(current);
+        
+        }
+        
+            public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled", ((ForoCategoria) event.getObject()).getIdCategoria().toString());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+        
     
             
     

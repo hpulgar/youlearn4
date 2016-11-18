@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+   
+    <h:head>
+        <title>Mantenedor</title>
+        
+          <meta name="viewport" content="width=device-width; initial-scale=1.0"></meta>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        
+         
+        
+        
+   </h:head>
+    <h:body  >
+        
+        <!--FORM GENERAL-->
+        <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.tabla}" action="#{usuarioController.prepararCrear()}" />
+        
+        <p:commandButton id="btoVerTabla" value="Tabla" actionListener="#{util.setTabla(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" action="#{usuarioController.precarga()}" />
+         
+         <p:commandButton value="Cancelar"  action="#{util.setTabla(false)}" update="paginas" process="@this" rendered="#{util.tabla}" />
+
+        
+     <h:form id="form"  >  
+       
+        <!-- INICIO DE FORMULARIO CREACION -->
+
+                    
+                 
+                    <p:outputLabel  value="username" rendered="#{util.getVerCrear()}"/>
+                    <p:inputText  value="#{usuarioController.selected.username}" rendered="#{util.getVerCrear()}"/>
+                    
+                    
+                     <p:outputLabel  value="password" rendered="#{util.getVerCrear()}"/>
+                     <p:inputText  value="#{usuarioController.selected.password}" rendered="#{util.getVerCrear()}"/>
+                    
+                    
+                      <p:outputLabel  value="Fecha creacion" rendered="#{util.getVerCrear()}"/>
+                      <p:inputText value="#{usuarioController.selected.fechaCreacion}" rendered="#{util.getVerCrear()}">
+                       <f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" />
+                   </p:inputText>
+        
+                        <p:outputLabel  value="ID Perfil" rendered="#{util.getVerCrear()}"/>
+                        <h:selectOneMenu value="#{usuarioController.selected.idPerfil}" rendered="#{util.getVerCrear()}">
+                        <f:selectItems value="#{perfilController.itemsAvailableSelectOne}" />
+                    </h:selectOneMenu>
+                      
+                       <p:outputLabel  value="Correo" rendered="#{util.getVerCrear()}"/>
+                       <p:inputText  value="#{usuarioController.selected.correo}" rendered="#{util.getVerCrear()}"/>
+                    
+                      
+                        <p:outputLabel  value="Creditos" rendered="#{util.getVerCrear()}"/>
+                        <p:inputText  value="#{usuarioController.selected.creditos}" rendered="#{util.getVerCrear()}"/>
+                   
+                  
+                    <p:outputLabel  value="Imagen portada perfil" rendered="#{util.getVerCrear()}"/>
+                    <p:inputText  value="#{usuarioController.selected.imagen_portada_perfil}" rendered="#{util.getVerCrear()}"/>
+
+                     <p:outputLabel  value="Imagen dashboard" rendered="#{util.getVerCrear()}"/>
+                     <p:inputText  value="#{usuarioController.selected.imagen_dashboard}" rendered="#{util.getVerCrear()}"/>
+
+                     <p:outputLabel  value="Imagen foto perfil" rendered="#{util.getVerCrear()}"/>
+                     <p:inputText  value="#{usuarioController.selected.imagen_foto_perfil}" rendered="#{util.getVerCrear()}"/>
+
+                    
+                   <br/>
+                   <p:commandButton id="btoCrear" value="Crear"  action="#{usuarioController.creacionU()}" actionListener="#{util.setVerCrear(false)}" update="paginas" process="@all" rendered="#{util.getVerCrear()}">
+                     
+                 </p:commandButton>
+                    
+                   <p:commandButton value="Cancelar"  action="#{util.setVerCrear(false)}" update="paginas" process="@this" rendered="#{util.getVerCrear()}" />
+                 
+        
+           
+           
+        
+        
+        <!-- FIN FORMULARIO CREACION -->
+        
+       
+        <!-- INICIO DATATABLE -->
+            <p:growl id="msgs" showDetail="true"/>
+            
+            <p:dataTable id="general" var="u" value="#{usuarioController.tablaUsuario()}" editable="true" style="margin-bottom:20px;width: 100%; height: 100%" 
+            rows="10"
+            paginator="true"
+            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+            rowsPerPageTemplate="5,10,15" rendered="#{util.tabla}">
+                <f:facet name="header">
+                Archivo
+                </f:facet>
+                
+                
+                <p:ajax event="rowEditInit" listener="#{usuarioController.cargaDatos(u.idUsuario)}" /> <!-- turirurururuu-->
+                <p:ajax event="rowEdit" listener="#{usuarioController.onRowEdit}" update="paginas:form:msgs" />
+                <p:ajax event="rowEditCancel" listener="#{usuarioController.onRowCancel}" update="paginas:form:msgs" />
+
+                <p:column headerText="ID Usuario" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{u.idUsuario}" /></f:facet>
+                        <f:facet name="input"><p:inputText id="modelInput" value="#{u.idUsuario}" readonly="true" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                    <p:column headerText="Username">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{u.username}" /></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{u.username}" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                    <p:column headerText="Password" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{u.password}" /></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{u.password}"  style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                 <p:column headerText="Fecha nacimiento" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{u.fechaCreacion}" /></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{u.fechaCreacion}" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                   <p:column headerText="Perfil" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{u.idPerfil.descripcion}" /></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{u.idPerfil.descripcion}" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                     <p:column headerText="Correo" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{u.correo}" /></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{u.correo}" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                
+                  <p:column headerText="Creditos" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{u.creditos}" /></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{u.creditos}" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                <p:column headerText="Imagen portada perfil" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{u.imagen_portada_perfil}" /></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{u.imagen_portada_perfil}" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                   <p:column headerText="Imagen dashboard" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{u.imagen_dashboard}" /></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{u.imagen_dashboard}" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                
+                <p:column headerText="Imagen Foto perfil" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{u.imagen_foto_perfil}" /></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{u.imagen_foto_perfil}" style="width: 100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                  
+                
+                
+                <p:column  headerText="Acciones" >
+                    
+                  
+                        <p:rowEditor/>
+                    
+                    <p:commandLink value="Eliminar" actionListener="#{usuarioController.eliminarU(u.idUsuario)}" update="general">
+                                <p:confirm header="Confirmation" message="¿Estas Seguro?" icon="ui-icon-alert" />
+                            </p:commandLink>
+                    
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                      
+                    
+                    
+                </p:column>
+            </p:dataTable>
+          <!-- FIN DATATABLE -->
+           
+        </h:form>
+        <!-- FIN FORM GENERAL -->
+           
+        </h:body>
+  
+</html>

@@ -1,15 +1,22 @@
 package VIEWS;
 
+import ENTITIES.Archivo;
+import ENTITIES.ForoCategoria;
 import ENTITIES.Notificaciones;
 import VIEWS.util.JsfUtil;
 import VIEWS.util.PaginationHelper;
 import MODELS.NotificacionesFacade;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.SimpleTimeZone;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -17,6 +24,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import org.primefaces.event.RowEditEvent;
 
 @Named("notificacionesController")
 @SessionScoped
@@ -30,6 +38,28 @@ public class NotificacionesController implements Serializable {
     private int selectedItemIndex;
 
     public NotificacionesController() {
+    }
+    
+      public void prepararCrear()
+    {
+        current = null;
+    }
+      
+            public void precarga()
+    {
+        List<Notificaciones> arMe;
+        arMe = ejbFacade.findAll();
+       
+        for(int i =0;i<arMe.size();i++)
+        {
+            current = arMe.get(i);
+        }
+                
+    }
+
+public void cargaDatos(int id)
+    {
+        current = ejbFacade.find(id);
     }
 
     public Notificaciones getSelected() {
@@ -151,6 +181,55 @@ public class NotificacionesController implements Serializable {
         if (selectedItemIndex >= 0) {
             current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
         }
+    }
+    
+     public void creacionN()
+    {
+        System.out.println("Antes de Crear");
+          
+        try{
+            current.setIdNotificacion(null);
+            ejbFacade.create(current);
+            current = null;
+           
+         
+            
+        }catch(Exception e)
+        {
+            System.out.println("ERRRROOORR "+e);
+          
+        }
+    }
+     
+             public List<Notificaciones> tablaNotificaciones()
+         {
+             return ejbFacade.findAll();
+         }
+         
+        public void onRowEdit(RowEditEvent event) 
+        {
+            FacesMessage msg = new FacesMessage("Car Edited", ((Notificaciones) event.getObject()).getIdNotificacion().toString());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+
+            //((Curso) event.getObject()).setPublicacion(current.getPublicacion());
+            //((PublicacionPerfil) event.getObject()).setIdPublicacion(current.getIdPublicacion());
+            System.out.println("Imprime publicacion q llega por evento: "+((Notificaciones) event.getObject()).getIdNotificacion());
+            //System.out.println("Imprime publicacion q llega por evento: "+((PublicacionPerfil) event.getObject()).getIdPublicacion());
+            //current = ((Curso) event.getObject());
+            ejbFacade.edit(current); //REFORMULAR?????
+        }
+          
+          
+        public void eliminarNotificacion(int id)
+        {
+            current.setIdNotificacion(id);
+            ejbFacade.remove(current);
+        
+        }
+        
+            public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled", ((Notificaciones) event.getObject()).getIdNotificacion().toString());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public DataModel getItems() {

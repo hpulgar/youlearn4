@@ -6,9 +6,11 @@
 package MODELS;
 
 import ENTITIES.Archivo;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +29,14 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
 
     public ArchivoFacade() {
         super(Archivo.class);
+    }
+    
+       public List<Archivo> obtenerArchivos(int idContenido)
+    {
+        EntityManager t2= getEntityManager();
+        Query q = t2.createNamedQuery("Archivo.findByIdContenido").setParameter("idContenido", idContenido);   
+        
+       return q.getResultList(); 
     }
     
 }

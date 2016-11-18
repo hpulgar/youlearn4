@@ -1,6 +1,7 @@
 package VIEWS;
 
 import ENTITIES.Ciudad;
+import ENTITIES.Notificaciones;
 import ENTITIES.Persona;
 import ENTITIES.Usuario;
 import VIEWS.util.JsfUtil;
@@ -20,6 +21,8 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import java.util.*;
+import javax.faces.application.FacesMessage;
+import org.primefaces.event.RowEditEvent;
 
 @Named("personaController")
 @SessionScoped
@@ -38,6 +41,29 @@ public class PersonaController implements Serializable {
 
     public PersonaController() {
     }
+    
+     public void prepararCrear()
+    {
+        current = null;
+    }
+     
+         public void precarga()
+    {
+        List<Persona> arMe;
+        arMe = ejbFacade.findAll();
+       
+        for(int i =0;i<arMe.size();i++)
+        {
+            current = arMe.get(i);
+        }
+                
+    }
+
+public void cargaDatos(int id)
+    {
+        current = ejbFacade.find(id);
+    }
+    
 
     public String getModificar() {
         return modificar;
@@ -101,6 +127,56 @@ public class PersonaController implements Serializable {
             };
         }
         return pagination;
+    }
+    
+    
+    public void creacionP()
+    {
+        System.out.println("Antes de Crear");
+          
+        try{
+            current.setIdPersona(null);
+            ejbFacade.create(current);
+            current = null;
+           
+         
+            
+        }catch(Exception e)
+        {
+            System.out.println("ERRRROOORR "+e);
+          
+        }
+    }
+     
+             public List<Persona> tablaPersona()
+         {
+             return ejbFacade.findAll();
+         }
+         
+        public void onRowEdit(RowEditEvent event) 
+        {
+            FacesMessage msg = new FacesMessage("Car Edited", ((Persona) event.getObject()).getIdPersona().toString());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+
+            //((Curso) event.getObject()).setPublicacion(current.getPublicacion());
+            //((PublicacionPerfil) event.getObject()).setIdPublicacion(current.getIdPublicacion());
+            System.out.println("Imprime publicacion q llega por evento: "+((Persona) event.getObject()).getIdPersona());
+            //System.out.println("Imprime publicacion q llega por evento: "+((PublicacionPerfil) event.getObject()).getIdPublicacion());
+            //current = ((Curso) event.getObject());
+            ejbFacade.edit(current); //REFORMULAR?????
+        }
+          
+          
+        public void eliminarPersona(int id)
+        {
+            current.setIdPersona(id);
+            ejbFacade.remove(current);
+        
+        }
+        
+            public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled", ((Persona) event.getObject()).getIdPersona().toString());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public String prepareList() {

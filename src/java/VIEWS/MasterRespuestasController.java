@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -24,6 +25,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import org.primefaces.event.RowEditEvent;
 
 @Named("masterRespuestasController")
 @SessionScoped
@@ -37,10 +39,33 @@ public class MasterRespuestasController implements Serializable {
     private int selectedItemIndex;
     private List<MasterRespuestas> listaRespuestas = new ArrayList();
     private boolean ver = false;
+     private boolean verCrear = false;
     
     
 
     public MasterRespuestasController() {
+    }
+    
+    public void prepararCrear()
+    {
+        current = null;
+    }
+    
+        public void precarga()
+    {
+        List<MasterRespuestas> arMe;
+        arMe = ejbFacade.findAll();
+       
+        for(int i =0;i<arMe.size();i++)
+        {
+            current = arMe.get(i);
+        }
+                
+    }
+
+public void cargaDatos(int id)
+    {
+        current = ejbFacade.find(id);
     }
 
     public boolean getVer() {
@@ -348,6 +373,65 @@ public class MasterRespuestasController implements Serializable {
            
         
         
+    }
+     
+     public boolean getVerCrear() {
+        return verCrear;
+    }
+
+    public void setVerCrear(boolean verCrear) {
+        this.verCrear = verCrear;
+    }
+    
+    
+     public void creacionMR()
+    {
+        System.out.println("Antes de Crear");
+          
+        try{
+   
+           current.setIdRespuestas(null);
+            ejbFacade.create(current);
+            current = null;
+           
+         
+            
+        }catch(Exception e)
+        {
+            System.out.println("ERRRROOORR "+e);
+          
+        }
+    }
+     
+             public List<MasterRespuestas> tablaMasterR()
+         {
+             return ejbFacade.findAll();
+         }
+         
+        public void onRowEdit(RowEditEvent event) 
+        {
+            FacesMessage msg = new FacesMessage("Car Edited", ((MasterRespuestas) event.getObject()).getIdRespuestas().toString());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+
+            //((Curso) event.getObject()).setPublicacion(current.getPublicacion());
+            //((PublicacionPerfil) event.getObject()).setIdPublicacion(current.getIdPublicacion());
+            System.out.println("Imprime publicacion q llega por evento: "+((MasterRespuestas) event.getObject()).getIdRespuestas());
+            //System.out.println("Imprime publicacion q llega por evento: "+((PublicacionPerfil) event.getObject()).getIdPublicacion());
+            //current = ((Curso) event.getObject());
+            ejbFacade.edit(current); //REFORMULAR?????
+        }
+          
+          
+        public void eliminaMasterRespuesta(int id)
+        {
+            current.setIdRespuestas(id);
+            ejbFacade.remove(current);
+        
+        }
+        
+            public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edicion cancelada", ((MasterRespuestas) event.getObject()).getIdRespuestas().toString());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
      
      
