@@ -5,6 +5,7 @@ import ENTITIES.Curso;
 import VIEWS.util.JsfUtil;
 import VIEWS.util.PaginationHelper;
 import MODELS.ContenidosFacade;
+import java.io.IOException;
 
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -22,6 +23,9 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import java.util.*;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
+import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletRequest;
 import org.primefaces.event.RowEditEvent;
 
 @Named("contenidosController")
@@ -36,6 +40,7 @@ public class ContenidosController implements Serializable {
     private int selectedItemIndex;
     private int idUnidad;
     private int idContenido;
+    private int idCurso;
     private List<Contenidos> arContenidos = new ArrayList<Contenidos>();
     private List<Contenidos> arContenidos2 = new ArrayList<Contenidos>();
     
@@ -85,6 +90,15 @@ public class ContenidosController implements Serializable {
     public void setArContenidos2(List<Contenidos> arContenidos2) {
         this.arContenidos2 = arContenidos2;
     }
+
+    public int getIdCurso() {
+        return idCurso;
+    }
+
+    public void setIdCurso(int idCurso) {
+        this.idCurso = idCurso;
+    }
+    
     
     public PaginationHelper getPagination() {
         if (pagination == null) {
@@ -156,6 +170,18 @@ public class ContenidosController implements Serializable {
         recreatePagination();
         recreateModel();
         return "List";
+    }
+    
+      public void eliminarUnidad(int id) throws IOException {
+          System.out.println("Obtengo ID de la unidad "+id);
+          Contenidos obj = new Contenidos();
+          obj.setIdContenido(id);
+          
+         ejbFacade.borrarUnidad(obj);
+         
+          ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+         ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
+    
     }
 
     public String destroyAndView() {
@@ -273,6 +299,37 @@ public class ContenidosController implements Serializable {
         
     }
     
+     public String creaunidadAdmin(ActionEvent event)
+    {
+        try
+        {
+            System.out.println("ID CURSO AL CREAR "+idCurso);
+          int idCurso = (int) event.getComponent().getAttributes().get("idCurso");
+           
+            Curso obCurso = new Curso();
+            obCurso.setIdCurso(idCurso);
+            
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd HH:mm:ss");
+            Date date = new Date();
+            String fecha = dateFormat.format(date);
+            
+            current.setFecha(dateFormat.parse(fecha));
+            current.setIdCurso(obCurso);
+            
+            getFacade().crear(current);
+            current = null;
+     
+            
+            return "/curso_editar.xhtml";
+            
+        }catch(Exception e)
+        {
+            System.out.println("EL ERROR"+ e );
+            return "/curso_editar.xhtml";            
+        }
+        
+    }
+    
     
     public List<Contenidos> verTodosCont(int idCurso)
     {
@@ -291,6 +348,45 @@ public class ContenidosController implements Serializable {
         }
               return arContenidos2;  
         
+    }
+    
+     public String prepareCrearUnidad() {
+   current = null;
+
+    //Curso objCur = new Curso();
+   // objCur.setIdCurso(idCurso);
+    //current.setIdCurso(objCur);
+    //System.out.println("ID curso del objeto "+current.getIdCurso());
+     // return "unidad_crear.xhtml";
+     
+      FacesContext fc = FacesContext.getCurrentInstance();
+      Map<String,String> params = 
+      fc.getExternalContext().getRequestParameterMap();
+      idCurso =  Integer.parseInt(params.get("idCurso")); 
+          System.out.println("Obtengo la id del curso para crear una unidad "+idCurso);
+      return "unidad_crear.xhtml";
+    }
+    
+     public String prepareEdicionUnidad(int idUnidad) {
+        current = ejbFacade.find(idUnidad);
+        return "unidad_editar.xhtml";
+    }
+     
+      public String actualizaUnidad() {
+       
+            System.out.println("Actualizar unidad...");
+             try {
+            getFacade().edit(current);
+          
+            return "curso_editar.xhtml";
+            
+        } catch (Exception e) {
+           
+            return null;
+        }
+         
+            
+       
     }
     
     public List<Contenidos> verUnCont(int idCont)
@@ -329,6 +425,8 @@ public class ContenidosController implements Serializable {
         return ejbFacade.findAll();
     }
     
+ 
+    
     
     public void onRowEdit(RowEditEvent event)
     {
@@ -363,9 +461,10 @@ public class ContenidosController implements Serializable {
     
     public void eliminarContenido(int id)
     {
-        current.setIdContenido(id);
+        System.out.println("Unidad a eliminar "+id);
+        current = ejbFacade.find(id);
         ejbFacade.remove(current);
-        current= null;
+       
     }
     
     public String verContenido(int id)

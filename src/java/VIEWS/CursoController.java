@@ -25,6 +25,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -46,6 +47,7 @@ public class CursoController implements Serializable {
     private int idSubcatSeleccionado;
    private String textoBusqueda;
    private String nombreCurso;
+   private String obtengoNombreCurso;
    
     private List<Curso> arCurso = new ArrayList();
 
@@ -197,6 +199,29 @@ public void resetValues()
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
+    
+        public String prepareEdicionCurso(int idCurso) {
+        current = ejbFacade.find(idCurso);
+        return "curso_editar.xhtml";
+    }
+        
+        public String actualizaCurso() {
+        try {
+            getFacade().edit(current);
+          
+            return "mis_cursos_admin.xhtml";
+            
+        } catch (Exception e) {
+           
+            return null;
+        }
+    }
+        
+          public void actualizaCursoTest() {
+              
+              System.out.println("Entra al metodo test..");
+       
+    }
 
     public String update() {
         try {
@@ -216,6 +241,12 @@ public void resetValues()
         recreatePagination();
         recreateModel();
         return "List";
+    }
+    
+      public void eliminarCursoAdmin(int idCurso) {
+        current = ejbFacade.find(idCurso);
+        getFacade().remove(current);
+      
     }
 
     public String destroyAndView() {
@@ -356,6 +387,38 @@ public void resetValues()
             return arCurso;
         }
         
+           public List<Curso> listaMisCursos(int idSubcat,String nombreCurso)
+        {
+           
+            
+                if(idSubcat != 0 && nombreCurso.isEmpty())
+                {
+                     
+                    
+                    arCurso.clear();
+                    arCurso = ejbFacade.cursosSubcategorias(idSubcat);
+                    
+                }
+                else if(!nombreCurso.isEmpty()  && idSubcat == 0)
+                {
+                    
+                    arCurso.clear();
+                    arCurso= ejbFacade.cursosNombres(nombreCurso);
+                }
+                    
+              
+                else
+                {
+                  
+                    this.arCurso.clear();
+                    arCurso = ejbFacade.findAll();
+
+
+                }
+            
+            return arCurso;
+        }
+        
         public List<Curso> verCurso(int idCurso)
         {
             arCurso.clear();
@@ -389,6 +452,9 @@ public void resetValues()
         public String CrearCurso(int id_scat_curso,int id_usuario)
         {
             try{
+                System.out.println("Creacion curso");
+                System.out.println("ID usuario"+id_usuario);
+                System.out.println("Id sucbat"+id_scat_curso);
                 
         // 1 INT IDCURSO automatico x
         // 2 INT ID SUBCAT por parametro X
@@ -439,9 +505,48 @@ public void resetValues()
                 }catch(Exception e)
                 {
                     System.out.println("EL ERRORR"+ e);
-                    return "/curso_crear.xhtml";
+                    return "/cursos_listado.xhtml";
                 }
         }
+        
+         public List<Curso> cursosPendientesAprobacion(int idUsuario)
+    {
+        return ejbFacade.cursosNoAprobado(idUsuario);
+    }
+         
+          public List<Curso> cursosAprobados(int idUsuario)
+    {
+        return ejbFacade.cursosAprobado(idUsuario);
+    }
+          
+          public String retornaNombre(int idCurso)
+          {
+              current = ejbFacade.find(idCurso);
+              return current.getNomCurso();
+          }
+          
+        
+          
+         public void edicionCurso(){
+             
+             /* String nombreCurso = (String) event.getComponent().getAttributes().get("nombreCurso"); 
+              String introduccionCurso = (String) event.getComponent().getAttributes().get("introduccionCurso"); 
+              String descripcionCurso = (String) event.getComponent().getAttributes().get("descripcionCurso"); 
+              String imagenportadaCurso = (String) event.getComponent().getAttributes().get("imagenportadaCurso"); 
+              String contenidosCurso = (String) event.getComponent().getAttributes().get("contenidosCurso"); 
+              int idCurso = (int) event.getComponent().getAttributes().get("idCurso"); */
+              
+             String value = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("hidden1");
+             
+              System.out.println("ID del curso a editar "+value);
+             /* System.out.println("Nombre del curso a editar "+nombreCurso);
+              System.out.println("Introduccion del curso a editar "+introduccionCurso);
+              System.out.println("descripcion del curso a editar "+descripcionCurso);
+              System.out.println("imagenportada del curso a editar "+imagenportadaCurso);
+              System.out.println("contenidos del curso a editar "+contenidosCurso);*/
+           
+             
+         }
         
          public List<String> autoCompletado(String query) {
             arCurso = ejbFacade.findAll();
@@ -501,14 +606,19 @@ public void resetValues()
         }
           
           
-        public void eliminarCurso(int id)
+       
+        
+        public String eliminarCurso(int id)
         {
-           System.out.println("ENTRA AL ELIMINAR "+id);
-            System.out.println("asdasd "+ejbFacade.eliminarCurso(id));
-            System.out.println("fin AL ELIMINAR");
+       current = ejbFacade.find(id);
+        performDestroy();
+        recreatePagination();
+        recreateModel();
+        return "mis_cursos_admin";
             
         
         }
+        
         public String verCont(int id)
         {
             return "cont"+id;

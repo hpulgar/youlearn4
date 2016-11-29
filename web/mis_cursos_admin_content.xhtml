@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+        
+        
+     
+        
+    </h:head>
+    <h:body>
+         
+      
+           
+                                                    
+       
+        
+       
+         
+        
+         <p:panel id="pendientes1" header="Cursos pendientes de aprobación - Aún no tiene cursos pendientes" rendered="#{empty cursoController.cursosPendientesAprobacion(usuarioController.id_user)}">
+              
+    </p:panel>
+        <p:panel  rendered="#{not empty cursoController.cursosPendientesAprobacion(usuarioController.id_user)}" id="pendientes" header="Cursos pendientes de aprobación">
+        <h:panelGroup id="ListaCursosPendientes" style="color: white" >
+           
+                                        
+            
+            <p:dataScroller   value="#{cursoController.cursosPendientesAprobacion(usuarioController.id_user)}" var="lc" chunkSize="5" mode="inline">
+                                 
+					<li class="event-wrapper event-full clearfix">
+					
+						
+				
+						<div class="event-info">	
+							<div class="event-meta">
+								
+                                                           
+                                                               <h:outputText value="Nombre del curso :" />
+                                                                <h:outputText value="#{lc.nomCurso}" />
+                                                                <br/>
+                                                               <h:outputText value="Subcategoria :" />
+                                                               <h:outputText value="#{lc.idCat.nomSubcat}" />
+                                                             
+                                                         
+          
+                                                               
+                                                        
+                                                        </div>
+						</div>
+				
+					<!-- END .event-wrapper -->
+					</li>
+                                       </p:dataScroller>
+            
+				</h:panelGroup>
+        </p:panel>
+
+      
+       
+        <p:panel id="aprobados" header="Cursos aprobados - Aún no tiene cursos aprobados" rendered="#{empty cursoController.cursosAprobados(usuarioController.id_user)}">
+              
+    </p:panel>
+        
+        <p:panel id="aprobadosNotEmpty" header="Cursos aprobados" rendered="#{not empty cursoController.cursosAprobados(usuarioController.id_user)}">
+        
+           <h:panelGroup id="ListaCursosAprobados" style="color: white" >
+           
+                                        
+              
+            <p:dataScroller   value="#{cursoController.cursosAprobados(usuarioController.id_user)}" var="lc" chunkSize="5" mode="inline" rendered="#{not empty cursoController.cursosAprobados(usuarioController.id_user)}">
+                                 
+			<li class="event-wrapper event-full clearfix">
+	
+			<div class="event-info">	
+				<div class="event-meta">
+					<p:growl for="mensaje" />		
+                                          <h:form>
+                                                 <h:outputText value="Nombre del curso :" />
+                                                 <h:outputText value="#{lc.nomCurso}" />
+                                                 <br/>
+                                                 <h:outputText value="Subcategoria :" />
+                                                 <h:outputText value="#{lc.idCat.nomSubcat}" />
+                                                  <br/>
+                                                  <p:commandButton action="#{cursoController.prepareEdicionCurso(lc.idCurso)}" value="Editar curso" />                                        
+                                                  <p:commandButton actionListener="#{cursoController.setIdCurso(lc.idCurso)}" action="#{inscripcionCursoController.cargarCurso(lc.idCurso,usuarioController.id_user)}" value="Ir al curso" />                                        
+                                                  <p:commandButton onclick="PF('#{lc.idCurso}').show();" value="Eliminar curso" />                                        
+                                          </h:form>
+                                        
+                                        <p:dialog header="#{lc.nomCurso}" widgetVar="#{lc.idCurso}" modal="true">
+                                              
+                                   <h:outputText value="¿Está seguro que desea borrar este curso?" />
+                                            <p:commandButton onclick="PF('#{lc.idCurso}').hide();" value="No" />       
+                                            <p:commandButton action="#{cursoController.eliminarCurso(lc.idCurso)}" value="Si" />       
+                                                 
+                                                  
+                                          </p:dialog>  
+                                                   
+                                   
+                                                               
+                                                        
+                                                        </div>
+						</div>
+				
+					<!-- END .event-wrapper -->
+					</li>
+                                       </p:dataScroller>
+            
+				</h:panelGroup>
+            </p:panel>
+        
+    
+        
+        
+        
+    </h:body>
+</html>
+

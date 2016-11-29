@@ -6,6 +6,7 @@
 package MODELS;
 
 import ENTITIES.Contenidos;
+import ENTITIES.Curso;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -49,5 +50,25 @@ public class ContenidosFacade extends AbstractFacade<Contenidos> {
         return obC = (Contenidos) q.getSingleResult();
     }
     
+        public List<Contenidos> unidadesCurso(int idCurso)
+    {
+     
+        
+        EntityManager m2 = getEntityManager();
+        Query q=m2.createNamedQuery("Contenidos.findByidCurso").setParameter("idCurso",idCurso);
+        
+         return q.getResultList();
+       
+    }
+        
+          public void borrarUnidad(Contenidos e)
+  {
+       EntityManager em2= getEntityManager();
+      Contenidos  b = em2.getReference(Contenidos.class,e.getIdContenido());
+              
+       em2.remove(b);
+    }
+    
+       
     
 }

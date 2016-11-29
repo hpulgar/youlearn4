@@ -6,9 +6,11 @@
 package MODELS;
 
 import ENTITIES.Notificaciones;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +29,34 @@ public class NotificacionesFacade extends AbstractFacade<Notificaciones> {
 
     public NotificacionesFacade() {
         super(Notificaciones.class);
+    }
+    
+    
+     public List<Notificaciones> obtenerNotificaciones()
+    {
+        EntityManager t2= getEntityManager();
+        Query q = t2.createNamedQuery("Notificaciones.findByIdusuario");   
+        
+       return q.getResultList(); 
+    }
+     
+    public boolean esSeguidor(int idUsuario,int idCurso)
+    {
+        boolean estado=false;
+        
+        EntityManager em3 = getEntityManager();
+        Query q= em3.createNamedQuery("Notificaciones.findBySeguidor").setParameter("idUsuario",idUsuario).setParameter("idCurso", idCurso);
+        if(q.toString().isEmpty())
+            {
+            estado=true;
+            }
+            else
+            {
+              estado=false;  
+            }
+        
+        return estado;
+        
     }
     
 }

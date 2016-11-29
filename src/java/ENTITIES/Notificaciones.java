@@ -6,6 +6,7 @@
 package ENTITIES;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -33,8 +35,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Notificaciones.findByIdNotificacion", query = "SELECT n FROM Notificaciones n WHERE n.idNotificacion = :idNotificacion"),
     @NamedQuery(name = "Notificaciones.findByTipo", query = "SELECT n FROM Notificaciones n WHERE n.tipo = :tipo"),
     @NamedQuery(name = "Notificaciones.findByDetalle", query = "SELECT n FROM Notificaciones n WHERE n.detalle = :detalle"),
-    @NamedQuery(name = "Notificaciones.findByEnlace", query = "SELECT n FROM Notificaciones n WHERE n.enlace = :enlace")})
+    @NamedQuery(name = "Notificaciones.findByFecha", query = "SELECT n FROM Notificaciones n WHERE n.fecha = :fecha"),
+    @NamedQuery(name = "Notificaciones.findByLeida", query = "SELECT n FROM Notificaciones n WHERE n.leida = :leida"),
+    @NamedQuery(name = "Notificaciones.findByIdusuario", query = "SELECT n FROM Notificaciones n WHERE n.leida=0"),
+    @NamedQuery(name = "Notificaciones.findBySuscrito", query = "SELECT n FROM InscripcionCurso n WHERE n.idUsuario.idUsuario = :idUsuario AND n.idCurso.idCurso = :idCurso AND n.tipoAlumno.idTipo =2"),
+    @NamedQuery(name = "Notificaciones.findBySeguidor", query = "SELECT n FROM InscripcionCurso n WHERE n.idUsuario.idUsuario = :idUsuario AND n.idCurso.idCurso = :idCurso AND n.tipoAlumno.idTipo =1"),
+    @NamedQuery(name = "Notificaciones.findByIdentificador", query = "SELECT n FROM Notificaciones n WHERE n.identificador = :identificador")})
 public class Notificaciones implements Serializable {
+
+    @Column(name = "id_usuario_trigger")
+    private Integer idUsuarioTrigger;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,21 +52,22 @@ public class Notificaciones implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_notificacion")
     private Integer idNotificacion;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "tipo")
     private String tipo;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 300)
     @Column(name = "detalle")
     private String detalle;
     @Size(max = 90)
-    @Column(name = "enlace")
-    private String enlace;
+    @Column(name = "fecha")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fecha;
+    @Column(name = "leida")
+    private Integer leida;
+    @Column(name = "identificador")
+    private Integer identificador;
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Usuario idUsuario;
 
     public Notificaciones() {
@@ -64,12 +75,6 @@ public class Notificaciones implements Serializable {
 
     public Notificaciones(Integer idNotificacion) {
         this.idNotificacion = idNotificacion;
-    }
-
-    public Notificaciones(Integer idNotificacion, String tipo, String detalle) {
-        this.idNotificacion = idNotificacion;
-        this.tipo = tipo;
-        this.detalle = detalle;
     }
 
     public Integer getIdNotificacion() {
@@ -96,12 +101,29 @@ public class Notificaciones implements Serializable {
         this.detalle = detalle;
     }
 
-    public String getEnlace() {
-        return enlace;
+
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setEnlace(String enlace) {
-        this.enlace = enlace;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Integer getLeida() {
+        return leida;
+    }
+
+    public void setLeida(Integer leida) {
+        this.leida = leida;
+    }
+
+    public Integer getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(Integer identificador) {
+        this.identificador = identificador;
     }
 
     public Usuario getIdUsuario() {
@@ -135,6 +157,14 @@ public class Notificaciones implements Serializable {
     @Override
     public String toString() {
         return "ENTITIES.Notificaciones[ idNotificacion=" + idNotificacion + " ]";
+    }
+
+    public Integer getIdUsuarioTrigger() {
+        return idUsuarioTrigger;
+    }
+
+    public void setIdUsuarioTrigger(Integer idUsuarioTrigger) {
+        this.idUsuarioTrigger = idUsuarioTrigger;
     }
     
 }

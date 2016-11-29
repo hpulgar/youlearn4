@@ -63,6 +63,24 @@ public class CursoFacade extends AbstractFacade<Curso> {
         return q.getResultList();
     }
     
+      public List<Curso> cursosNoAprobado(int idUsuario)
+    {
+        EntityManager m2 = getEntityManager();
+        Query q=m2.createNamedQuery("Curso.findByUsuarioNoAprobado").setParameter("idUsuario",idUsuario);
+        
+        
+        return q.getResultList();
+    }
+      
+        public List<Curso> cursosAprobado(int idUsuario)
+    {
+        EntityManager m2 = getEntityManager();
+        Query q=m2.createNamedQuery("Curso.findByUsuarioAprobado").setParameter("idUsuario",idUsuario);
+        
+        
+        return q.getResultList();
+    }
+    
     public int eliminarCurso(int idCurso)
     {
         EntityManager m2 = getEntityManager();

@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+        
+        
+     
+        
+    </h:head>
+    <h:body>
+         
+        <style>
+            .event-full .event-info p{
+                color:#4ca20b;
+            }
+            
+            
+        </style>
+           
+                                                    
+       
+        
+       
+         
+        
+        
+        <h:panelGroup id="ListaCursos" style="color: white" >
+           
+                                        
+            
+            <p:dataScroller   value="#{inscripcionCursoController.misCursos(usuarioController.id_user)}" var="lc" chunkSize="5" mode="inline" scrollHeight="600px ;border-color: white; " style=" background: rgba(128, 234, 47, 0.09);" styleClass="miTabla"  >
+                                 
+					<li class="event-wrapper event-full clearfix">
+					
+						<div class="event-date">
+                                                    <div class="event-m">#{lc.fechaInsc.toLocaleString().subSequence(3,5)}</div>
+                                                    <div class="event-m">#{lc.fechaInsc.toGMTString().substring(2,6)}</div>
+                                                    <div class="event-d">#{lc.fechaInsc.toGMTString().subSequence(0,2)}</div>	
+                                                    <div class="event-m">#{lc.fechaInsc.toGMTString().subSequence(6,11)}</div>
+                                                    
+                                                </div>
+				
+						<div class="event-info">	
+							<div class="event-meta">
+								
+                                                            <h:form id="cursoForm" onreset="">
+                                                                <h4> <h:commandLink actionListener="#{cursoController.setIdCurso(lc.idCurso.idCurso)}" action="#{inscripcionCursoController.cargarCurso(lc.idCurso.idCurso,usuarioController.id_user)}"  value="#{lc.idCurso.nomCurso}" />
+                                                                &raquo; </h4>
+                                                                
+                                                                <p><strong>Seguidores: </strong>#{inscripcionCursoController.seguidores(lc.idCurso.idCurso)}</p>
+                                                                <p><strong>Suscripciones: </strong>#{inscripcionCursoController.suscriptores(lc.idCurso.idCurso)}</p>
+                                                                <p><strong>Subcategoria </strong>#{lc.idCurso.idCat.nomSubcat}</p>
+          
+                                                               
+                                                            
+                                                            </h:form>
+                                                        </div>
+						</div>
+				
+					<!-- END .event-wrapper -->
+					</li>
+                                       </p:dataScroller>
+            
+				</h:panelGroup>
+        
+        
+        
+    </h:body>
+</html>
+

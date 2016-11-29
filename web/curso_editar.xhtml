@@ -34,18 +34,44 @@
 		<div class="page-header-inner clearfix">
 		
 		<div class="page-title">	
-			<h2>Crea un curso en Youlearn</h2>
+			<h2>Edicion curso</h2>
 			<div class="page-title-block"></div>
 		</div>
 		
-		<div class="breadcrumbs">
-			<p><a href="courses-single.html">Curso</a> &#187;Crear curso</p>
-		</div>
+	
 		
 		</div>
 		
 	<!-- END .page-header -->
 	</div>
+        	
+    
+ <div class="content-wrapper page-content-wrapper clearfix">
+    <div class="main-content page-content">
+ <h:form>  
+
+ 
+    <p:menubar>
+        <p:submenu label="Unidades">
+             <c:forEach items="#{contenidosController.verTodosCont(cursoController.selected.idCurso)}" var="c"> 
+                 <p:submenu label="#{c.nombreUnidad}">
+                     <p:menuitem value="Editar"  action="#{contenidosController.prepareEdicionUnidad(c.idContenido)}"/>
+                     <p:menuitem value="Eliminar" action="#{contenidosController.eliminarUnidad(c.idContenido)}" />
+            </p:submenu>
+             </c:forEach>
+                
+           
+        
+        </p:submenu>
+ 
+        <p:menuitem value="Nueva unidad" action="#{contenidosController.prepareCrearUnidad()}">
+        <f:param name="idCurso" value="#{cursoController.selected.idCurso}" />
+        </p:menuitem> 
+
+    </p:menubar>
+</h:form> 
+</div>
+ </div>
 	
 	<!-- BEGIN .content-wrapper -->
 	<div class="content-wrapper page-content-wrapper clearfix">
@@ -59,41 +85,9 @@
 			<p>&nbsp;</p>
 			
 			<h:form  id="contactform2" class="clearfix">
-                            
-				<div class="field-row">
-					<label for="categoria">Categoria del curso</label>
-                                       
-                                        <h:selectOneMenu value="#{cursoCategoriaController.id_curso_cat}">
-                                                
-                                            <f:selectItem itemValue="0" itemLabel="Seleccione una Categoria" noSelectionOption="true" /> 
-                                             <p:ajax  update="subcategorias"/>
-                                            <c:forEach items="#{cursoCategoriaController.cCats()}" var="c"> 
-                                                <f:selectItem itemValue="#{c.idCat}" itemLabel="#{c.nomCat}" />   
-                                                </c:forEach>
-                                             </h:selectOneMenu>
-                                      
-                                            
-				</div>
-                           
-				<div class="field-row">
-				  <label for="subcategoria">Subcategoria del curso</label>
-                                  
-                                 
-                                  <h:selectOneMenu value="#{cursoSubCatController.id_cSub_cat}" id="subcategorias" >
-                                        
-                                      <f:selectItem itemValue="0" itemLabel="Seleccione una Categoria"  noSelectionOption="true"/> 
-                                      <c:forEach items="#{cursoSubCatController.listaSubCategorias(cursoCategoriaController.id_curso_cat)}" var="fsc"  >
-                                          <f:selectItem itemValue="#{fsc.idSubcat}" itemLabel="#{fsc.nomSubcat}" />
-                                        </c:forEach>
-                                     </h:selectOneMenu>	
-                                  
-				</div>
-                            
-                       
-                             
-                        
+               
                             <div class="field-row">
-				  <label for="titulo">Nomre del curso</label>
+				  <label for="titulo">Nombre del curso</label>
                                   <h:inputText value="#{cursoController.selected.nomCurso}" class="text_input" id="nombre"  />
 				</div>
                             
@@ -134,17 +128,24 @@
                              <div class="field-row">
 
 				<p>
-                                    <h:commandButton action="#{cursoController.CrearCurso(cursoSubCatController.id_cSub_cat,usuarioController.id_user)}" class="button1" type="submit"  style="float:right" value="Crear Curso" id="submit"/>
+                                    <h:commandButton action="#{cursoController.actualizaCurso()}" class="button1" type="submit"  style="float:right" value="Actualizar Curso" id="submit"/>
                                 </p>
                             </div>
                                
                         </h:form>
 			
+                        
+                        
+                        
 			<!-- END .inner-content-wrapper -->
 			</div>
+                        
+                        
 			
 		<!-- END .main-content -->
 		</div>
+                
+               
 		
 		
 	

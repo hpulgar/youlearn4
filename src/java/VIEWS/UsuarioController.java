@@ -150,6 +150,10 @@ public void cargaDatos(int id)
     private UsuarioFacade getFacade() {
         return ejbFacade;
     }
+    
+    public UsuarioFacade getFacade2() {
+        return ejbFacade;
+    }
 
      public int getId_user() {
         return id_user;

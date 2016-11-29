@@ -4,14 +4,115 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
    
     <h:head>
       
-        <title>TODO supply a title</title>
+        <title></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    
+    <script type="text/javascript" >
+$(document).ready(function()
+{
+$("#notificationLink").click(function()
+{
+$("#notificationContainer").fadeToggle(300);
+$("#notification_count").fadeOut("slow");
+return false;
+});
+
+//Document Click
+$(document).click(function()
+{
+$("#notificationContainer").hide();
+});
+//Popup Click
+$("#notificationContainer").click(function()
+{
+return false
+});
+
+});
+</script>
+<style>
+#nav{list-style:none;margin: 0px;
+padding: 0px;}
+#nav li {
+float: left;
+margin-right: 20px;
+font-size: 14px;
+font-weight:bold;
+}
+#nav li a{color:#333333;text-decoration:none}
+#nav li a:hover{color:#006699;text-decoration:none}
+#notification_li{position:relative}
+#notificationContainer {
+background-color: #fff;
+border: 1px solid rgba(100, 100, 100, .4);
+-webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+overflow: visible;
+position: absolute;
+top: 30px;
+margin-left: -170px;
+width: 400px;
+z-index: -1;
+display: none;
+}
+#notificationContainer:before {
+content: '';
+display: block;
+position: absolute;
+width: 0;
+height: 0;
+color: transparent;
+border: 10px solid black;
+border-color: transparent transparent white;
+margin-top: -20px;
+margin-left: 188px;
+}
+#notificationTitle {
+z-index: 1000;
+font-weight: bold;
+padding: 8px;
+font-size: 13px;
+background-color: #ffffff;
+width: 384px;
+border-bottom: 1px solid #dddddd;
+}
+#notificationsBody {
+/*padding: 33px 0px 0px 0px !important;
+min-height:300px;*/
+}
+#notificationFooter {
+background-color: #e9eaed;
+text-align: center;
+font-weight: bold;
+padding: 8px;
+font-size: 12px;
+border-top: 1px solid #dddddd;
+}
+#notification_count {
+padding: 3px 7px 3px 7px;
+background: #cc0000;
+color: #ffffff;
+font-weight: bold;
+margin-left: 77px;
+border-radius: 9px;
+position: absolute;
+margin-top: -11px;
+font-size: 11px;
+}
+
+  .xyz:hover {
+    background-color: rgba(76, 162, 11, 0.24);
+  }
+  
+  .xyz {
+    background-color: rgba(76, 162, 11, 0.76);
+  }
+</style>
+        
     </h:head>
     <h:body>
         
@@ -65,6 +166,31 @@
                     <ul id="main-menu">
 
                         <li class="current_page_item"><a href="index.xhtml">Home</a></li>
+                       
+                        <h:form id="form" rendered="#{menuController.logeado()}">
+                        <li id="notification_li">
+                    <span id="notification_count">#{notificacionesController.cantidadNotificaciones(usuarioController.id_user)}</span>
+                    <a href="#" id="notificationLink">Notificaciones</a>
+                    <div id="notificationContainer">
+                    <div id="notificationTitle"></div>
+                         <div id="notificationsBody" class="notifications">
+                             
+                                 
+                                 <c:forEach items="#{notificacionesController.verNotificaciones(usuarioController.id_user)}" var="n" >
+                                         <p:commandLink  actionListener="#{cursoController.setIdCurso(n.identificador)}" action="#{inscripcionCursoController.cargarCurso(n.identificador,2)}" rendered="#{n.tipo eq 'Curso_suscrito'}"  style="#{1 eq n.leida? 'background-color: rgba(76, 162, 11, 0.24)' : 'rgba(76, 162, 11, 0.76)'}" styleClass="xyz"> <!-- actionListener  que redireccione al curso-->
+                                              <h:outputText value="#{n.detalle}" /> <h:outputLabel>#{notificacionesController.comparaFechas(n.fecha)}</h:outputLabel>
+                                         <f:actionListener binding="#{notificacionesController.actualizaNotificacion(n.idNotificacion)}"/> 
+                                         </p:commandLink>
+
+                                     </c:forEach> 
+                                 
+                           
+                         </div>
+                    <!--<div id="notificationFooter"><a href="#">Ver todas</a></div>-->
+                    </div>
+
+                            </li>
+                           </h:form>
                             <h:form>
 
                             <li><h:commandLink  value="Dashboard"  action="perfil.xhtml" actionListener="#{usuarioController.setId_usuario_amigo(usuarioController.id_user)}" rendered="#{menuController.logeado()}">
@@ -75,39 +201,20 @@
                                 </li>
                         </h:form>
 
-
                         <li><a href="cursos_listado.xhtml">Cursos</a>
                             <h:form rendered="#{menuController.logeado()}">
                             <ul>
                                 
-                                <li><h:commandLink  value="Mis cursos"></h:commandLink></li>
-                                    <li><h:commandLink  value="Crear un curso"></h:commandLink></li>
+                                <li><h:commandLink  value="Todos los cursos" action="cursos_listado.xhtml"></h:commandLink></li>
+                                <li><h:commandLink  value="Cursos que sigo" action="mis_cursos.xhtml"></h:commandLink></li>
+                                <li><h:commandLink value="Crear un curso" action="curso_crear.xhtml" rendered="#{usuarioController.idProfile eq '3' or usuarioController.idProfile eq '4' or usuarioController.idProfile eq '5'}"></h:commandLink></li>
+                                    <li><h:commandLink value="Administracion cursos" action="mis_cursos_admin.xhtml" rendered="#{not empty cursoController.cursosPendientesAprobacion(usuarioController.id_user) or not empty cursoController.cursosAprobados(usuarioController.id_user)}"></h:commandLink></li>
                                   
                                 </ul>
                               </h:form>
                             </li>
                             <li><h:form><h:commandLink  value="Foro"  action="foro.xhtml" rendered="#{menuController.logeado()}"></h:commandLink></h:form></li>
-                              <!--  <li><a href="typography.html">Caracteristicas</a>
-                                    <ul>
-
-                                        <li><a href="events.html">Events</a></li>
-                                        <li><a href="events-single.html">Events Single</a></li>
-                                        <li><a href="teachers1.html">Teachers #1</a></li>
-                                        <li><a href="teachers2.html">Teachers #2</a></li>
-                                        <li><a href="portfolio.html">Portfolio</a></li>
-                                        <li><a href="portfolio-single.html">Portfolio Single</a></li>
-                                        <li><a href="photo-gallery-2-col.html">Gallery - 2 Columns</a></li>
-                                        <li><a href="photo-gallery-3-col.html">Gallery - 3 Columns</a></li>
-                                        <li><a href="photo-gallery-4-col.html">Gallery - 4 Columns</a></li>
-                                        <li><a href="full-width.html">Full Width</a></li>
-                                        <li><a href="left-sidebar.html">Left Sidebar</a></li>
-                                        <li><a href="right-sidebar.html">Right Sidebar</a></li>
-                                        <li><a href="columns.html">Columns</a></li>
-                                        <li><a href="js-elements.html">JS Elements</a></li>
-                                        <li><a href="typography.html">Typography</a></li>
-                                    </ul>
-                                </li>
-                              -->
+              
                                 <li><a href="nosotros.xhtml">Nosotros</a></li>
                                 <li><a href="contacto.xhtml">Contacto</a></li>
 
@@ -165,7 +272,7 @@
                                     <h:inputText value="#{mensajeController.selected.contenido}" class="msg_input" />
                                     <p:commandButton style=" visibility:  hidden" value ="Enviar mensaje" action="#{mensajeController.enviarMensaje(usuarioController.id_user,mensajeController.idAmigo)}" update="chatcontainer"  process="@all"/>
                                 </h:form>
-                                <!--<textarea class="msg_input" rows="4"></textarea-->
+                               
                             </div>
                             
                         </div>
@@ -173,21 +280,7 @@
         
         
     </h:panelGroup>
-      <!--      
-<div class="msg_box" style="right:42%">
-	<div class="msg_head">Krishna Tejadsd
-	<div class="close">x</div>
-	</div>
-	<div class="msg_wrap">
-		<div class="msg_body">
-			<div class="msg_a">This is from A	</div>
-			<div class="msg_b">This is from B, and its amazingly kool nah... i know it even i liked it :)</div>
-			<div class="msg_a">Wow, Thats great to hear from you man </div>	
-			<div class="msg_push"></div>
-		</div>
-            <div class="msg_footer"><textarea class="msg_input" rows="4"></textarea></div>
-        </div>
-</div>-->
+ 
              
         
         

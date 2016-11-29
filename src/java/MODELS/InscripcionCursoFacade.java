@@ -5,10 +5,13 @@
  */
 package MODELS;
 
+import ENTITIES.Archivo;
 import ENTITIES.InscripcionCurso;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +30,14 @@ public class InscripcionCursoFacade extends AbstractFacade<InscripcionCurso> {
 
     public InscripcionCursoFacade() {
         super(InscripcionCurso.class);
+    }
+    
+       public List<InscripcionCurso> obtenerCursos(int idUsuario)
+    {
+        EntityManager t2= getEntityManager();
+        Query q = t2.createNamedQuery("InscripcionCurso.findByIdUsuario").setParameter("idUsuario", idUsuario);   
+        
+       return q.getResultList(); 
     }
     
 }

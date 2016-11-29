@@ -16,19 +16,19 @@
 
         <!--Title-->
         <title>Youlearn - Pagina principal</title>
-     
-  <link rel="stylesheet" href="css/style.css" type="text/css"  media="all" />
-	<link rel="stylesheet" href="css/colour.css" type="text/css"  media="all" />
-	<link rel="stylesheet" href="css/flexslider.css" type="text/css"  media="all" />
-	<link rel="stylesheet" href="css/superfish.css" type="text/css"  media="all" />
-	<link rel="stylesheet" href="css/responsive.css" type="text/css"  media="all" />
+        
+        <link rel="stylesheet" href="css/style.css" type="text/css"  media="all" />
+        <link rel="stylesheet" href="css/colour.css" type="text/css"  media="all" />
+        <link rel="stylesheet" href="css/flexslider.css" type="text/css"  media="all" />
+        <link rel="stylesheet" href="css/superfish.css" type="text/css"  media="all" />
+        <link rel="stylesheet" href="css/responsive.css" type="text/css"  media="all" />
         <link rel="stylesheet" href="css/chat.css" type="text/css"  media="all" />
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'/>
-	<link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,700,900' rel='stylesheet' type='text/css'/>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'/>
+        <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,700,900' rel='stylesheet' type='text/css'/>
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-      <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js'></script>
-       <script type="text/javascript" src="js/superfish.js"></script>
+        <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js'></script>
+        <script type="text/javascript" src="js/superfish.js"></script>
         <script type="text/javascript" src="js/jquery.flexslider-min.js"></script>
         <script type="text/javascript" src="js/tinynav.min.js"></script>
         <script type="text/javascript" src="js/jquery.uniform.js"></script>
@@ -134,55 +134,55 @@
 
                     <!-- BEGIN .content-block -->
                     <div align="center" class="content-block">
-                      
+
                         <h3>¡Busque un curso!</h3>
                         <br></br>
-                
-                      
-                        <h:form>
-                                 <label for="categoria">Categoria del curso</label>
-                                                                <h:selectOneMenu value="#{cursoCategoriaController.id_curso_cat}">
-                                                                    <f:selectItem itemValue="0" itemLabel="Seleccione &nbsp; &nbsp;" noSelectionOption="true" /> 
-                                                                        <p:ajax  update="subcategorias"/>
-                                                                        <c:forEach items="#{cursoCategoriaController.cCats()}" var="c"> 
-                                                                            <f:selectItem itemValue="#{c.idCat}" itemLabel="#{c.nomCat}" />   
-                                                                        </c:forEach>
-                                                                </h:selectOneMenu>
 
-                                                                  
-                                                                <label for="subcategoria">Subcategoria del curso</label>
-                                                                <h:selectOneMenu value="#{cursoSubCatController.id_cSub_cat}" id="subcategorias">
-                                                                    <f:selectItem itemValue="0" itemLabel="Seleccione &nbsp; &nbsp;"  noSelectionOption="true"/> 
-                                                                    <p:ajax event="change" listener="#{cursoSubCatController.clickCursoSelect(cursoSubCatController.id_cSub_cat)}"/>        
-                                                                        <c:forEach items="#{cursoSubCatController.listaSubCategorias(cursoCategoriaController.id_curso_cat)}" var="fsc"  >
-                                                                            <f:selectItem itemValue="#{fsc.idSubcat}" itemLabel="#{fsc.nomSubcat}" />
-                                                                           
-                                                                        </c:forEach>
-                                                                  
-                                                                </h:selectOneMenu>	
-                           
-                            
+
+                        <h:form>
+                            <label for="categoria">Categoria del curso</label>
+                            <h:selectOneMenu value="#{cursoCategoriaController.id_curso_cat}">
+                                <f:selectItem itemValue="0" itemLabel="Seleccione &nbsp; &nbsp;" noSelectionOption="true" /> 
+                                <p:ajax  update="subcategorias"/>
+                                <c:forEach items="#{cursoCategoriaController.cCats()}" var="c"> 
+                                    <f:selectItem itemValue="#{c.idCat}" itemLabel="#{c.nomCat}" />   
+                                </c:forEach>
+                            </h:selectOneMenu>
+
+
+                            <label for="subcategoria">Subcategoria del curso</label>
+                            <h:selectOneMenu value="#{cursoSubCatController.id_cSub_cat}" id="subcategorias">
+                                <f:selectItem itemValue="0" itemLabel="Seleccione &nbsp; &nbsp;"  noSelectionOption="true"/> 
+                                <p:ajax event="change" listener="#{cursoSubCatController.clickCursoSelect(cursoSubCatController.id_cSub_cat)}"/>        
+                                <c:forEach items="#{cursoSubCatController.listaSubCategorias(cursoCategoriaController.id_curso_cat)}" var="fsc"  >
+                                    <f:selectItem itemValue="#{fsc.idSubcat}" itemLabel="#{fsc.nomSubcat}" />
+
+                                </c:forEach>
+
+                            </h:selectOneMenu>	
+
+
                         </h:form>
-                               
-                     
-                          <!--<select name="keyword-type" class="course-finder-form">
-                                        <ui:repeat value="#/{cursoSubCatController.listaSubCategoriasSinID()}" var="u">
-                                            <option value="">#/{u.nomSubcat}</option>
-                                        </ui:repeat>
-                                    </select>-->
-                        
-                        
-  <h:form id="formularioBusqueda" onreset="#{cursoController.submit()}">
-                       <h:panelGrid columns="2" cellpadding="5">
-                            <p:autoComplete  a:placeholder="Escriba una busqueda" itemValue="#{cursoController.textoBusqueda}" id="acMinLength" minQueryLength="1" value="#{cursoController.textoBusqueda}" completeMethod="#{cursoController.autoCompletado}" effect="fade">
-                                <p:ajax event="blur" listener="#{cursoController.clickCursoCompletado()}"/>
-                              
-            <!-- <p:ajax event="itemSelect" listener="#/{cursoController.handleSelect}"/>-->
-                            </p:autoComplete>
-                       </h:panelGrid>
-                 
-                            
-                 </h:form>
+
+
+                        <!--<select name="keyword-type" class="course-finder-form">
+                        <ui:repeat value="#/{cursoSubCatController.listaSubCategoriasSinID()}" var="u">
+                            <option value="">#/{u.nomSubcat}</option>
+                        </ui:repeat>
+                    </select>-->
+
+
+                        <h:form id="formularioBusqueda" onreset="#{cursoController.submit()}">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <p:autoComplete  a:placeholder="Escriba una busqueda" itemValue="#{cursoController.textoBusqueda}" id="acMinLength" minQueryLength="1" value="#{cursoController.textoBusqueda}" completeMethod="#{cursoController.autoCompletado}" effect="fade">
+                                    <p:ajax event="blur" listener="#{cursoController.clickCursoCompletado()}"/>
+
+                                    <!-- <p:ajax event="itemSelect" listener="#/{cursoController.handleSelect}"/>-->
+                                </p:autoComplete>
+                            </h:panelGrid>
+
+
+                        </h:form>
 
                         <!-- END .content-block -->	
                     </div>
@@ -217,20 +217,20 @@
 
 
                                         <c:forEach  begin="0" end="3" items="#{foroPosteosController.listaForos(foroPosteosController.tit, 1)}" var="f" rendered="false">
-                                       <li class="clearfix">
+                                            <li class="clearfix">
 
-                                            <div class="news-image">
-                                                <a href="#"><img src="images/11_demo_image.jpg" alt="" /></a>
-                                            </div>
-                                            <div class="news-content">
-                                                <h:form>
-                                                <h4><h:commandLink action="#{foroPosteosController.verPost(f.idPost)}" value="#{f.titulo}"/></h4>
-                                                </h:form>
-                                                <p class="news-date">#{f.fecha}</p>
-                                                <p class="news-excerpt"><h:outputText value="#{f.contenido}" escape="false"  /></p>
+                                                <div class="news-image">
+                                                    <a href="#"><img src="images/11_demo_image.jpg" alt="" /></a>
+                                                </div>
+                                                <div class="news-content">
+                                                    <h:form>
+                                                        <h4><h:commandLink action="#{foroPosteosController.verPost(f.idPost)}" value="#{f.titulo}"/></h4>
+                                                    </h:form>
+                                                    <p class="news-date">#{f.fecha}</p>
+                                                    <p class="news-excerpt"><h:outputText value="#{f.contenido}" escape="false"  /></p>
 
-                                            </div>
-                                        </li>
+                                                </div>
+                                            </li>
 
                                         </c:forEach>
 
@@ -245,7 +245,7 @@
                                 </li>
 
                                 <!-- BEGIN .slides li -->
-                                
+
 
                                 <!-- END .slides -->
                             </ul>
@@ -266,52 +266,52 @@
                 <div class="sidebar-right page-content">
 
                     <!-- BEGIN .content-block -->
-               
 
-                        <h3 class="block-title">Ultimos cursos</h3>
 
-                        <ul>
-                            <c:forEach begin="0" end="3" items="#{cursoController.listaCursos(cursoSubCatController.id_cSub_cat, cursoController.nombreCurso)}" var="lc"  >
-					<li class="event-wrapper event-full clearfix">
-					
-				
-						<div class="event-info">	
-							<div class="event-meta">
-								
-                                                            <h:form id="cursoForm">
-                                                                <h4> <h:commandLink actionListener="#{cursoController.setIdCurso(lc.idCurso)}" action="#{inscripcionCursoController.cargarCurso(lc.idCurso,usuarioController.id_user)}"  value="#{lc.nomCurso}" /> </h4>
-                                                                <p><strong>SubCategoria: </strong>#{lc.idCat.nomSubcat}</p>
-                                                            </h:form>
-                                                        </div>
-						</div>
-				
-					<!-- END .event-wrapper -->
-					</li>
-                                        </c:forEach>
-                        </ul>
+                    <h3 class="block-title">Ultimos cursos</h3>
 
-                        <!-- END .content-block -->	
-              
+                    <ul>
+                        <c:forEach begin="0" end="3" items="#{cursoController.listaCursos(cursoSubCatController.id_cSub_cat, cursoController.nombreCurso)}" var="lc"  >
+                            <li class="event-wrapper event-full clearfix">
 
-                   
 
-                       <!-- <h3 class="block-title">Ultimos comentarios</h3>
-                     
-                        <ul>
-                            
-                            <c:forEach begin="0" end="5" items="#/{masterComentarioController.cargaComentariosIndex()}" var="mc">
-                                   
-                            <li>
-                                <h:form>
-                                <h:commandLink action="#/{foroPosteosController.verPost(mc.idPft.idPft)}" value="#/{mc.comentario}"/>
-                                </h:form>
+                                <div class="event-info">	
+                                    <div class="event-meta">
+
+                                        <h:form id="cursoForm">
+                                            <h4> <h:commandLink actionListener="#{cursoController.setIdCurso(lc.idCurso)}" action="#{inscripcionCursoController.cargarCurso(lc.idCurso,usuarioController.id_user)}"  value="#{lc.nomCurso}" /> </h4>
+                                            <p><strong>SubCategoria: </strong>#{lc.idCat.nomSubcat}</p>
+                                        </h:form>
+                                    </div>
+                                </div>
+
+                                <!-- END .event-wrapper -->
                             </li>
-                                     </c:forEach>
-                        </ul>
-                          -->
+                        </c:forEach>
+                    </ul>
 
-                        <!-- END .content-block -->	
-                
+                    <!-- END .content-block -->	
+
+
+
+
+                    <!-- <h3 class="block-title">Ultimos comentarios</h3>
+                  
+                     <ul>
+                         
+                    <c:forEach begin="0" end="5" items="#/{masterComentarioController.cargaComentariosIndex()}" var="mc">
+                           
+                    <li>
+                        <h:form>
+                            <h:commandLink action="#/{foroPosteosController.verPost(mc.idPft.idPft)}" value="#/{mc.comentario}"/>
+                        </h:form>
+                    </li>
+                    </c:forEach>
+       </ul>
+                    -->
+
+                    <!-- END .content-block -->	
+
 
 
 
@@ -326,13 +326,20 @@
         </div>
 
         <!-- BEGIN #footer-wrapper -->
-          <ui:include src="Footer.xhtml" />
+        <ui:include src="Footer.xhtml" />
 
         <!-- END body -->
 
-       
-       
+
+
     </h:body>
+
+
+
+
+
+
+
 
 
 

@@ -38,7 +38,7 @@
                                               <p:commandButton value="Ver archivo" type="button" onclick="PF('#{c.idArchivo}').show();" />    
                                       
                          
-                                         <p:dialog header="#{c.descripcion}" widgetVar="#{c.idArchivo}" modal="true">
+                                              <p:dialog header="#{c.descripcion}" widgetVar="#{c.idArchivo}" modal="true">
                                               
                                              <!-- Si es una imagen -->     
                                              <h:graphicImage  value="#{c.ubicacion}" rendered="#{c.idTipoArchivo.idTipo eq '1' or c.idTipoArchivo.idTipo eq '2' or c.idTipoArchivo.idTipo eq '3'}" />

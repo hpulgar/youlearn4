@@ -1,18 +1,25 @@
 package VIEWS;
 
+import ENTITIES.Amigos;
 import ENTITIES.Archivo;
+import ENTITIES.Curso;
 import ENTITIES.ForoCategoria;
 import ENTITIES.Notificaciones;
+import ENTITIES.Persona;
+import ENTITIES.Usuario;
 import VIEWS.util.JsfUtil;
 import VIEWS.util.PaginationHelper;
 import MODELS.NotificacionesFacade;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.SimpleTimeZone;
+import java.util.concurrent.TimeUnit;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -21,6 +28,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -36,10 +44,14 @@ public class NotificacionesController implements Serializable {
     private MODELS.NotificacionesFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private List<Notificaciones> arNotificaciones = new ArrayList();
+    private List<Notificaciones> arNotificaciones2= new ArrayList();
+    private List<Amigos> arAmigos= new ArrayList();
+     private List<Usuario> arUsuarios= new ArrayList();
 
     public NotificacionesController() {
     }
-    
+
       public void prepararCrear()
     {
         current = null;
@@ -183,7 +195,307 @@ public void cargaDatos(int id)
         }
     }
     
-     public void creacionN()
+     public void actualizaNotificacion(int id_notificacion)
+    {
+       
+          
+        try{
+            
+
+            current = ejbFacade.find(id_notificacion);
+            current.setLeida(1);
+          
+            ejbFacade.crear(current);
+           
+           
+         
+            
+        }catch(Exception e)
+        {
+            System.out.println("ERRRROOORR "+e);
+          
+        }
+    }
+    
+    public String comparaFechas(Date fechaIn)
+    {
+        //Compara la fecha actual con fechaIn para asi devolver mensaje si X contenido fue posteado hace x cantidad de tiempo.
+        
+        //texto utilizado para concatenar strings y fechas para posteriormente devolver un mensaje determinado
+        String textoFecha="";
+        
+         SimpleDateFormat sdf = new SimpleDateFormat();
+           sdf.setTimeZone(new SimpleTimeZone(-3, "GMT"));
+            sdf.applyPattern("yyyy/mm/dd");
+            Date fechaAhoraTiempo = new Date();
+            
+            Calendar fechaAhora = Calendar.getInstance();
+            
+            Calendar fechaCompara = Calendar.getInstance();
+            fechaCompara.setTime(fechaIn);
+            
+            Date startDate = fechaIn;
+            Date endDate   = fechaAhoraTiempo;
+
+            long duration  = endDate.getTime() - startDate.getTime();
+
+            long diffInSeconds = TimeUnit.MILLISECONDS.toSeconds(duration);
+            long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(duration);
+            long diffInHours = TimeUnit.MILLISECONDS.toHours(duration);
+            
+            
+          if (fechaCompara.equals(fechaAhora))
+                             {
+                             
+                             textoFecha="Hace un momento";
+          
+                             }
+
+          if (fechaCompara.after(fechaAhora))
+                             {
+                            //Dias anteriores
+                             
+                             textoFecha="El dia..fecha hora";
+                             
+           
+                             }
+
+           if (fechaCompara.get(Calendar.DAY_OF_MONTH)==fechaAhora.get(Calendar.DAY_OF_MONTH))
+                             {
+                              //Hoy
+                              
+                             textoFecha="Hace "+diffInHours+" horas";
+                                 
+          
+                             }
+           
+           if(fechaCompara.get(Calendar.DAY_OF_MONTH)<fechaAhora.get(Calendar.DAY_OF_MONTH))
+           {
+               String mes="";
+               
+              
+                switch (fechaCompara.get(Calendar.MONTH)) {
+                    case 0:
+                    mes="enero";
+                    break;
+                    case 1:
+                    mes="febrero";
+                    break;   
+                    case 2:
+                    mes="marzo";
+                    break; 
+                    case 3:
+                    mes="abril";
+                    break; 
+                    case 4:
+                    mes="mayo";
+                    break; 
+                    case 5:
+                    mes="junio";
+                    break; 
+                    case 6:
+                    mes="julio";
+                    break; 
+                    case 7:
+                    mes="agosto";
+                    break;
+                    case 8:
+                    mes="septiembre";
+                    break; 
+                    case 9:
+                    mes="octubre";
+                    break; 
+                    case 10:
+                    mes="noviembre";
+                    break; 
+                    case 11:
+                    mes="diciembre";
+                    break;
+                    
+                default:
+                    mes="";
+                    break;
+            }
+                
+                 
+            
+                
+                
+                
+                             textoFecha="El dia "+fechaCompara.get(Calendar.DAY_OF_MONTH)+" de "+mes+" a las "+fechaCompara.get(Calendar.HOUR_OF_DAY)+":"+fechaCompara.get(Calendar.MINUTE);
+                             
+                               
+           }
+                   
+           
+        
+        
+        
+        
+        
+        return textoFecha;
+        
+    }
+    
+    
+     public List<Notificaciones> verNotificaciones(int idUsuario)
+    {
+        arNotificaciones.clear();
+        arNotificaciones2.clear();
+        arNotificaciones = ejbFacade.findAll();        
+        
+        for(int i=0;i<arNotificaciones.size();i++)
+        {
+            
+            //Mostrar todas las notificaciones excepto la miap !=idUsuario
+            //if(arNotificaciones.get(i).getIdUsuario().getIdUsuario() == idUsuario)
+            if(arNotificaciones.get(i).getIdUsuario().getIdUsuario() != idUsuario)
+            {
+                arNotificaciones2.add(arNotificaciones.get(i));
+            }
+        }        
+        return arNotificaciones2;
+    }
+     
+     
+
+     
+    public void retornaUsuariotest(List<Usuario> lista){
+   System.out.println("Entro al metodo...");
+
+        for(int i=0;i<lista.size();i++)
+                       {
+ System.out.println("Entro al metodo..."+lista.get(i).getIdUsuario());
+                               
+                       } 
+        
+       
+      
+    }
+    
+    
+    public void notificacionesSys(List<Usuario> lista,int id_usuario,String nombre_usuario,int id_identificador,String nombre_identificador,String tipo)
+    {
+        System.out.println("Inicio creacion de notificaciones");
+     
+     
+//        //En este string se concatenaran los valores para representar el mensaje que recibira el usuario finalmente en sus notificaciones
+ 
+    String mensaje_final="Mensaje de prueba";
+//        
+//        System.out.println("Entro al try con el tipo"+tipo);
+          
+        try{
+            
+            if("Curso_suscrito".equals(tipo))
+            {
+              
+               System.out.println("Nombre curso-> "+nombre_identificador);
+                mensaje_final=nombre_usuario+" se ha suscrito al curso "+nombre_identificador;
+          
+                           
+               for(int i=0;i<lista.size();i++)
+                       {
+                           
+                           
+                            if(lista.get(i).getIdUsuario()==id_usuario && ejbFacade.esSeguidor(id_usuario,id_identificador))
+                   {
+                       System.out.println(mensaje_final);
+                       
+                   }
+                        
+                       }
+          
+            }
+            
+            if("Curso_seguido".equals(tipo))
+            {
+              
+          System.out.println("Nombre curso-> "+nombre_identificador);
+          mensaje_final=nombre_usuario+" ha empezado a seguir al curso "+nombre_identificador;
+           for(int i=0;i<lista.size();i++)
+                       {
+                           
+                           
+                            if(lista.get(i).getIdUsuario()==id_usuario && ejbFacade.esSeguidor(id_usuario,id_identificador))
+                   {
+                       System.out.println(mensaje_final);
+                       
+                   }
+                        
+                       }
+          
+            }
+            if("Unidad_nueva_curso".equals(tipo))
+            {
+              
+          System.out.println("Nombre Unidad-> "+nombre_identificador);
+          mensaje_final=nombre_usuario+" ha creado una nueva unidad en el curso "+nombre_identificador;
+          
+            }
+            if("Tablero_nueva_discusion".equals(tipo))
+            {
+              
+          System.out.println("Nombre -> "+nombre_identificador);
+          mensaje_final=nombre_usuario+" ha creado una discusion en el tablero del curso "+nombre_identificador;
+          
+            }
+            if("Respuesta_comentario_foro".equals(tipo))
+            {
+              
+          System.out.println("Nombre -> "+nombre_identificador);
+          mensaje_final=nombre_usuario+" ha respondido un comentario en el foro "+nombre_identificador;
+          
+            }
+            
+            
+            //Declaro fecha actual...
+          //  System.out.println("Dclaro objeto usuario y lo seteo con la id usuario"+id_usuario);
+            Usuario objUsuario = new Usuario();
+            objUsuario.setIdUsuario(id_usuario);
+            
+            
+            SimpleDateFormat sdf = new SimpleDateFormat();
+            sdf.setTimeZone(new SimpleTimeZone(-3, "GMT"));
+            sdf.applyPattern("yyyy/mm/dd");
+            Date fecha = new Date();
+            
+            
+           
+            
+            Notificaciones objNotificacion = new Notificaciones();
+            objNotificacion.setIdNotificacion(null);
+            objNotificacion.setIdUsuario(objUsuario);
+            objNotificacion.setTipo(tipo);
+            objNotificacion.setDetalle(mensaje_final);
+            objNotificacion.setFecha(fecha);    
+            objNotificacion.setLeida(0);    
+            objNotificacion.setIdentificador(id_identificador);
+            
+            System.out.println("Valores del objeto antes de crear");
+            System.out.println("ID usuario "+objNotificacion.getIdUsuario().getIdUsuario());
+            System.out.println("Tipo "+objNotificacion.getTipo());
+            System.out.println("Detalle "+objNotificacion.getDetalle());
+            System.out.println("Fecha "+objNotificacion.getFecha());
+            System.out.println("Leida "+objNotificacion.getLeida());
+            System.out.println("ID identificador "+objNotificacion.getIdentificador());
+           
+            
+            
+            
+            ejbFacade.crear(objNotificacion);
+        
+         
+            
+        }catch(Exception e)
+        {
+            System.out.println("ERROR "+e);
+          
+        }
+    }
+    
+    
+    public void creacionN()
     {
         System.out.println("Antes de Crear");
           
@@ -204,6 +516,27 @@ public void cargaDatos(int id)
              public List<Notificaciones> tablaNotificaciones()
          {
              return ejbFacade.findAll();
+         }
+             
+             
+             
+       public int cantidadNotificaciones(int idUsuario)
+         {
+           arNotificaciones.clear();
+        arNotificaciones2.clear();
+        arNotificaciones = ejbFacade.findAll();        
+        
+        for(int i=0;i<arNotificaciones.size();i++)
+        {
+            
+            //Mostrar todas las notificaciones excepto la miap !=idUsuario
+            //if(arNotificaciones.get(i).getIdUsuario().getIdUsuario() == idUsuario)
+            if(arNotificaciones.get(i).getIdUsuario().getIdUsuario() == idUsuario && arNotificaciones.get(i).getLeida()==0)
+            {
+                arNotificaciones2.add(arNotificaciones.get(i));
+            }
+        }        
+        return arNotificaciones2.size();
          }
          
         public void onRowEdit(RowEditEvent event) 

@@ -254,6 +254,12 @@ public class InscripcionCursoController implements Serializable {
 //            System.out.println("desc "+oic.getDescripcion());
 //            System.out.println("tipo a "+oic.getTipoAlumno().getIdTipo());
             ejbFacade.create(oic);
+            oic = null;
+            //Notificacion
+            
+          //  NotificacionesController notificacion = new NotificacionesController();
+           // notificacion.notificacionesSys();  
+            
             System.out.println("ESTA COSI3 CONFIMA LA CREACION");
             
             return "/curso.xhtml";
@@ -430,6 +436,14 @@ public class InscripcionCursoController implements Serializable {
     {
         return ejbFacade.findAll();
     }
+    
+      public List<InscripcionCurso> misCursos(int idUsuario)
+    {
+        return ejbFacade.obtenerCursos(idUsuario);
+    }
+      
+      
+        
     
     public void onRowEdit(RowEditEvent event)
     {

@@ -22,7 +22,11 @@
                     <h:outputLabel value="#{bundle.CreateNotificacionesLabel_detalle}" for="detalle" />
                     <h:inputText id="detalle" value="#{notificacionesController.selected.detalle}" title="#{bundle.CreateNotificacionesTitle_detalle}" required="true" requiredMessage="#{bundle.CreateNotificacionesRequiredMessage_detalle}"/>
                     <h:outputLabel value="#{bundle.CreateNotificacionesLabel_enlace}" for="enlace" />
-                    <h:inputText id="enlace" value="#{notificacionesController.selected.enlace}" title="#{bundle.CreateNotificacionesTitle_enlace}" required="true" requiredMessage="#{bundle.CreateNotificacionesRequiredMessage_enlace}"/>
+                    <h:inputText id="enlace" value="#{notificacionesController.selected.enlace}" title="#{bundle.CreateNotificacionesTitle_enlace}" />
+                    <h:outputLabel value="#{bundle.CreateNotificacionesLabel_idUsuario}" for="idUsuario" />
+                    <h:selectOneMenu id="idUsuario" value="#{notificacionesController.selected.idUsuario}" title="#{bundle.CreateNotificacionesTitle_idUsuario}" required="true" requiredMessage="#{bundle.CreateNotificacionesRequiredMessage_idUsuario}">
+                        <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
                     <h:outputLabel value="#{bundle.CreateNotificacionesLabel_fecha}" for="fecha" />
                     <h:inputText id="fecha" value="#{notificacionesController.selected.fecha}" title="#{bundle.CreateNotificacionesTitle_fecha}" required="true" requiredMessage="#{bundle.CreateNotificacionesRequiredMessage_fecha}">
                         <f:convertDateTime pattern="MM/dd/yyyy" />

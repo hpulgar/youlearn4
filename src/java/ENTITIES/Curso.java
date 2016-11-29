@@ -46,6 +46,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Curso.nombres", query = "SELECT c.nomCurso FROM Curso c WHERE c.nomCurso = :nomCurso"),
     @NamedQuery(name = "Curso.findByPersonasInscritas", query = "SELECT c FROM Curso c WHERE c.personasInscritas = :personasInscritas"),
     @NamedQuery(name = "Curso.findByAutorizado", query = "SELECT c FROM Curso c WHERE c.autorizado = :autorizado"),
+    @NamedQuery(name = "Curso.findByUsuarioNoAprobado", query = "SELECT c FROM Curso c WHERE c.autorizado = 0 AND c.idUsuario.idUsuario = :idUsuario"),
+    @NamedQuery(name = "Curso.findByUsuarioAprobado", query = "SELECT c FROM Curso c WHERE c.autorizado = 1 AND c.idUsuario.idUsuario = :idUsuario"),
     @NamedQuery(name = "Curso.findBySeguidores", query = "SELECT c FROM Curso c WHERE c.seguidores = :seguidores"),
     @NamedQuery(name = "Curso.findByIntroduccionCurso", query = "SELECT c FROM Curso c WHERE c.introduccionCurso = :introduccionCurso"),
     @NamedQuery(name = "Curso.findByImagenPortadaCurso", query = "SELECT c FROM Curso c WHERE c.imagenPortadaCurso = :imagenPortadaCurso"),
@@ -107,7 +109,7 @@ public class Curso implements Serializable {
     @NotNull
     @Column(name = "fecha")
     
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCurso")
     private List<Contenidos> contenidosList;

@@ -34,9 +34,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Contenidos.findAll", query = "SELECT c FROM Contenidos c"),
+    @NamedQuery(name = "Contenidos.findByIdContenido", query = "SELECT c FROM Contenidos c WHERE c.idContenido = :idContenido"),
+    @NamedQuery(name = "Contenidos.findByTipoAlumno", query = "SELECT c FROM Contenidos c WHERE c.tipoAlumno = :tipoAlumno"),
     @NamedQuery(name = "Contenidos.verContenido", query = "SELECT c FROM Contenidos c WHERE c.idContenido = :idContenido"),
     @NamedQuery(name = "Contenidos.findByUnidad", query = "SELECT c FROM Contenidos c WHERE c.unidad = :unidad"),
     @NamedQuery(name = "Contenidos.findByNombreUnidad", query = "SELECT c FROM Contenidos c WHERE c.nombreUnidad = :nombreUnidad"),
+    @NamedQuery(name = "Contenidos.findByidCurso", query = "SELECT c FROM Contenidos c WHERE c.idCurso.idCurso = :idCurso"),
     @NamedQuery(name = "Contenidos.findByFecha", query = "SELECT c FROM Contenidos c WHERE c.fecha = :fecha")})
 public class Contenidos implements Serializable {
 
@@ -46,6 +49,10 @@ public class Contenidos implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_contenido")
     private Integer idContenido;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "tipo_alumno")
+    private int tipoAlumno;
     @Basic(optional = false)
     @NotNull
     @Column(name = "unidad")
@@ -77,8 +84,9 @@ public class Contenidos implements Serializable {
         this.idContenido = idContenido;
     }
 
-    public Contenidos(Integer idContenido, int unidad, String nombreUnidad, Date fecha, String contenido) {
+    public Contenidos(Integer idContenido, int tipoAlumno, int unidad, String nombreUnidad, Date fecha, String contenido) {
         this.idContenido = idContenido;
+        this.tipoAlumno = tipoAlumno;
         this.unidad = unidad;
         this.nombreUnidad = nombreUnidad;
         this.fecha = fecha;
@@ -91,6 +99,14 @@ public class Contenidos implements Serializable {
 
     public void setIdContenido(Integer idContenido) {
         this.idContenido = idContenido;
+    }
+
+    public int getTipoAlumno() {
+        return tipoAlumno;
+    }
+
+    public void setTipoAlumno(int tipoAlumno) {
+        this.tipoAlumno = tipoAlumno;
     }
 
     public int getUnidad() {

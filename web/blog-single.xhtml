@@ -163,7 +163,9 @@
                                         <h:form id="#{masterComentarioController.nombreForm2(mc.idComentario)}">
                                             
                                             <p:inputText  id="#{masterComentarioController.nombreInput2(mc.idComentario)}" a:placeholder="Responder..." value="#{masterRespuestasController.selected.respuesta}"  style="float:left; margin-left: 30px" /><br/>
-                                            <p:commandButton  style=" visibility: hidden"  id="#{masterComentarioController.nombreBoton2(mc.idComentario)}" actionListener="#{masterRespuestasController.crearRespuesta(mc.idComentario,usuarioController.id_user)}" update="parametroBody" process="@all" value="Responder" />
+                                            <p:commandButton  style=" visibility: hidden"  id="#{masterComentarioController.nombreBoton2(mc.idComentario)}" actionListener="#{masterRespuestasController.crearRespuesta(mc.idComentario,usuarioController.id_user)}" update="parametroBody" process="@all" value="Responder" >
+                                                <f:actionListener binding="#{notificacionesController.notificacionesSys(usuarioController.id_user,usuarioController.nombreUsuario,foroPosteosController.selected.idPost,foroPosteosController.selected.titulo,'Respuesta_comentario_foro')}"/>
+                                            </p:commandButton>
                                         </h:form>
                                     </div>
                                 </li>
