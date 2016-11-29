@@ -153,10 +153,10 @@
 							<div class="title-block"></div>
 						</div>
                                             <p:commandButton  action="#{inscripcionCursoController.inscribirAlCurso(usuarioController.id_user,cursoController.idCurso,1)}" actionListener="#{publicacionPerfilController.crearPublicacionPerfil(usuarioController.id_user,'Siguiendo',0,vc.idCurso)}" value="Seguir" class="button2">
-                                                <f:actionListener binding="#{notificacionesController.notificacionesSys(usuarioController.tablaUsuario(),usuarioController.id_user,'Pepito',usuarioController.id_user,'Pepito curso','Curso_suscrito')}"/>
+                                                <f:actionListener binding="#{notificacionesController.notificacionesSys(usuarioController.tablaUsuario(),usuarioController.id_user,usuarioController.nombreUsuario,cursoController.idCurso,vc.nomCurso,'Curso_seguido')}"/>
                                             </p:commandButton>
                                             <p:commandButton  action="#{inscripcionCursoController.inscribirAlCurso(usuarioController.id_user,cursoController.idCurso,2)}" actionListener="#{publicacionPerfilController.crearPublicacionPerfil(usuarioController.id_user, 'Suscrito',0,vc.idCurso)}" value="Suscribir" class="button2">
-                    
+                                             <f:actionListener binding="#{notificacionesController.notificacionesSys(usuarioController.tablaUsuario(),usuarioController.id_user,usuarioController.nombreUsuario,cursoController.idCurso,vc.nomCurso,'Curso_suscrito')}"/>
                                             </p:commandButton>
                                                
                                                  <br/><br/><br/><br/><br/>

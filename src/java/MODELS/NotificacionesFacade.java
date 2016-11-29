@@ -40,22 +40,16 @@ public class NotificacionesFacade extends AbstractFacade<Notificaciones> {
        return q.getResultList(); 
     }
      
-    public boolean esSeguidor(int idUsuario,int idCurso)
+    public List esSeguidor(int idUsuario,int idCurso)
     {
-        boolean estado=false;
+     
         
         EntityManager em3 = getEntityManager();
         Query q= em3.createNamedQuery("Notificaciones.findBySeguidor").setParameter("idUsuario",idUsuario).setParameter("idCurso", idCurso);
-        if(q.toString().isEmpty())
-            {
-            estado=true;
-            }
-            else
-            {
-              estado=false;  
-            }
+       
+          
         
-        return estado;
+       return q.getResultList();
         
     }
     

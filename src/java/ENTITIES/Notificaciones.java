@@ -43,22 +43,20 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Notificaciones.findByIdentificador", query = "SELECT n FROM Notificaciones n WHERE n.identificador = :identificador")})
 public class Notificaciones implements Serializable {
 
-    @Column(name = "id_usuario_trigger")
-    private Integer idUsuarioTrigger;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_notificacion")
     private Integer idNotificacion;
+    @Column(name = "id_usuario_trigger")
+    private Integer idUsuarioTrigger;
     @Size(max = 45)
     @Column(name = "tipo")
     private String tipo;
     @Size(max = 300)
     @Column(name = "detalle")
     private String detalle;
-    @Size(max = 90)
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
@@ -67,7 +65,7 @@ public class Notificaciones implements Serializable {
     @Column(name = "identificador")
     private Integer identificador;
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Usuario idUsuario;
 
     public Notificaciones() {
@@ -85,6 +83,14 @@ public class Notificaciones implements Serializable {
         this.idNotificacion = idNotificacion;
     }
 
+    public Integer getIdUsuarioTrigger() {
+        return idUsuarioTrigger;
+    }
+
+    public void setIdUsuarioTrigger(Integer idUsuarioTrigger) {
+        this.idUsuarioTrigger = idUsuarioTrigger;
+    }
+
     public String getTipo() {
         return tipo;
     }
@@ -100,7 +106,6 @@ public class Notificaciones implements Serializable {
     public void setDetalle(String detalle) {
         this.detalle = detalle;
     }
-
 
     public Date getFecha() {
         return fecha;
@@ -157,14 +162,6 @@ public class Notificaciones implements Serializable {
     @Override
     public String toString() {
         return "ENTITIES.Notificaciones[ idNotificacion=" + idNotificacion + " ]";
-    }
-
-    public Integer getIdUsuarioTrigger() {
-        return idUsuarioTrigger;
-    }
-
-    public void setIdUsuarioTrigger(Integer idUsuarioTrigger) {
-        this.idUsuarioTrigger = idUsuarioTrigger;
     }
     
 }

@@ -390,20 +390,22 @@ public void cargaDatos(int id)
             if("Curso_suscrito".equals(tipo))
             {
               
-               System.out.println("Nombre curso-> "+nombre_identificador);
+               System.out.println("Nombre curso suscrito-> "+nombre_identificador);
+                System.out.println("La lista usuarios tiene un largo de-> "+lista.size());
                 mensaje_final=nombre_usuario+" se ha suscrito al curso "+nombre_identificador;
           
                            
-               for(int i=0;i<lista.size();i++)
+                  for(int i=0;i<lista.size();i++)
                        {
+                           // if(lista.get(i).getIdUsuario()==id_usuario && ejbFacade.esSeguidor(id_usuario,id_identificador))
+                   
+//                            Usuario objUsuario = new Usuario();
+//                            objUsuario.setIdUsuario(id_usuario);
                            
+                           System.out.println("Les llegara notificacion a este usuario"+lista.get(i).getIdUsuario());
                            
-                            if(lista.get(i).getIdUsuario()==id_usuario && ejbFacade.esSeguidor(id_usuario,id_identificador))
-                   {
-                       System.out.println(mensaje_final);
-                       
-                   }
                         
+                       
                        }
           
             }
@@ -411,17 +413,51 @@ public void cargaDatos(int id)
             if("Curso_seguido".equals(tipo))
             {
               
-          System.out.println("Nombre curso-> "+nombre_identificador);
+          System.out.println("Nombre curso seguido-> "+nombre_identificador);
+          System.out.println("La lista usuarios tiene un largo de-> "+lista.size());
           mensaje_final=nombre_usuario+" ha empezado a seguir al curso "+nombre_identificador;
            for(int i=0;i<lista.size();i++)
                        {
-                           
-                           
-                            if(lista.get(i).getIdUsuario()==id_usuario && ejbFacade.esSeguidor(id_usuario,id_identificador))
-                   {
-                       System.out.println(mensaje_final);
-                       
-                   }
+                
+                                //Metodo esSeguido compara los parametros para verificar si en la tabla inscripcionCurso existen,por ende , solo los usuarios que siguen al curso 
+                                //tendran la notificacion
+                           if((ejbFacade.esSeguidor(lista.get(i).getIdUsuario(),id_identificador)).isEmpty()==false)
+                           {
+                                    System.out.println("Les llegara notificacion a este usuario"+lista.get(i).getIdUsuario());
+
+                                    System.out.println("Declaro la concha de su madre de objeto usuario ,y lo seteo con la id usuario"+id_usuario);
+                                    Usuario objUsuario = new Usuario();
+                                    objUsuario.setIdUsuario(lista.get(i).getIdUsuario());
+
+
+                                    SimpleDateFormat sdf = new SimpleDateFormat();
+                                    sdf.setTimeZone(new SimpleTimeZone(-3, "GMT"));
+                                    sdf.applyPattern("yyyy/mm/dd");
+                                    Date fecha = new Date();
+
+
+
+
+                                    Notificaciones objNotificacion = new Notificaciones();
+                                    objNotificacion.setIdNotificacion(null);
+                                    objNotificacion.setIdUsuario(objUsuario);
+                                    objNotificacion.setTipo(tipo);
+                                    objNotificacion.setIdUsuarioTrigger(id_usuario);
+                                    objNotificacion.setDetalle(mensaje_final);
+                                    objNotificacion.setFecha(fecha);    
+                                    objNotificacion.setLeida(0);    
+                                    objNotificacion.setIdentificador(id_identificador);
+
+                                    System.out.println("Valores del objeto antes de crear");
+                                    System.out.println("ID usuario "+objNotificacion.getIdUsuario().getIdUsuario());
+                                    System.out.println("Tipo "+objNotificacion.getTipo());
+                                    System.out.println("Detalle "+objNotificacion.getDetalle());
+                                    System.out.println("Fecha "+objNotificacion.getFecha());
+                                    System.out.println("Leida "+objNotificacion.getLeida());
+                                    System.out.println("ID identificador "+objNotificacion.getIdentificador());
+
+                                    ejbFacade.crear(objNotificacion);
+                       }
                         
                        }
           
@@ -451,39 +487,40 @@ public void cargaDatos(int id)
             
             //Declaro fecha actual...
           //  System.out.println("Dclaro objeto usuario y lo seteo con la id usuario"+id_usuario);
-            Usuario objUsuario = new Usuario();
-            objUsuario.setIdUsuario(id_usuario);
-            
-            
-            SimpleDateFormat sdf = new SimpleDateFormat();
-            sdf.setTimeZone(new SimpleTimeZone(-3, "GMT"));
-            sdf.applyPattern("yyyy/mm/dd");
-            Date fecha = new Date();
-            
-            
+//            Usuario objUsuario = new Usuario();
+//            objUsuario.setIdUsuario(id_usuario);
+//            
+//            
+//            SimpleDateFormat sdf = new SimpleDateFormat();
+//            sdf.setTimeZone(new SimpleTimeZone(-3, "GMT"));
+//            sdf.applyPattern("yyyy/mm/dd");
+//            Date fecha = new Date();
+//            
+//            
+//           
+//            
+//            Notificaciones objNotificacion = new Notificaciones();
+//            objNotificacion.setIdNotificacion(null);
+//            objNotificacion.setIdUsuario(objUsuario);
+//            objNotificacion.setTipo(tipo);
+//            objNotificacion.setIdUsuarioTrigger(id_usuario);
+//            objNotificacion.setDetalle(mensaje_final);
+//            objNotificacion.setFecha(fecha);    
+//            objNotificacion.setLeida(0);    
+//            objNotificacion.setIdentificador(id_identificador);
+//            
+//            System.out.println("Valores del objeto antes de crear");
+//            System.out.println("ID usuario "+objNotificacion.getIdUsuario().getIdUsuario());
+//            System.out.println("Tipo "+objNotificacion.getTipo());
+//            System.out.println("Detalle "+objNotificacion.getDetalle());
+//            System.out.println("Fecha "+objNotificacion.getFecha());
+//            System.out.println("Leida "+objNotificacion.getLeida());
+//            System.out.println("ID identificador "+objNotificacion.getIdentificador());
            
-            
-            Notificaciones objNotificacion = new Notificaciones();
-            objNotificacion.setIdNotificacion(null);
-            objNotificacion.setIdUsuario(objUsuario);
-            objNotificacion.setTipo(tipo);
-            objNotificacion.setDetalle(mensaje_final);
-            objNotificacion.setFecha(fecha);    
-            objNotificacion.setLeida(0);    
-            objNotificacion.setIdentificador(id_identificador);
-            
-            System.out.println("Valores del objeto antes de crear");
-            System.out.println("ID usuario "+objNotificacion.getIdUsuario().getIdUsuario());
-            System.out.println("Tipo "+objNotificacion.getTipo());
-            System.out.println("Detalle "+objNotificacion.getDetalle());
-            System.out.println("Fecha "+objNotificacion.getFecha());
-            System.out.println("Leida "+objNotificacion.getLeida());
-            System.out.println("ID identificador "+objNotificacion.getIdentificador());
-           
-            
-            
-            
-            ejbFacade.crear(objNotificacion);
+//            
+//            
+//            
+//            ejbFacade.crear(objNotificacion);
         
          
             
