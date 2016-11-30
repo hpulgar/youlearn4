@@ -347,9 +347,8 @@ public void cargaDatos(int id)
         for(int i=0;i<arNotificaciones.size();i++)
         {
             
-            //Mostrar todas las notificaciones excepto la miap !=idUsuario
-            //if(arNotificaciones.get(i).getIdUsuario().getIdUsuario() == idUsuario)
-            if(arNotificaciones.get(i).getIdUsuario().getIdUsuario() != idUsuario)
+    
+            if(arNotificaciones.get(i).getIdUsuario().getIdUsuario() == idUsuario)
             {
                 arNotificaciones2.add(arNotificaciones.get(i));
             }
@@ -395,27 +394,54 @@ public void cargaDatos(int id)
                 mensaje_final=nombre_usuario+" se ha suscrito al curso "+nombre_identificador;
           
                            
-                  for(int i=0;i<lista.size();i++)
+                    for(int i=0;i<lista.size();i++)
                        {
-                           // if(lista.get(i).getIdUsuario()==id_usuario && ejbFacade.esSeguidor(id_usuario,id_identificador))
-                   
-//                            Usuario objUsuario = new Usuario();
-//                            objUsuario.setIdUsuario(id_usuario);
-                           
-                           System.out.println("Les llegara notificacion a este usuario"+lista.get(i).getIdUsuario());
-                           
+                
+                                //Metodo esSeguido compara los parametros para verificar si en la tabla inscripcionCurso existen,por ende , solo los usuarios que sean suscriptores al curso 
+                                //tendran la notificacion
+                           if((ejbFacade.esSuscriptor(lista.get(i).getIdUsuario(),id_identificador)).isEmpty()==false)
+                           {
+         
+                                    Usuario objUsuario = new Usuario();
+                                    objUsuario.setIdUsuario(lista.get(i).getIdUsuario());
+
+
+                                    SimpleDateFormat sdf = new SimpleDateFormat();
+                                    sdf.setTimeZone(new SimpleTimeZone(-3, "GMT"));
+                                    sdf.applyPattern("yyyy/mm/dd");
+                                    Date fecha = new Date();
+
+
+
+
+                                    Notificaciones objNotificacion = new Notificaciones();
+                                    objNotificacion.setIdNotificacion(null);
+                                    objNotificacion.setIdUsuario(objUsuario);
+                                    objNotificacion.setTipo(tipo);
+                                    objNotificacion.setIdUsuarioTrigger(id_usuario);
+                                    objNotificacion.setDetalle(mensaje_final);
+                                    objNotificacion.setFecha(fecha);    
+                                    objNotificacion.setLeida(0);    
+                                    objNotificacion.setIdentificador(id_identificador);
+
+                                    System.out.println("Valores del objeto antes de crear");
+                                    System.out.println("ID usuario "+objNotificacion.getIdUsuario().getIdUsuario());
+                                    System.out.println("Tipo "+objNotificacion.getTipo());
+                                    System.out.println("Detalle "+objNotificacion.getDetalle());
+                                    System.out.println("Fecha "+objNotificacion.getFecha());
+                                    System.out.println("Leida "+objNotificacion.getLeida());
+                                    System.out.println("ID identificador "+objNotificacion.getIdentificador());
+
+                                    ejbFacade.crear(objNotificacion);
+                       }
                         
-                       
                        }
           
             }
             
             if("Curso_seguido".equals(tipo))
             {
-              
-          System.out.println("Nombre curso seguido-> "+nombre_identificador);
-          System.out.println("La lista usuarios tiene un largo de-> "+lista.size());
-          mensaje_final=nombre_usuario+" ha empezado a seguir al curso "+nombre_identificador;
+ 
            for(int i=0;i<lista.size();i++)
                        {
                 
@@ -423,9 +449,7 @@ public void cargaDatos(int id)
                                 //tendran la notificacion
                            if((ejbFacade.esSeguidor(lista.get(i).getIdUsuario(),id_identificador)).isEmpty()==false)
                            {
-                                    System.out.println("Les llegara notificacion a este usuario"+lista.get(i).getIdUsuario());
-
-                                    System.out.println("Declaro la concha de su madre de objeto usuario ,y lo seteo con la id usuario"+id_usuario);
+      
                                     Usuario objUsuario = new Usuario();
                                     objUsuario.setIdUsuario(lista.get(i).getIdUsuario());
 
@@ -468,6 +492,50 @@ public void cargaDatos(int id)
           System.out.println("Nombre Unidad-> "+nombre_identificador);
           mensaje_final=nombre_usuario+" ha creado una nueva unidad en el curso "+nombre_identificador;
           
+            for(int i=0;i<lista.size();i++)
+                       {
+                
+                                //Metodo esSeguido compara los parametros para verificar si en la tabla inscripcionCurso existen,por ende , solo los usuarios que siguen al curso 
+                                //tendran la notificacion
+                           if((ejbFacade.estaEnCurso(lista.get(i).getIdUsuario(),id_identificador)).isEmpty()==false)
+                           {
+
+
+                                    Usuario objUsuario = new Usuario();
+                                    objUsuario.setIdUsuario(lista.get(i).getIdUsuario());
+
+
+                                    SimpleDateFormat sdf = new SimpleDateFormat();
+                                    sdf.setTimeZone(new SimpleTimeZone(-3, "GMT"));
+                                    sdf.applyPattern("yyyy/mm/dd");
+                                    Date fecha = new Date();
+
+
+
+
+                                    Notificaciones objNotificacion = new Notificaciones();
+                                    objNotificacion.setIdNotificacion(null);
+                                    objNotificacion.setIdUsuario(objUsuario);
+                                    objNotificacion.setTipo(tipo);
+                                    objNotificacion.setIdUsuarioTrigger(id_usuario);
+                                    objNotificacion.setDetalle(mensaje_final);
+                                    objNotificacion.setFecha(fecha);    
+                                    objNotificacion.setLeida(0);    
+                                    objNotificacion.setIdentificador(id_identificador);
+
+                                    System.out.println("Valores del objeto antes de crear");
+                                    System.out.println("ID usuario "+objNotificacion.getIdUsuario().getIdUsuario());
+                                    System.out.println("Tipo "+objNotificacion.getTipo());
+                                    System.out.println("Detalle "+objNotificacion.getDetalle());
+                                    System.out.println("Fecha "+objNotificacion.getFecha());
+                                    System.out.println("Leida "+objNotificacion.getLeida());
+                                    System.out.println("ID identificador "+objNotificacion.getIdentificador());
+
+                                    ejbFacade.crear(objNotificacion);
+                       }
+                        
+                       }
+          
             }
             if("Tablero_nueva_discusion".equals(tipo))
             {
@@ -475,54 +543,91 @@ public void cargaDatos(int id)
           System.out.println("Nombre -> "+nombre_identificador);
           mensaje_final=nombre_usuario+" ha creado una discusion en el tablero del curso "+nombre_identificador;
           
+            for(int i=0;i<lista.size();i++)
+                       {
+                
+                                //Metodo esSeguido compara los parametros para verificar si en la tabla inscripcionCurso existen,por ende , solo los usuarios que siguen al curso 
+                                //tendran la notificacion
+                           if((ejbFacade.estaEnCurso(lista.get(i).getIdUsuario(),id_identificador)).isEmpty()==false)
+                           {
+
+                                    Usuario objUsuario = new Usuario();
+                                    objUsuario.setIdUsuario(lista.get(i).getIdUsuario());
+
+
+                                    SimpleDateFormat sdf = new SimpleDateFormat();
+                                    sdf.setTimeZone(new SimpleTimeZone(-3, "GMT"));
+                                    sdf.applyPattern("yyyy/mm/dd");
+                                    Date fecha = new Date();
+
+
+
+
+                                    Notificaciones objNotificacion = new Notificaciones();
+                                    objNotificacion.setIdNotificacion(null);
+                                    objNotificacion.setIdUsuario(objUsuario);
+                                    objNotificacion.setTipo(tipo);
+                                    objNotificacion.setIdUsuarioTrigger(id_usuario);
+                                    objNotificacion.setDetalle(mensaje_final);
+                                    objNotificacion.setFecha(fecha);    
+                                    objNotificacion.setLeida(0);    
+                                    objNotificacion.setIdentificador(id_identificador);
+
+                                    System.out.println("Valores del objeto antes de crear");
+                                    System.out.println("ID usuario "+objNotificacion.getIdUsuario().getIdUsuario());
+                                    System.out.println("Tipo "+objNotificacion.getTipo());
+                                    System.out.println("Detalle "+objNotificacion.getDetalle());
+                                    System.out.println("Fecha "+objNotificacion.getFecha());
+                                    System.out.println("Leida "+objNotificacion.getLeida());
+                                    System.out.println("ID identificador "+objNotificacion.getIdentificador());
+
+                                    ejbFacade.crear(objNotificacion);
+                       }
+                        
+                       }
+          
             }
             if("Respuesta_comentario_foro".equals(tipo))
             {
               
           System.out.println("Nombre -> "+nombre_identificador);
-          mensaje_final=nombre_usuario+" ha respondido un comentario en el foro "+nombre_identificador;
-          
+          mensaje_final=nombre_usuario+" ha respondido tu comentario en el foro "+nombre_identificador;
+
+                                    //Tengo que obtener el ID usuario del posteo..para que solo le llegue a el la notificacion
+                                            Usuario objUsuario = new Usuario();
+
+                                    objUsuario.setIdUsuario(id_identificador);
+                                    SimpleDateFormat sdf = new SimpleDateFormat();
+                                    sdf.setTimeZone(new SimpleTimeZone(-3, "GMT"));
+                                    sdf.applyPattern("yyyy/mm/dd");
+                                    Date fecha = new Date();
+
+
+
+
+                                    Notificaciones objNotificacion = new Notificaciones();
+                                    objNotificacion.setIdNotificacion(null);
+                                    objNotificacion.setIdUsuario(objUsuario);
+                                    objNotificacion.setTipo(tipo);
+                                    objNotificacion.setIdUsuarioTrigger(id_usuario);
+                                    objNotificacion.setDetalle(mensaje_final);
+                                    objNotificacion.setFecha(fecha);    
+                                    objNotificacion.setLeida(0);    
+                                    objNotificacion.setIdentificador(id_identificador);
+
+                                    System.out.println("Valores del objeto antes de crear");
+                                    System.out.println("ID usuario "+objNotificacion.getIdUsuario().getIdUsuario());
+                                    System.out.println("Tipo "+objNotificacion.getTipo());
+                                    System.out.println("Detalle "+objNotificacion.getDetalle());
+                                    System.out.println("Fecha "+objNotificacion.getFecha());
+                                    System.out.println("Leida "+objNotificacion.getLeida());
+                                    System.out.println("ID identificador "+objNotificacion.getIdentificador());
+
+                                    ejbFacade.crear(objNotificacion);
+                                    
             }
             
-            
-            //Declaro fecha actual...
-          //  System.out.println("Dclaro objeto usuario y lo seteo con la id usuario"+id_usuario);
-//            Usuario objUsuario = new Usuario();
-//            objUsuario.setIdUsuario(id_usuario);
-//            
-//            
-//            SimpleDateFormat sdf = new SimpleDateFormat();
-//            sdf.setTimeZone(new SimpleTimeZone(-3, "GMT"));
-//            sdf.applyPattern("yyyy/mm/dd");
-//            Date fecha = new Date();
-//            
-//            
-//           
-//            
-//            Notificaciones objNotificacion = new Notificaciones();
-//            objNotificacion.setIdNotificacion(null);
-//            objNotificacion.setIdUsuario(objUsuario);
-//            objNotificacion.setTipo(tipo);
-//            objNotificacion.setIdUsuarioTrigger(id_usuario);
-//            objNotificacion.setDetalle(mensaje_final);
-//            objNotificacion.setFecha(fecha);    
-//            objNotificacion.setLeida(0);    
-//            objNotificacion.setIdentificador(id_identificador);
-//            
-//            System.out.println("Valores del objeto antes de crear");
-//            System.out.println("ID usuario "+objNotificacion.getIdUsuario().getIdUsuario());
-//            System.out.println("Tipo "+objNotificacion.getTipo());
-//            System.out.println("Detalle "+objNotificacion.getDetalle());
-//            System.out.println("Fecha "+objNotificacion.getFecha());
-//            System.out.println("Leida "+objNotificacion.getLeida());
-//            System.out.println("ID identificador "+objNotificacion.getIdentificador());
-           
-//            
-//            
-//            
-//            ejbFacade.crear(objNotificacion);
-        
-         
+          
             
         }catch(Exception e)
         {
@@ -558,23 +663,23 @@ public void cargaDatos(int id)
              
              
        public int cantidadNotificaciones(int idUsuario)
-         {
-           arNotificaciones.clear();
-        arNotificaciones2.clear();
-        arNotificaciones = ejbFacade.findAll();        
+                   {
+                        arNotificaciones.clear();
+                        arNotificaciones2.clear();
+                        arNotificaciones = ejbFacade.findAll();        
         
-        for(int i=0;i<arNotificaciones.size();i++)
-        {
-            
-            //Mostrar todas las notificaciones excepto la miap !=idUsuario
-            //if(arNotificaciones.get(i).getIdUsuario().getIdUsuario() == idUsuario)
-            if(arNotificaciones.get(i).getIdUsuario().getIdUsuario() == idUsuario && arNotificaciones.get(i).getLeida()==0)
-            {
-                arNotificaciones2.add(arNotificaciones.get(i));
-            }
-        }        
-        return arNotificaciones2.size();
-         }
+                            for(int i=0;i<arNotificaciones.size();i++)
+                            {
+
+                                if(arNotificaciones.get(i).getIdUsuario().getIdUsuario() == idUsuario && arNotificaciones.get(i).getLeida()==0)
+                                {
+                                    arNotificaciones2.add(arNotificaciones.get(i));
+                                }
+                            }     
+                            
+                  return arNotificaciones2.size();
+                 }
+       
          
         public void onRowEdit(RowEditEvent event) 
         {

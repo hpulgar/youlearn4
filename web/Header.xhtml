@@ -169,7 +169,7 @@ font-size: 11px;
                        
                         <h:form id="form" rendered="#{menuController.logeado()}">
                         <li id="notification_li">
-                    <span id="notification_count">#{notificacionesController.cantidadNotificaciones(usuarioController.id_user)}</span>
+                            <h:outputText rendered="#{not empty notificacionesController.cantidadNotificaciones(usuarioController.id_user)}"><span id="notification_count">#{notificacionesController.cantidadNotificaciones(usuarioController.id_user)}</span></h:outputText>
                     <a href="#" id="notificationLink">Notificaciones</a>
                     <div id="notificationContainer">
                     <div id="notificationTitle"></div>
@@ -177,13 +177,15 @@ font-size: 11px;
                              
                                  
                                  <c:forEach items="#{notificacionesController.verNotificaciones(usuarioController.id_user)}" var="n" >
-                                         <p:commandLink  actionListener="#{cursoController.setIdCurso(n.identificador)}" action="#{inscripcionCursoController.cargarCurso(n.identificador,2)}" rendered="#{n.tipo eq 'Curso_suscrito'}"  style="#{1 eq n.leida? 'background-color: rgba(76, 162, 11, 0.24)' : 'rgba(76, 162, 11, 0.76)'}" styleClass="xyz"> <!-- actionListener  que redireccione al curso-->
+                                         <p:commandLink  actionListener="#{cursoController.setIdCurso(n.identificador)}" action="#{inscripcionCursoController.cargarCurso(n.identificador,2)}" rendered="#{n.tipo eq 'Curso_suscrito' or n.tipo eq 'Curso_seguido' or n.tipo eq 'Unidad_nueva_curso' or n.tipo eq 'Tablero_nueva_discusion'}"  style="#{1 eq n.leida? 'background-color: rgba(76, 162, 11, 0.24)' : 'rgba(76, 162, 11, 0.76)'}" styleClass="xyz"> <!-- actionListener  que redireccione al curso-->
                                               <h:outputText value="#{n.detalle}" /> <h:outputLabel>#{notificacionesController.comparaFechas(n.fecha)}</h:outputLabel>
                                          <f:actionListener binding="#{notificacionesController.actualizaNotificacion(n.idNotificacion)}"/> 
                                          </p:commandLink>
 
                                      </c:forEach> 
-                                 
+                             <h:panelGroup rendered="#{empty notificacionesController.verNotificaciones(usuarioController.id_user)}">
+                               <h:outputText value="Aun no tiene notificaciones"></h:outputText>
+                             </h:panelGroup>
                            
                          </div>
                     <!--<div id="notificationFooter"><a href="#">Ver todas</a></div>-->

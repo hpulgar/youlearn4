@@ -104,8 +104,6 @@ public class Usuario implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private List<Persona> personaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    private List<LogStreaming> logStreamingList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private List<MasterRespuestas> masterRespuestasList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private List<InscripcionCurso> inscripcionCursoList;
@@ -277,14 +275,7 @@ public class Usuario implements Serializable {
         this.personaList = personaList;
     }
 
-    @XmlTransient
-    public List<LogStreaming> getLogStreamingList() {
-        return logStreamingList;
-    }
-
-    public void setLogStreamingList(List<LogStreaming> logStreamingList) {
-        this.logStreamingList = logStreamingList;
-    }
+    
 
     @XmlTransient
     public List<MasterRespuestas> getMasterRespuestasList() {

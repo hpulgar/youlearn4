@@ -53,4 +53,43 @@ public class NotificacionesFacade extends AbstractFacade<Notificaciones> {
         
     }
     
+     public List esSuscriptor(int idUsuario,int idCurso)
+    {
+     
+        
+        EntityManager em3 = getEntityManager();
+        Query q= em3.createNamedQuery("Notificaciones.findBySeguidor").setParameter("idUsuario",idUsuario).setParameter("idCurso", idCurso);
+       
+          
+        
+       return q.getResultList();
+        
+    }
+     
+      public List estaEnCurso(int idUsuario,int idCurso)
+    {
+     
+        
+        EntityManager em3 = getEntityManager();
+        Query q= em3.createNamedQuery("Notificaciones.findByEstaEnCurso").setParameter("idUsuario",idUsuario).setParameter("idCurso", idCurso);
+       
+          
+        
+       return q.getResultList();
+        
+    }
+      
+      public List esDeSiMismo(int idUsuario)
+    {
+     
+        
+        EntityManager em3 = getEntityManager();
+        Query q= em3.createNamedQuery("Notificaciones.EsUnComentarioDeSiMismo").setParameter("idUsuario",idUsuario);
+       
+          
+        
+       return q.getResultList();
+        
+    }
+    
 }

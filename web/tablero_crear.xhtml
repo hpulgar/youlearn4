@@ -197,7 +197,8 @@
 
 				<p>
                                     <h:commandButton action="#{tableroController.crearTablero(cursoController.idCurso,usuarioController.id_user)}" class="button1" type="submit"  style="float:right" value="Crear tema en tablero" id="submit">
-                                        <f:actionListener binding="#{notificacionesController.notificacionesSys(usuarioController.id_user,usuarioController.nombreUsuario,cursoController.idCurso,cursoController.retornaNombre(cursoController.idCurso),'Tablero_nueva_discusion')}"/>
+                                             <f:actionListener binding="#{notificacionesController.notificacionesSys(usuarioController.tablaUsuario(),usuarioController.id_user,usuarioController.nombreUsuario,cursoController.idCurso,cursoController.retornaNombre(contenidosController.idCurso),'Tablero_nueva_discusion')}"/>
+
                                     </h:commandButton>
                                 </p>
                             </div>

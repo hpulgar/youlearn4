@@ -91,8 +91,9 @@
 
 				<p>
                                     <h:commandButton   actionListener="#{contenidosController.creaunidadAdmin}" class="button1" type="submit"  style="float:right" value="Crear Unidad" id="submit">
-                                       <f:attribute name="idCurso" value="#{contenidosController.idCurso}" />      
-                                       <f:actionListener binding="#{notificacionesController.notificacionesSys(usuarioController.id_user,usuarioController.nombreUsuario,contenidosController.idCurso,cursoController.retornaNombre(contenidosController.idCurso),'Unidad_nueva_curso')}"/>
+                                       <f:attribute name="idCurso" value="#{contenidosController.idCurso}" />  
+                                  <f:actionListener binding="#{notificacionesController.notificacionesSys(usuarioController.tablaUsuario(),usuarioController.id_user,usuarioController.nombreUsuario,contenidosController.idCurso,cursoController.retornaNombre(contenidosController.idCurso),'Unidad_nueva_curso')}"/>
+
                                     </h:commandButton>
                                 </p>
                             </div>

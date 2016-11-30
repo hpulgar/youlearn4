@@ -40,6 +40,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Notificaciones.findByIdusuario", query = "SELECT n FROM Notificaciones n WHERE n.leida=0"),
     @NamedQuery(name = "Notificaciones.findBySuscrito", query = "SELECT n FROM InscripcionCurso n WHERE n.idUsuario.idUsuario = :idUsuario AND n.idCurso.idCurso = :idCurso AND n.tipoAlumno.idTipo =2"),
     @NamedQuery(name = "Notificaciones.findBySeguidor", query = "SELECT n FROM InscripcionCurso n WHERE n.idUsuario.idUsuario = :idUsuario AND n.idCurso.idCurso = :idCurso AND n.tipoAlumno.idTipo =1"),
+    @NamedQuery(name = "Notificaciones.findByEstaEnCurso", query = "SELECT n FROM InscripcionCurso n WHERE n.idUsuario.idUsuario = :idUsuario AND n.idCurso.idCurso = :idCurso"),
+    @NamedQuery(name = "Notificaciones.EsUnComentarioDeSiMismo", query = "SELECT n FROM MasterComentario n WHERE n.idUsuario.idUsuario = :idUsuario"),
     @NamedQuery(name = "Notificaciones.findByIdentificador", query = "SELECT n FROM Notificaciones n WHERE n.identificador = :identificador")})
 public class Notificaciones implements Serializable {
 
