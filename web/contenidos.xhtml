@@ -113,10 +113,11 @@
 					<div class="news-social-links">
                                             
                                              <h:form>
+        
                                                  <ui:repeat var="c" value="#{archivoController.verArchivos(contenidosController.selected.idContenido)}">
                                    
     
-                                                <p:inputText value="#{c.descripcion}" required="true" label="text" />
+                                                     <h:outputText value="#{c.descripcion}" />
                                                                           
                                               <p:commandButton value="Ver archivo" type="button" onclick="PF('#{c.idArchivo}').show();" />    
                                       

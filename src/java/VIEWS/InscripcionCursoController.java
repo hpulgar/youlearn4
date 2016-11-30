@@ -274,6 +274,22 @@ public class InscripcionCursoController implements Serializable {
     }
     
     
+     public boolean esSeguidor(int idUsuario,int idCurso)
+    {
+        boolean es;
+        
+        if(ejbFacade.esSeguidor(idUsuario, idCurso).isEmpty()==true)
+        {
+            es=false;
+        }
+        else
+        {
+            es=true;
+        }
+            
+        return es;
+    }
+    
     
     public int seguidores(int idCurso)
     {

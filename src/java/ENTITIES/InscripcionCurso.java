@@ -35,6 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "InscripcionCurso.findAll", query = "SELECT i FROM InscripcionCurso i"),
     @NamedQuery(name = "InscripcionCurso.findByIdInsc", query = "SELECT i FROM InscripcionCurso i WHERE i.idInsc = :idInsc"),
     @NamedQuery(name = "InscripcionCurso.findByIdUsuario", query = "SELECT i FROM InscripcionCurso i WHERE i.idUsuario.idUsuario = :idUsuario"),
+    @NamedQuery(name = "InscripcionCurso.esSuscriptor", query = "SELECT n FROM InscripcionCurso n WHERE n.idUsuario.idUsuario = :idUsuario AND n.idCurso.idCurso = :idCurso AND n.tipoAlumno.idTipo =2"),
+    @NamedQuery(name = "InscripcionCurso.esSeguidor", query = "SELECT n FROM InscripcionCurso n WHERE n.idUsuario.idUsuario = :idUsuario AND n.idCurso.idCurso = :idCurso AND n.tipoAlumno.idTipo =1"),
     @NamedQuery(name = "InscripcionCurso.findByFechaInsc", query = "SELECT i FROM InscripcionCurso i WHERE i.fechaInsc = :fechaInsc")})
 public class InscripcionCurso implements Serializable {
 

@@ -39,5 +39,31 @@ public class InscripcionCursoFacade extends AbstractFacade<InscripcionCurso> {
         
        return q.getResultList(); 
     }
+       
+       public List esSeguidor(int idUsuario,int idCurso)
+    {
+     
+        
+        EntityManager em3 = getEntityManager();
+        Query q= em3.createNamedQuery("InscripcionCurso.esSeguidor").setParameter("idUsuario",idUsuario).setParameter("idCurso", idCurso);
+       
+          
+        
+       return q.getResultList();
+        
+    }
+    
+     public List esSuscriptor(int idUsuario,int idCurso)
+    {
+     
+        
+        EntityManager em3 = getEntityManager();
+        Query q= em3.createNamedQuery("InscripcionCurso.esSuscriptor").setParameter("idUsuario",idUsuario).setParameter("idCurso", idCurso);
+       
+          
+        
+       return q.getResultList();
+        
+    }
     
 }

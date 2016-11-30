@@ -138,7 +138,7 @@
 									<th>Unidad</th>
 									<th>Nombre Unidad</th>
 									<th>Fecha</th>
-									<th>Algo</th>
+									
 								</tr>
 							</thead>
 							<tbody>
@@ -147,10 +147,11 @@
                                                                     <tr>
                                                                    
                                                                             <td data-title="Column 1">#{cont.unidad}</td>
-                                                                            <td data-title="Column 1">  <h:commandLink value="#{cont.nombreUnidad}" action="#{contenidosController.verContenidoI(cont.idContenido)}"/> </td>
+                                                                            <td data-title="Column 1">  <h:commandLink rendered="#{inscripcionCursoController.esSeguidor(usuarioController.id_user, cursoController.idCurso) eq 'true' and cont.tipoAlumno eq '1'}" value="#{cont.nombreUnidad}" action="#{contenidosController.verContenidoI(cont.idContenido)}"/>  <h:outputText rendered="#{inscripcionCursoController.esSeguidor(usuarioController.id_user, cursoController.idCurso) eq 'true' and cont.tipoAlumno eq '2'}" value="Este contenido está solo para suscriptores"/></td>
+                                                                       
                                                                             
                                                                             <td data-title="Column 1">#{cont.fecha}</td>
-                                                                            <td data-title="Column 1">#{cont.idContenido}</td>
+                                                                         
                                                                     </tr>
                                                                  </c:forEach>
 								</h:form>
