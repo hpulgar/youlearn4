@@ -113,43 +113,40 @@
 					<div class="news-social-links">
                                             
                                              <h:form>
-                                                 <p:fileUpload  fileUploadListener="#{archivoController.upload}" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|ppt|doc|docx|xls)$/" sizeLimit="1000000" label="Adjuntar.." cancelLabel="Cancelar" uploadLabel="Subir"> 
-                                                        <f:attribute name="nombreCurso" value="#{contenidosController.selected.idCurso.nomCurso}" />
-                                                        <f:attribute name="nombreUnidad" value="#{contenidosController.selected.nombreUnidad}" />
-                                                        <f:attribute name="idContenido" value="#{contenidosController.selected.idContenido}" />
-
-                                                  </p:fileUpload>
-                                          </h:form>
-                                            
-                                          <h:form>
-                                                  <p:dataTable var="c" value="#{archivoController.verArchivos(contenidosController.selected.idContenido)}">
+                                                 <ui:repeat var="c" value="#{archivoController.verArchivos(contenidosController.selected.idContenido)}">
                                    
-                                           <p:column>
-                                               
-                                                <p:inplace id="ajax" editor="true">
-                                                    
-                                                                 <p:inputText value="#{c.descripcion}" required="true" label="text" />
-                                                                 
-                                                </p:inplace>
+    
+                                                <p:inputText value="#{c.descripcion}" required="true" label="text" />
+                                                                          
+                                              <p:commandButton value="Ver archivo" type="button" onclick="PF('#{c.idArchivo}').show();" />    
                                       
-                                           </p:column>
-                                                      
-                                          <p:column>
-                                          
-                                                                <h:commandButton value="Download" onclick="#{c.ubicacion}"/>                  
-                                      
-                                          </p:column>
+                         
+                                              <p:dialog header="#{c.descripcion}" widgetVar="#{c.idArchivo}" modal="true">
+                                              
+                                             <!-- Si es una imagen -->     
+                                             <h:graphicImage  value="#{c.ubicacion}" rendered="#{c.idTipoArchivo.idTipo eq '1' or c.idTipoArchivo.idTipo eq '2' or c.idTipoArchivo.idTipo eq '3'}" />
+                                              <!-- Si es un PDF -->  
+                                                  <h:panelGroup id="formatoPDF"  rendered="#{c.idTipoArchivo.idTipo eq '4'}">
+                                                 
+                                                  <object  type="application/pdf" data="#{c.ubicacion}" height="auto" width="100%" internalinstanceid="3">
+                                                        Su navegador no puede mostrar este archivo. haga , <a href="#{c.ubicacion}">click</a> para descargarlo.
+                                                    </object>
+                                                  </h:panelGroup>
+                                                
+                                                      <!-- Si es un word,excel o ppt -->  
+                                                    <h:outputLink rendered="#{c.idTipoArchivo.idTipo eq '5' or c.idTipoArchivo.idTipo eq '6' or c.idTipoArchivo.idTipo eq '7'}" value="#{c.ubicacion}">
+                                                            <h:outputText value="Descargar archivo" />
+
+                                                    </h:outputLink>
+                                                 
+                                                  
+                                          </p:dialog>  
+                                              <br></br>
                                         
-                                    <!--<p:column headerText="Nombre Tema">
-                                        <h:commandLink action="#/{tableroController.verDetalle(f.idTablero)}" value="#{f.titulo}"/>
-                                    </p:column>-->
-                                 
-                                        
-                                        
-                                       
-                                        
-                                    </p:dataTable>
-				</h:form>
+                                       </ui:repeat>
+                                                 <h:outputText value="Aun no hay archivos en esta unidad" rendered="#{empty archivoController.verArchivos(contenidosController.selected.idContenido)}"></h:outputText>
+                                    </h:form>
+                                         
 						
 					</div>
 					

@@ -317,10 +317,10 @@ public class ContenidosController implements Serializable {
             current.setIdCurso(obCurso);
             
             getFacade().crear(current);
-            current = null;
+           
      
             
-            return "/curso_editar.xhtml";
+            return "/unidad_editar.xhtml";
             
         }catch(Exception e)
         {

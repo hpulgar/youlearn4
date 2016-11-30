@@ -15,10 +15,6 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.le-frog-1.0.10.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
                     <file>${file.reference.commons-fileupload-1.3.2.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>

@@ -16,7 +16,23 @@
 	<!--Title-->
 	<title>Youlearn - Edicion unidad</title>
 
- <ui:include src="utilidades.xhtml" />	
+	<link rel="stylesheet" href="css/style.css" type="text/css"  media="all" />
+	<link rel="stylesheet" href="css/colour.css" type="text/css"  media="all" />
+	<link rel="stylesheet" href="css/flexslider.css" type="text/css"  media="all" />
+	<link rel="stylesheet" href="css/superfish.css" type="text/css"  media="all" />
+	<link rel="stylesheet" href="css/responsive.css" type="text/css"  media="all" />
+         <link rel="stylesheet" href="css/chat.css" type="text/css"  media="all" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'></link>
+        <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,700,900' rel='stylesheet' type='text/css'></link>
+
+	  <script type="text/javascript" src="js/chat.js"></script>
+        <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+	<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js'></script>
+	<script type="text/javascript" src="js/superfish.js"></script>
+	<script type="text/javascript" src="js/jquery.flexslider-min.js"></script>
+	<script type="text/javascript" src="js/tinynav.min.js"></script>
+	<script type="text/javascript" src="js/jquery.uniform.js"></script>
+	<script type="text/javascript" src="js/scripts.js"></script>-->
 <!-- END head -->
    </h:head>
     
@@ -56,9 +72,53 @@
 			<div class="inner-content-wrapper">
 			
 			<p>&nbsp;</p>
-			
+			 <h:form>
+                             <p:fileUpload  cancelLabel="Cancelar" uploadLabel="Cargar" invalidFileMessage="Formato no permitido" fileUploadListener="#{archivoController.upload}" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|ppt|doc|docx|xls)$/" sizeLimit="1000000" label="Seleccione un archivo" update="@form">
+               <f:attribute name="nombreCurso" value="#{contenidosController.selected.idCurso.nomCurso}" />
+               <f:attribute name="nombreUnidad" value="#{contenidosController.selected.nombreUnidad}" />
+               <f:attribute name="idContenido" value="#{contenidosController.selected.idContenido}" />
+         </p:fileUpload>
+               <h:form id="archivosContenido">
+                      <ui:repeat var="c" value="#{archivoController.verArchivos(contenidosController.selected.idContenido)}">
+                                   
+   
+                                            
+                                              <p:commandButton value="Ver archivo" type="button" onclick="PF('#{c.idArchivo}').show();" />    
+                                            
+                                              
+                                              <p:inplace id="Nombre" editor="true">  
+                                                  <p:ajax event="save" listener="#{archivoController.actualizaNombre(c.idArchivo, c.descripcion)}"/>
+                                                <p:inputText value="#{c.descripcion}" required="true"     label="text"/>     
+                                              </p:inplace>
+                         
+                                              <p:dialog header="#{c.descripcion}" widgetVar="#{c.idArchivo}" modal="true">
+                                              
+                                             <!-- Si es una imagen -->     
+                                             <h:graphicImage  value="#{c.ubicacion}" rendered="#{c.idTipoArchivo.idTipo eq '1' or c.idTipoArchivo.idTipo eq '2' or c.idTipoArchivo.idTipo eq '3'}" />
+                                              <!-- Si es un PDF -->  
+                                                  <h:panelGroup id="formatoPDF"  rendered="#{c.idTipoArchivo.idTipo eq '4'}">
+                                                 
+                                                  <object  type="application/pdf" data="#{c.ubicacion}" height="auto" width="100%" internalinstanceid="3">
+                                                        Su navegador no puede mostrar este archivo. haga , <a href="#{c.ubicacion}">click</a> para descargarlo.
+                                                    </object>
+                                                  </h:panelGroup>
+                                                
+                                                      <!-- Si es un word,excel o ppt -->  
+                                                    <h:outputLink rendered="#{c.idTipoArchivo.idTipo eq '5' or c.idTipoArchivo.idTipo eq '6' or c.idTipoArchivo.idTipo eq '7'}" value="#{c.ubicacion}">
+                                                            <h:outputText value="Descargar archivo" />
+
+                                                    </h:outputLink>
+                                                 
+                                                  
+                                          </p:dialog>  
+                                              <br></br>
+                                        
+                     </ui:repeat>
+	</h:form>
+         
+        </h:form>
 			<h:form class="clearfix">
-               
+             
                             <div class="field-row">
 				  <label for="numeroUnidad">Numero unidad</label>
                                   <h:inputText value="#{contenidosController.selected.unidad}" class="text_input" id="numeroUnidad"  />
@@ -103,7 +163,7 @@
 	<!-- END .content-wrapper -->
 	</div>
 	
-	<ui:include src="Footer.xhtml" />
+
 
 <!-- END body -->
  </h:body>

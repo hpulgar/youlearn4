@@ -235,6 +235,29 @@ public class ArchivoController implements Serializable {
     }
     
     
+      public void actualizaNombre(int id_archivo,String descripcion)
+    {
+       
+          
+        try{
+            
+
+            current = ejbFacade.find(id_archivo);
+            current.setDescripcion(descripcion);
+          
+            ejbFacade.crear(current);
+           
+           
+         
+            
+        }catch(Exception e)
+        {
+            System.out.println("ERRRROOORR "+e);
+          
+        }
+    }
+    
+    
      public void creacionA()
     {
         System.out.println("Antes de Crear");
@@ -301,7 +324,7 @@ public class ArchivoController implements Serializable {
                         //Estos valores deben ser declarados con el controlador curso
                          String nomcurso = (String) event.getComponent().getAttributes().get("nombreCurso"); 
                          String nomunidad = (String) event.getComponent().getAttributes().get("nombreUnidad");
-                         String obtengoIdContenido =  (String)event.getComponent().getAttributes().get("idContenido");
+                         int idContenido =  (int) event.getComponent().getAttributes().get("idContenido");
                         
                          //Path directorio .WAR de proyecto
                          File dataDir = new File(extContext.getRealPath("//files//"));
@@ -317,7 +340,7 @@ public class ArchivoController implements Serializable {
                          String filepath="/archivos/";
                          //Directorio root de Apache,soloa accesible por el aplicativo
                          String apacheDir ="C://Apache24//htdocs//";    
-                        int idContenido = Integer.valueOf((String) obtengoIdContenido);
+             
                         String directorio = apacheDir+filepath+pathDatos;
                          boolean existeDirectorio = new File(directorio).exists(); 
             
