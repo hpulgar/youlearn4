@@ -1,5 +1,8 @@
 # youlearn
 Proyecto JavaEE ,utilizando framework primefaces,JPA,Jquery y librerias JS.<br>
+Servidor principal utilizado : Wildfly 10.1 <br/>
+Motor de base de datos recomendado : MariaDB <br/>
+Servidor para archivos utilizado : Apache <br/>
 El tema es una plataforma E-learning <br/>
 Características :<br/>
 Sistema de Chat<br/>
