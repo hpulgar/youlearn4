@@ -85,14 +85,14 @@
                      <p:column headerText="Nombre Ciudad" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{c.nombreCiudad}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{c.nombreCiudad}" readonly="true" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{ciudadController.selected.nombreCiudad}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                      <p:column headerText="ID Pais" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{c.idPais.nombrePais}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{c.idPais.nombrePais}" readonly="true" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{ciudadController.selected.idPais.nombrePais}"  style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 

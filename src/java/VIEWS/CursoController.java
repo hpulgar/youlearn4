@@ -610,11 +610,11 @@ public void resetValues()
         
         public String eliminarCurso(int id)
         {
-       current = ejbFacade.find(id);
-        performDestroy();
-        recreatePagination();
-        recreateModel();
-        return "mis_cursos_admin";
+            current = ejbFacade.find(id);
+             performDestroy();
+             recreatePagination();
+             recreateModel();
+             return "mis_cursos_admin";
             
         
         }
@@ -662,6 +662,30 @@ public void resetValues()
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
         
+     
+    public void cargaDatos(int id)
+    {
+        
+        current = ejbFacade.find(id);
+        
+    }    
+        
+    public void prepararCrear()
+    {
+        current = null;
+    }
+    
+    public void precarga()
+    {
+        List<Curso> arMe;
+        arMe = ejbFacade.findAll();
+        for(int i =0;i<arMe.size();i++)
+        {
+            current = arMe.get(i);
+        }
+                
+    }
+    
            /////////////////////////////////////////////////////////////////////
           
     

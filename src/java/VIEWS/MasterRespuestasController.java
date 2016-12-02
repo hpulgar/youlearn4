@@ -290,6 +290,7 @@ public void cargaDatos(int id)
                     System.out.println("LA RESPUESTA A CREAR "+current.getRespuesta());
                     getFacade().create(current);
                     current = null;
+                    
                 }
                 
             }catch(Exception e){
@@ -418,7 +419,9 @@ public void cargaDatos(int id)
             System.out.println("Imprime publicacion q llega por evento: "+((MasterRespuestas) event.getObject()).getIdRespuestas());
             //System.out.println("Imprime publicacion q llega por evento: "+((PublicacionPerfil) event.getObject()).getIdPublicacion());
             //current = ((Curso) event.getObject());
+            current.setIdRespuestas(((MasterRespuestas) event.getObject()).getIdRespuestas());
             ejbFacade.edit(current); //REFORMULAR?????
+            current = null;
         }
           
           

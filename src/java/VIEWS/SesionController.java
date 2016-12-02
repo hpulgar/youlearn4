@@ -250,6 +250,17 @@ public class SesionController implements Serializable {
         current = null;
     }
     
+    public void precarga()
+    {
+        List<Sesion> arMe;
+        arMe = ejbFacade.findAll();
+        for(int i =0;i<arMe.size();i++)
+        {
+            current = arMe.get(i);
+        }
+                
+    }
+    
     //////////////////////////////////////////
     
 

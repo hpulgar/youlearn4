@@ -336,6 +336,29 @@ public class CursoSubCatController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
                
+    
+     public void cargaDatos(int id)
+    {
+        
+        current = ejbFacade.find(id);
+        
+    }    
+        
+    public void prepararCrear()
+    {
+        current = null;
+    }
+    
+    public void precarga()
+    {
+        List<CursoSubCat> arMe;
+        arMe = ejbFacade.findAll();
+        for(int i =0;i<arMe.size();i++)
+        {
+            current = arMe.get(i);
+        }
+                
+    }
            
     
     

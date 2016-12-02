@@ -261,6 +261,19 @@ public class PaisController implements Serializable {
         current = null;
     }
     
+     
+    
+    public void precarga()
+    {
+        List<Pais> arMe;
+        arMe = ejbFacade.findAll();
+        for(int i =0;i<arMe.size();i++)
+        {
+            current = arMe.get(i);
+        }
+                
+    }
+    
     //////////////////////////////////////////////////////
     
     public SelectItem[] getItemsAvailableSelectMany() {

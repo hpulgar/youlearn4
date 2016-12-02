@@ -113,35 +113,37 @@
                     <p:column headerText="Username">
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{u.username}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{u.username}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{usuarioController.selected.username}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                     <p:column headerText="Password" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{u.password}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{u.password}"  style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{usuarioController.selected.password}"  style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                  <p:column headerText="Fecha nacimiento" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{u.fechaCreacion}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{u.fechaCreacion}" style="width: 100%"/></f:facet>
+                         <f:facet name="input"><p:outputLabel for="popupFecha" value="Fecha" />
+                             <p:calendar id="popupFecha" value="#{usuarioController.selected.fechaCreacion}" /> 
+                        </f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                    <p:column headerText="Perfil" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{u.idPerfil.descripcion}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{u.idPerfil.descripcion}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{usuarioController.selected.idPerfil.descripcion}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                      <p:column headerText="Correo" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{u.correo}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{u.correo}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{usuarioController.selected.correo}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
@@ -149,21 +151,21 @@
                   <p:column headerText="Creditos" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{u.creditos}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{u.creditos}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{usuarioController.selected.creditos}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                 <p:column headerText="Imagen portada perfil" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{u.imagen_portada_perfil}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{u.imagen_portada_perfil}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{usuarioController.selected.imagen_portada_perfil}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                    <p:column headerText="Imagen dashboard" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{u.imagen_dashboard}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{u.imagen_dashboard}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{usuarioController.selected.imagen_dashboard}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
@@ -171,7 +173,7 @@
                 <p:column headerText="Imagen Foto perfil" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{u.imagen_foto_perfil}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{u.imagen_foto_perfil}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{usuarioController.selected.imagen_foto_perfil}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                   

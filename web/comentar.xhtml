@@ -112,8 +112,8 @@
                                         <li>
                                             <div id ="comment-rightResp" class="comment-right">
                                                 <h:form id="#{masterComentarioController.nombreForm2(mc.idComentario)}">
-                                                    <p:inputText  id="#{masterComentarioController.nombreInput2(mc.idComentario)}" a:placeholder="Responder..." value="#{masterRespuestasController.selected.respuesta}"  style="float:left; margin-left: 30px" /><br/>
-                                                    <p:commandButton  style=" visibility: hidden"  id="#{masterComentarioController.nombreBoton2(mc.idComentario)}" actionListener="#{masterRespuestasController.crearRespuesta(mc.idComentario,usuarioController.id_user)}" update="#{masterComentarioController.nombreForm4(pu.idPublicacion)}:#{masterComentarioController.nombreForm6(mc.idComentario)}" process="@all" value="Responder" />
+                                                    <p:inputText   id="#{masterComentarioController.nombreInput2(mc.idComentario)}" a:placeholder="Responder..." value="#{masterRespuestasController.selected.respuesta}"  style="float:left; margin-left: 30px" /><br/>
+                                                    <p:commandButton  style=" visibility: hidden"  id="#{masterComentarioController.nombreBoton2(mc.idComentario)}" actionListener="#{masterRespuestasController.crearRespuesta(mc.idComentario,usuarioController.id_user)}" update="#{masterComentarioController.nombreForm4(pu.idPublicacion)}:#{masterComentarioController.nombreForm3(pu.idPublicacion)}" process="@all" value="Responder" />
                                                 </h:form>
                                             </div>
                                         </li>
@@ -160,7 +160,7 @@
          </h:panelGroup>
     </c:forEach>
             <h:form>
-            <p:commandLink value="Ver Publicaciones Anteriores" action="#{publicacionPerfilController.setLargoArray(10)}" update="parametroBody" process="@all" />
+                <p:commandLink value="Ver Publicaciones Anteriores" action="#{publicacionPerfilController.setLargoArray(10)}" update="parametroBody" process="@all" rendered="#{!publicacionPerfilController.mostrarVerMas(usuarioController.id_usuario_amigo)}" />
             <!--</p:dataScroller>-->
     </h:form>
 

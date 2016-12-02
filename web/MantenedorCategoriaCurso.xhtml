@@ -22,7 +22,11 @@
     <h:body>
         
         <!--FORM GENERAL-->
-         <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" />
+        <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.tabla}" action="#{cursoCategoriaController.prepararCrear()}" />
+        
+        <p:commandButton id="btoVerTabla" value="Tabla" actionListener="#{util.setTabla(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" action="#{cursoCategoriaController.precarga()}" />
+         
+         <p:commandButton value="Cancelar"  action="#{util.setTabla(false)}" update="paginas" process="@this" rendered="#{util.tabla}" />
         
         
      <h:form id="form"  > 
@@ -61,11 +65,12 @@
             rows="10"
             paginator="true"
             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-            rowsPerPageTemplate="5,10,15">
-                <f:facet name="header">
+            rowsPerPageTemplate="5,10,15" rendered="#{util.tabla}">
+                <f:facet name="header" >
                 Categorias Curso
                 </f:facet>
 
+                <p:ajax event="rowEditInit" listener="#{cursoCategoriaController.cargaDatos(p.idCat)}"  />
                 <p:ajax event="rowEdit" listener="#{cursoCategoriaController.onRowEdit}"  update="paginas:form:msgs" />
                 <p:ajax event="rowEditCancel" listener="#{cursoCategoriaController.onRowCancel}" update="paginas:form:msgs" />
 

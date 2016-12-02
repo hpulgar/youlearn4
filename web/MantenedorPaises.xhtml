@@ -22,7 +22,11 @@
     <h:body>
         
         <!--FORM GENERAL-->
-        <p:commandButton id="btoMostrarCrear" value="Nuevo" action="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" actionListener="#{paisController.prepararCrear()}" />
+        <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.tabla}" action="#{paisController.prepararCrear()}" />
+        
+        <p:commandButton id="btoVerTabla" value="Tabla" actionListener="#{util.setTabla(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" action="#{paisController.precarga()}" />
+         
+        <p:commandButton value="Cancelar"  action="#{util.setTabla(false)}" update="paginas" process="@this" rendered="#{util.tabla}" />
         
         
      <h:form id="form"  > 
@@ -59,11 +63,12 @@
             rows="10"
             paginator="true"
             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-            rowsPerPageTemplate="5,10,15">
+            rowsPerPageTemplate="5,10,15" rendered="#{util.tabla}">
                 <f:facet name="header">
-                Cursos
+                Pais
                 </f:facet>
 
+                <p:ajax event="rowEditInit" listener="#{paisController.cargaDatos(p.idPais)}" />
                 <p:ajax event="rowEdit" listener="#{paisController.onRowEdit}" update="paginas:form:msgs" />
                 <p:ajax event="rowEditCancel" listener="#{paisController.onRowCancel}" update="paginas:form:msgs" />
 
@@ -83,9 +88,8 @@
                 
                 <p:column  headerText="Acciones" style="width:50px" >
                     
-                    <p:rowEditor    >   
-                        #{paisController.cargaDatos(p.idPais)}
-                    </p:rowEditor>
+                    <p:rowEditor />   
+                    
                     
                     <p:commandLink value="Eliminar" actionListener="#{paisController.eliminarPais(p.idPais)}" update="general">
                                 <p:confirm header="Confirmation" message="¿Estas Seguro?" icon="ui-icon-alert" />

@@ -81,7 +81,7 @@
                     <p:column headerText="Nombre">
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{t.nombreTipo}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{t.nombreTipo}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{tipoAlumnoController.selected.nombreTipo}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 

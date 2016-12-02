@@ -91,21 +91,21 @@
                 <p:column headerText="ID Comentario" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{mc.idComentario}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{mc.idComentario}" readonly="true" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{masterComentarioController.selected.idComentario}" readonly="true" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                      <p:column headerText="ID PFT" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{mc.idPft}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{mc.idPft}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{masterComentarioController.selected.idPft}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                  <p:column headerText="Comentario" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{mc.comentario}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{mc.comentario}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{masterComentarioController.selected.comentario}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                
@@ -121,14 +121,14 @@
                   <p:column headerText="ID Usuario" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{mc.idUsuario}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{mc.idUsuario}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{masterComentarioController.selected.idUsuario}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                 <p:column headerText="ID Publicacion" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{mc.idPublicacion}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{mc.idPublicacion}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{masterComentarioController.selected.idPublicacion}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                  

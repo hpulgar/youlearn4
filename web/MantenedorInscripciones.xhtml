@@ -22,7 +22,11 @@
     <h:body>
         
         <!--FORM GENERAL-->
-        <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" action="#{inscripcionCursoController.prepararCrear()}" />
+        <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.tabla}" action="#{inscripcionCursoController.prepararCrear()}" />
+        
+        <p:commandButton id="btoVerTabla" value="Tabla" actionListener="#{util.setTabla(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" action="#{inscripcionCursoController.precarga()}" />
+         
+        <p:commandButton value="Cancelar"  action="#{util.setTabla(false)}" update="paginas" process="@this" rendered="#{util.tabla}" />
         
         
      <h:form id="form"  > 
@@ -77,11 +81,12 @@
             rows="10"
             paginator="true"
             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-            rowsPerPageTemplate="5,10,15">
+            rowsPerPageTemplate="5,10,15" rendered="#{util.tabla}">
                 <f:facet name="header">
-                Cursos
+                Inscripciones
                 </f:facet>
 
+                <p:ajax event="rowEditInit" listener="#{paisController.cargaDatos(p.idInsc)}" />
                 <p:ajax event="rowEdit" listener="#{inscripcionCursoController.onRowEdit}" update="paginas:form:msgs" />
                 <p:ajax event="rowEditCancel" listener="#{inscripcionCursoController.onRowCancel}" update="paginas:form:msgs" />
 
@@ -157,7 +162,7 @@
                 <p:column  headerText="Acciones" style="width:50px">
                     
                     <p:rowEditor> 
-                        #{inscripcionCursoController.cargaDatos(p.idInsc)}
+                        
                     </p:rowEditor>
                     
                     <p:commandLink value="Eliminar" actionListener="#{inscripcionCursoController.eliminarInscripcion(p.idInsc)}" update="general">

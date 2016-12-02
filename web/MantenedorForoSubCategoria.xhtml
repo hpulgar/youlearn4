@@ -97,21 +97,21 @@
                 <p:column headerText="Id Categoria" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{fsc.idCategoria}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{fsc.idCategoria}" readonly="true" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{foroSubcategoriaController.selected.idCategoria}"  style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                     <p:column headerText="Titulo">
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{fsc.titulo}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{fsc.titulo}" readonly="true" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{foroSubcategoriaController.selected.titulo}"  style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                     <p:column headerText="Descripcion" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{fsc.descripcion}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{fsc.descripcion}" readonly="true" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{foroSubcategoriaController.selected.descripcion}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                

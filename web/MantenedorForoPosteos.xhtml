@@ -103,28 +103,28 @@
                     <p:column headerText="Id Subcategoria" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{fp.idSubcategoria}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{fp.idSubcategoria}" readonly="true" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{foroPosteosController.selected.idSubcategoria}"  style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                  <p:column headerText="Id Usuario" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{fp.idUser}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{fp.idUser}" readonly="true" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{foroPosteosController.selected.idUser}"  style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                <p:column headerText="Titulo" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{fp.titulo}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{fp.titulo}" readonly="true" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{foroPosteosController.selected.titulo}"  style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                 <p:column headerText="Contenido" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{fp.contenido}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{fp.contenido}" readonly="true" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{foroPosteosController.selected.contenido}"  style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
@@ -141,14 +141,14 @@
                 <p:column headerText="Autorizado" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{fp.autorizado}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{fp.autorizado}" readonly="true" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{foroPosteosController.selected.autorizado}"  style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                 <p:column headerText="Imagen" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{fp.imagen_foro_posteos}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{fp.imagen_foro_posteos}" readonly="true" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{foroPosteosController.selected.imagen_foro_posteos}"  style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 

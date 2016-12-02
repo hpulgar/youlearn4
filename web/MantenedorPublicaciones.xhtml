@@ -21,7 +21,11 @@
    </h:head>
     <h:body  >
         
-         <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" action="#{publicacionPerfilController.prepararCrear()}" />
+        <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.tabla}" action="#{publicacionPerfilController.prepararCrear()}" />
+        
+        <p:commandButton id="btoVerTabla" value="Tabla" actionListener="#{util.setTabla(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" action="#{publicacionPerfilController.precarga()}" />
+         
+        <p:commandButton value="Cancelar"  action="#{util.setTabla(false)}" update="paginas" process="@this" rendered="#{util.tabla}" />
         
     <h:form id="form">
         
@@ -86,13 +90,16 @@
             rows="10"
             paginator="true"
             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-            rowsPerPageTemplate="5,10,15">
+            rowsPerPageTemplate="5,10,15" rendered="#{util.tabla}"  > 
                 <f:facet name="header">
                 Publicaciones
                 </f:facet>
 
-                <p:ajax event="rowEdit" listener="#{publicacionPerfilController.onRowEdit}" update="paginas:form:msgs" />
+                
+                <p:ajax event="rowEditInit" listener="#{publicacionPerfilController.cargaDatos(p.idPublicacion)}"  />
+                <p:ajax event="rowEdit" listener="#{publicacionPerfilController.onRowEdit}"  update="paginas:form:msgs"  />
                 <p:ajax event="rowEditCancel" listener="#{publicacionPerfilController.onRowCancel}" update="paginas:form:msgs" />
+                
 
                 <p:column headerText="id" style="width: 20px" >
                     <p:cellEditor>
@@ -171,12 +178,12 @@
                 </p:column>
                 
                 <p:column  headerText="Acciones" style="width:50px">
-                    
-                    <p:rowEditor  >
-                         #{publicacionPerfilController.cargaDatos(p.idPublicacion)}
-                    </p:rowEditor>
-           
+                       
+                            <p:rowEditor >
+                            
+                            </p:rowEditor>      
                         
+                   
                     
                             <p:commandLink value="Eliminar" actionListener="#{publicacionPerfilController.eliminarPublicacion(p.idPublicacion)}" update="general">
                                 <p:confirm header="Confirmation" message="¿Estas Seguro?" icon="ui-icon-alert" />

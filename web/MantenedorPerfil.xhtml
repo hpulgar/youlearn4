@@ -50,7 +50,7 @@
                      
                  </p:commandButton>
                     
-                   <p:commandButton value="Cancelar"  action="#{util.setVerCrear(false)}" update="paginas" process="@this" rendered="#{util.getVerCrear()}" action="#{perfilController.prepararCrear()}"/>
+                   <p:commandButton value="Cancelar"  action="#{util.setVerCrear(false)}" update="paginas" process="@this" rendered="#{util.getVerCrear()}" actionListener="#{perfilController.prepararCrear()}"/>
                  
         
            
@@ -69,7 +69,7 @@
             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
             rowsPerPageTemplate="5,10,15" rendered="#{util.tabla}">
                 <f:facet name="header">
-                Archivo
+                Perfiles
                 </f:facet>
                 
                 <p:ajax event="rowEditInit" listener="#{perfilController.cargaDatos(p.idPerfil)}" /> <!-- turirurururuu-->

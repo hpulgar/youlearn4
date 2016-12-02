@@ -510,6 +510,19 @@ public class InscripcionCursoController implements Serializable {
     {
         current = null;
     }
+    
+     
+    public void precarga()
+    {
+        List<InscripcionCurso> arMe;
+        arMe = ejbFacade.findAll();
+        for(int i =0;i<arMe.size();i++)
+        {
+            current = arMe.get(i);
+        }
+                
+    }
+    
     //////////////////////////////////////////////
     @FacesConverter(forClass = InscripcionCurso.class)
     public static class InscripcionCursoControllerConverter implements Converter {

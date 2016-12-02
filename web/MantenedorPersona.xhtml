@@ -116,35 +116,37 @@
                     <p:column headerText="Nombre">
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{p.nombre}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{p.nombre}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{personaController.selected.nombre}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                     <p:column headerText="Apellido" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{p.apellido}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{p.apellido}"  style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{personaController.selected.apellido}"  style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                  <p:column headerText="Fecha nacimiento" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{p.fechaNac}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{p.fechaNac}" style="width: 100%"/></f:facet>
+                       <f:facet name="input"><p:outputLabel for="popupFecha" value="Fecha" />
+                           <p:calendar id="popupFecha" value="#{personaController.selected.fechaNac}" /> 
+                        </f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                    <p:column headerText="Ocupacion" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{p.ocupacion}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{p.ocupacion}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{personaController.selected.ocupacion}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                      <p:column headerText="Ciudad" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{p.idCiudad}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{p.idCiudad}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{personaController.selected.idCiudad}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
@@ -152,21 +154,21 @@
                   <p:column headerText="Genero" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{p.genero}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{p.genero}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{personaController.selected.genero}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                 <p:column headerText="ID Usuario" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{p.idUsuario.idUsuario}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{p.idUsuario.idUsuario}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{personaController.selected.idUsuario.idUsuario}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                    <p:column headerText="Descripcion" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{p.descripcion}" /></f:facet>
-                        <f:facet name="input"><p:inputText  value="#{p.descripcion}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{personaController.selected.descripcion}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                   

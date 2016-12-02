@@ -438,6 +438,7 @@ public class MasterComentarioController implements Serializable {
             
             Usuario ou = new Usuario();
             ou.setIdUsuario(idComentador);
+            
             MasterPft mpft =  new MasterPft();
             mpft.setIdPft(pft);
 
@@ -446,9 +447,9 @@ public class MasterComentarioController implements Serializable {
             String fecha = dateFormat.format(date);
 
  
-            System.out.println("en el id pft"+ pft);
-            System.out.println("en id us"+ idComentador);
-            System.out.println("en id pub"+ idPublicacion);
+            System.out.println("en el id pft "+ pft);
+            System.out.println("en id us "+ idComentador);
+            System.out.println("en id pub "+ idPublicacion);
             
             current.setIdPft(mpft);
             //current.setComentario(comentario);

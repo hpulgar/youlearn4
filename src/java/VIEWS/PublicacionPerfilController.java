@@ -68,6 +68,11 @@ public class PublicacionPerfilController extends AmigosController implements Ser
         System.out.println("this.largoArray");
     }
 
+    public boolean mostrarVerMas(int idUsuario)
+    {
+        return this.largoArray > ejbFacade.PublicacionesPerfil(idUsuario).size();
+     
+    }
     
 
     public String getPaginaRedirect() {
@@ -558,6 +563,19 @@ public class PublicacionPerfilController extends AmigosController implements Ser
             System.out.println("ERRRROOORR "+e);
            // return "/publicacionDialog.xhtml";
         }
+    }
+    
+     
+    
+    public void precarga()
+    {
+        List<PublicacionPerfil> arMe;
+        arMe = ejbFacade.findAll();
+        for(int i =0;i<arMe.size();i++)
+        {
+            current = arMe.get(i);
+        }
+                
     }
    
     //////////////////////FIN EDITAR MANTENEDOR

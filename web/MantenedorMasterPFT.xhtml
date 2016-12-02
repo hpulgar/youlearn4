@@ -76,14 +76,14 @@
                 <p:column headerText="ID PFT" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{mpft.idPft}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{mpft.idPft}" readonly="true" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{masterPftController.selected.idPft}" readonly="true" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                 <p:column headerText="Descripcion" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{mpft.descripcion}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{mpft.descripcion}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{masterPftController.selected.descripcion}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 

@@ -91,28 +91,28 @@
                 <p:column headerText="ID Respuesta" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{mr.idRespuestas}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{mr.idRespuestas}" readonly="true" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{masterRespuestasController.selected.idRespuestas}" readonly="true" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                      <p:column headerText="ID Comentario" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{mr.idComentario}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{mr.idComentario}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{masterRespuestasController.selected.idComentario}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                  <p:column headerText="Respuesta" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{mr.respuesta}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{mr.respuesta}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{masterRespuestasController.selected.respuesta}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                 <p:column headerText="ID Usuario" >
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{mr.idUsuario}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{mr.idUsuario}" style="width: 100%"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{masterRespuestasController.selected.idUsuario}" style="width: 100%"/></f:facet>
                     </p:cellEditor>
                 </p:column>
                 

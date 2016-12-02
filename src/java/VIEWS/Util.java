@@ -42,6 +42,11 @@ public class Util implements Serializable {
         this.verCrear = verCrear;
     }
     
+    public void setVerCrearMasTabla(boolean verCrear) {
+        this.verCrear = verCrear;
+        this.tabla = verCrear;
+    }
+    
         public boolean isTabla() {
         return tabla;
     }

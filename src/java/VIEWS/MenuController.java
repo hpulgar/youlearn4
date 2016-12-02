@@ -300,6 +300,30 @@ public class MenuController implements Serializable {
            // return "/publicacionDialog.xhtml";
         }
      }
+     
+    public void cargaMenus(int id)
+    {
+        System.out.println("id q llega "+id);
+        current = ejbFacade.find(id);
+        
+    }   
+        
+    public void prepararCrear()
+    {
+        current = null;
+    }
+    
+    public void precarga()
+    {
+        List<Menu> arMe;
+        arMe = ejbFacade.findAll();
+        for(int i =0;i<arMe.size();i++)
+        {
+            current = arMe.get(i);
+        }
+                
+    }
+     
     ////////////////////////////////////////////
 
     @FacesConverter(forClass = Menu.class)

@@ -289,12 +289,10 @@ public class ForoCategoriaController implements Serializable {
             FacesMessage msg = new FacesMessage("Car Edited", ((ForoCategoria) event.getObject()).getIdCategoria().toString());
             FacesContext.getCurrentInstance().addMessage(null, msg);
 
-            //((Curso) event.getObject()).setPublicacion(current.getPublicacion());
-            //((PublicacionPerfil) event.getObject()).setIdPublicacion(current.getIdPublicacion());
-            System.out.println("Imprime publicacion q llega por evento: "+((ForoCategoria) event.getObject()).getIdCategoria());
-            //System.out.println("Imprime publicacion q llega por evento: "+((PublicacionPerfil) event.getObject()).getIdPublicacion());
-            //current = ((Curso) event.getObject());
+            current.setIdCategoria(((ForoCategoria) event.getObject()).getIdCategoria());
             ejbFacade.edit(current); //REFORMULAR?????
+            
+            current = null;
         }
           
           

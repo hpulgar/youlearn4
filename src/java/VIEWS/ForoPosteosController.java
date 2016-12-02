@@ -366,6 +366,11 @@ public class ForoPosteosController implements Serializable {
         return arForo2;
         
     }
+       
+       public List<ForoPosteos> tablaForo()
+       {
+           return ejbFacade.findAll();
+       }
    public List<ForoPosteos> listaForos(String tituloForo,int idSubcat)
     {
         
@@ -441,8 +446,10 @@ public class ForoPosteosController implements Serializable {
             //((ForoPosteo) event.getObject()).setIdPublicacion(current.getIdPublicacion());
             System.out.println("Imprime publicacion q llega por evento: "+((ForoPosteos) event.getObject()).getIdPost());
             //System.out.println("Imprime publicacion q llega por evento: "+((ForoPosteos) event.getObject()).getIdPublicacion());
-            //current = ((Curso) event.getObject());
+            current.setIdPost(((ForoPosteos) event.getObject()).getIdPost());
             ejbFacade.edit(current); //REFORMULAR?????
+            current = null;
+            
         }
           
           

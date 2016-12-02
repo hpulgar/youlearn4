@@ -22,7 +22,11 @@
     <h:body>
         
         <!--FORM GENERAL-->
-        <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" action="#{tableroController.prepararCrear()}" />
+        <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.tabla}" action="#{tableroController.prepararCrear()}" />
+        
+        <p:commandButton id="btoVerTabla" value="Tabla" actionListener="#{util.setTabla(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" action="#{tableroController.precarga()}" />
+         
+        <p:commandButton value="Cancelar"  action="#{util.setTabla(false)}" update="paginas" process="@this" rendered="#{util.tabla}" />
         
         
      <h:form id="form"  > 
@@ -34,7 +38,7 @@
                     
                     <p:outputLabel  value="Usuario" rendered="#{util.getVerCrear()}"/>
                     <h:selectOneMenu value="#{tableroController.selected.idUsuario}" rendered="#{util.getVerCrear()}">
-                        <f:selectItems value="#{usuarioController.tablaUsuario()}" var="d"  itemLabel="#{d.username}"  />
+                        <f:selectItems value="#{usuarioController.tablaUsuario()}" var="du"  itemLabel="#{du.username}"  />
                     </h:selectOneMenu>
                     
                     <p:outputLabel  value="Curso" rendered="#{util.getVerCrear()}"/>
@@ -75,11 +79,13 @@
             rows="10"
             paginator="true"
             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-            rowsPerPageTemplate="5,10,15">
+            rowsPerPageTemplate="5,10,15" rendered="#{util.tabla}">
                 <f:facet name="header">
-                Cursos
+                Tablero
                 </f:facet>
 
+                
+                <p:ajax event="rowEditInit" listener="#{tableroController.cargaDatos(p.idTablero)}" />
                 <p:ajax event="rowEdit" listener="#{tableroController.onRowEdit}" update="paginas:form:msgs" />
                 <p:ajax event="rowEditCancel" listener="#{tableroController.onRowCancel}" update="paginas:form:msgs" />
 
@@ -142,7 +148,7 @@
                 <p:column  headerText="Acciones" style="width:50px">
                     
                     <p:rowEditor> 
-                        #{tableroController.cargaDatos(p.idTablero)}
+                        
                     </p:rowEditor>
                     
                     <p:commandLink value="Eliminar" actionListener="#{tableroController.eliminarTablero(p.idTablero)}" update="general">

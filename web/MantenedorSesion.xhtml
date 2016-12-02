@@ -22,7 +22,11 @@
     <h:body>
         
         <!--FORM GENERAL-->
-        <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" action="#{sesionController.prepararCrear()}" />
+        <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.tabla}" action="#{sesionController.prepararCrear()}" />
+        
+        <p:commandButton id="btoVerTabla" value="Tabla" actionListener="#{util.setTabla(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" action="#{sesionController.precarga()}" />
+         
+        <p:commandButton value="Cancelar"  action="#{util.setTabla(false)}" update="paginas" process="@this" rendered="#{util.tabla}" />
         
         
      <h:form id="form"  > 
@@ -69,11 +73,12 @@
             rows="10"
             paginator="true"
             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-            rowsPerPageTemplate="5,10,15">
+            rowsPerPageTemplate="5,10,15" rendered="#{util.tabla}">
                 <f:facet name="header">
-                Cursos
+                Sessiones
                 </f:facet>
 
+                <p:ajax event="rowEditInit" listener="#{sesionController.cargaDatos(p.idSesion)}" />
                 <p:ajax event="rowEdit" listener="#{sesionController.onRowEdit}" update="paginas:form:msgs" />
                 <p:ajax event="rowEditCancel" listener="#{sesionController.onRowCancel}" update="paginas:form:msgs" />
 
@@ -129,7 +134,7 @@
                 <p:column  headerText="Acciones" style="width:50px">
                     
                     <p:rowEditor> 
-                        #{sesionController.cargaDatos(p.idSesion)}
+                        
                     </p:rowEditor>
                     
                     <p:commandLink value="Eliminar" actionListener="#{sesionController.eliminarSesion(p.idSesion)}" update="general">

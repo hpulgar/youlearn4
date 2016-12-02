@@ -472,6 +472,28 @@ public class ContenidosController implements Serializable {
         return "conte"+id;
     }
     
+      public void cargaDatos(int id)
+    {
+        
+        current = ejbFacade.find(id);
+        
+    }    
+        
+    public void prepararCrear()
+    {
+        current = null;
+    }
+    
+    public void precarga()
+    {
+        List<Contenidos> arMe;
+        arMe = ejbFacade.findAll();
+        for(int i =0;i<arMe.size();i++)
+        {
+            current = arMe.get(i);
+        }
+                
+    }
     
     //////////////////////////////////////////////////
     

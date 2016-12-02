@@ -2,14 +2,14 @@
 	Top bar in header background colour
 ----------------------------------------------------------- */
 #header-top {
-	background: #4ca20b;
+	background: #209b60;
 }
 
 /* -----------------------------------------------------------
 	Logo text colour
 ----------------------------------------------------------- */
 #logo h1 span {
-	color: #4ca20b;
+	color: #209b60;
 }
 
 /* -----------------------------------------------------------
@@ -31,23 +31,23 @@
 	5 colour blocks on homepage, 1 = left, 5 = right
 ----------------------------------------------------------- */
 .header-block-style-1 {
-	background: #4ca20b;
+	background: #209b60;
 }
 
 .header-block-style-2 {
-	background: #4ca20b;
+	background: #198752;
 }
 
 .header-block-style-3 {
-	background: #4ca20b;
+	background: #107243;
 }
 
 .header-block-style-4 {
-	background: #4ca20b;
+	background: #065f34;
 }
 
 .header-block-style-5 {
-	background: #4ca20b;
+	background: #034b29;
 }
 
 /* -----------------------------------------------------------
@@ -55,7 +55,7 @@
 ----------------------------------------------------------- */
 #main-menu li.current_page_item,
 #main-menu li:hover {
-	border-color: #4ca20b;
+	border-color: #209b60;
 }
 
 /* -----------------------------------------------------------
@@ -95,7 +95,7 @@
 	Table head colour
 ----------------------------------------------------------- */
 .page-content table th {
-	background: #285c00;
+	background: #209b60;
 }
 
 /* -----------------------------------------------------------
@@ -109,21 +109,21 @@ table tr a {
 	Tab border colour
 ----------------------------------------------------------- */
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected {
-	border-color: #4ca20b;
+	border-color: #209b60;
 }
 
 /* -----------------------------------------------------------
 	Content block title background colour
 ----------------------------------------------------------- */
 .block-title {
-	background: #4ca20b;
+	background: #209b60;
 }
 
 /* -----------------------------------------------------------
 	Event month background colour
 ----------------------------------------------------------- */
 .event-m {
-	background: #4ca20b;
+	background: #209b60;
 }
 
 .event-name {
@@ -134,14 +134,14 @@ table tr a {
 	Event title link colour
 ----------------------------------------------------------- */
 .event-info h4 a {
-	color: #4ca20b;
+	color: #209b60;
 }
 
 /* -----------------------------------------------------------
 	Blog title link colour
 ----------------------------------------------------------- */
 .news-content h4 a {
-	color: #4ca20b;
+	color: #209b60;
 }
 
 /* -----------------------------------------------------------
@@ -178,7 +178,7 @@ table tr a {
 	Teacher title background colour
 ----------------------------------------------------------- */
 .teacher-4 li h3.teacher-title {
-	background: #4ca20b;
+	background: #209b60;
 }
 
 /* -----------------------------------------------------------
@@ -200,7 +200,7 @@ table tr a {
 	Footer background colour
 ----------------------------------------------------------- */
 #footer-wrapper {
-	background: #4ca20b;
+	background: #034b29;
 }
 
 /* -----------------------------------------------------------
@@ -210,11 +210,11 @@ table tr a {
 	http://hex2rgba.devoth.com/
 ----------------------------------------------------------- */
 .page-slider .slides .flex-caption p {
-	background: #4ca20b;
+	background: rgba(32, 155, 96, 0.6);
 }
 
 .slider .slides .flex-caption p {
-	background: #4ca20b;
+	background: rgba(32, 155, 96, 0.6);
 }
 
 /* -----------------------------------------------------------
@@ -247,28 +247,28 @@ table tr a {
 	Widget title border/block colour
 ----------------------------------------------------------- */
 .widget-title-block {
-	background: #285c00;
+	background: #198752;
 }
 
 /* -----------------------------------------------------------
 	Tag widget background colour
 ----------------------------------------------------------- */
 .wp-tag-cloud li {
-	background: #3a8104;
+	background: #198752;
 }
 
 /* -----------------------------------------------------------
 	Background colour of footer bottom bar
 ----------------------------------------------------------- */
 #footer-bottom {
-	background: #3a8104;
+	background: #198752;
 }
 
 /* -----------------------------------------------------------
 	Page title border/block colour
 ----------------------------------------------------------- */
 .page-title .page-title-block {
-	background: #4ca20b;
+	background: #198752;
 }
 
 /* -----------------------------------------------------------
@@ -286,7 +286,7 @@ table tr a {
 }
 
 .title-block {
-	background: #4eb305;
+	background: #198752;
 }
 
 /* -----------------------------------------------------------

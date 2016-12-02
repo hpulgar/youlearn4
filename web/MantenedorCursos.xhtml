@@ -22,7 +22,11 @@
     <h:body>
         
         <!--FORM GENERAL-->
-         <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" />
+        <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.tabla}" action="#{cursoController.prepararCrear()}" />
+        
+        <p:commandButton id="btoVerTabla" value="Tabla" actionListener="#{util.setTabla(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" action="#{cursoController.precarga()}" />
+         
+        <p:commandButton value="Cancelar"  action="#{util.setTabla(false)}" update="paginas" process="@this" rendered="#{util.tabla}" />
         
         
      <h:form id="form"  > 
@@ -34,12 +38,12 @@
                     
                     <p:outputLabel  value="Sub Categoria" rendered="#{util.getVerCrear()}"/>
                     <h:selectOneMenu value="#{cursoController.selected.idCat}" rendered="#{util.getVerCrear()}">
-                        <f:selectItems value="#{cursoSubCatController.itemsAvailableSelectOne}" />
+                        <f:selectItems value="#{cursoSubCatController.tablaCursoSubCat()}" var="csc" itemLabel="#{csc.nomSubcat}" />
                     </h:selectOneMenu>
                     
                     <p:outputLabel  value="Usuario" rendered="#{util.getVerCrear()}"/>
                     <h:selectOneMenu value="#{cursoController.selected.idUsuario}" rendered="#{util.getVerCrear()}">
-                        <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}" />
+                        <f:selectItems value="#{usuarioController.tablaUsuario()}" var="us" itemLabel="#{us.username}" />
                     </h:selectOneMenu>
                     
                     <p:outputLabel for="popup" value="fecha creacion" rendered="#{util.getVerCrear()}"/>
@@ -77,7 +81,7 @@
                      
                  </p:commandButton>
                     
-                   <p:commandButton value="Cancelar"  action="#{util.setVerCrear(false)}" update="paginas" process="@this" rendered="#{util.getVerCrear()}" />
+                   <p:commandButton value="Cancelar"  action="#{util.setVerCrear(false)}" update="paginas" process="@this" rendered="#{util.getVerCrear()}" actionListener="#{perfilController.prepararCrear()}" />
                  
         
            
@@ -94,11 +98,13 @@
             rows="10"
             paginator="true"
             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-            rowsPerPageTemplate="5,10,15">
+            rowsPerPageTemplate="5,10,15" rendered="#{util.tabla}">
                 <f:facet name="header">
                 Cursos
                 </f:facet>
-
+                
+                
+                <p:ajax event="rowEditInit" listener="#{cursoController.cargaDatos(p.idCurso)}"  />
                 <p:ajax event="rowEdit" listener="#{cursoController.onRowEdit}" update="paginas:form:msgs" />
                 <p:ajax event="rowEditCancel" listener="#{cursoController.onRowCancel}" update="paginas:form:msgs" />
 
@@ -114,7 +120,7 @@
                         <f:facet name="output"><h:outputText value="#{p.idCat.nomSubcat}"/></f:facet>
                         <f:facet name="input">
                             <h:selectOneMenu value="#{cursoController.selected.idCat}" style="width:100%">
-                                <f:selectItems value="#{cursoSubCatController.itemsAvailableSelectOne}" />
+                                <f:selectItems value="#{cursoSubCatController.tablaCursoSubCat()}" var="csc"  itemLabel="#{csc.nomSubcat}" />
                             </h:selectOneMenu>
                         </f:facet>
                     </p:cellEditor>
@@ -125,7 +131,7 @@
                         <f:facet name="output"><h:outputText value="#{p.idUsuario}"/></f:facet>
                         <f:facet name="input">
                             <h:selectOneMenu value="#{cursoController.selected.idUsuario}" style="width:100%">
-                                <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}" />
+                                <f:selectItems value="#{usuarioController.tablaUsuario()}" var="us" itemLabel="#{us.username}" />
                             </h:selectOneMenu>
                         </f:facet>
                     </p:cellEditor>

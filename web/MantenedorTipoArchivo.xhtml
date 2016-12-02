@@ -22,7 +22,11 @@
     <h:body>
         
         <!--FORM GENERAL-->
-        <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" action="#{tipoArchivoController.prepararCrear()}" />
+        <p:commandButton id="btoMostrarCrear" value="Nuevo" actionListener="#{util.setVerCrear(true)}" update="paginas" process="@all" rendered="#{!util.tabla}" action="#{tipoArchivoController.prepararCrear()}" />
+        
+        <p:commandButton id="btoVerTabla" value="Tabla" actionListener="#{util.setTabla(true)}" update="paginas" process="@all" rendered="#{!util.getVerCrear()}" action="#{tipoArchivoController.precarga()}" />
+         
+        <p:commandButton value="Cancelar"  action="#{util.setTabla(false)}" update="paginas" process="@this" rendered="#{util.tabla}" />
         
         
      <h:form id="form"  > 
@@ -63,11 +67,13 @@
             rows="10"
             paginator="true"
             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-            rowsPerPageTemplate="5,10,15">
+            rowsPerPageTemplate="5,10,15" rendered="#{util.tabla}">
                 <f:facet name="header">
-                Cursos
+                Tipo Archivo
                 </f:facet>
+                
 
+                <p:ajax event="rowEditInit" listener="#{tipoArchivoController.cargaDatos(p.idTipo)}" />
                 <p:ajax event="rowEdit" listener="#{tipoArchivoController.onRowEdit}" update="paginas:form:msgs" />
                 <p:ajax event="rowEditCancel" listener="#{tipoArchivoController.onRowCancel}" update="paginas:form:msgs" />
 
@@ -98,7 +104,7 @@
                 <p:column  headerText="Acciones" style="width:50px">
                     
                     <p:rowEditor> 
-                        #{tipoArchivoController.cargaDatos(p.idTipo)}
+                        
                     </p:rowEditor>
                     
                     <p:commandLink value="Eliminar" actionListener="#{tipoArchivoController.eliminarTipoArchivo(p.idTipo)}" update="general">
