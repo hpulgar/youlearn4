@@ -79,7 +79,7 @@ public class NotificacionesFacade extends AbstractFacade<Notificaciones> {
         
     }
       
-      public List esDeSiMismo(int idUsuario)
+      public List tipoAlumno(int idUsuario)
     {
      
         

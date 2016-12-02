@@ -636,6 +636,7 @@ public void cargaDatos(int id)
         }
     }
     
+   
     
     public void creacionN()
     {
