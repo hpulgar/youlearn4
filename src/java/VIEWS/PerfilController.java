@@ -96,7 +96,10 @@ public void cargaDatos(int id)
             System.out.println("Imprime publicacion q llega por evento: "+((Perfil) event.getObject()).getIdPerfil());
             //System.out.println("Imprime publicacion q llega por evento: "+((PublicacionPerfil) event.getObject()).getIdPublicacion());
             //current = ((Curso) event.getObject());
+            
+            current.setIdPerfil(((Perfil) event.getObject()).getIdPerfil());
             ejbFacade.edit(current); //REFORMULAR?????
+            current= null;
         }
           
           
