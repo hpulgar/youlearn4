@@ -88,7 +88,7 @@
 			<!-- BEGIN .content-block -->
 			<div class="content-block">
 				
-				<h3 class="block-title"><a href="events.html">Filtro &raquo;</a></h3>
+				<h3 class="block-title"><a>Buscar un curso</a></h3>
 				
 				<ul class="event-list">
 					<!-- BEGIN .event-wrapper -->
@@ -110,42 +110,7 @@
                                                     
                                                     
                                                     
-                                                    <h:form style="margin-top: 20px">
-                                                          
-                                                        <label for="Buscar Por nombre">Subcategoria del curso</label>
-                                                                <h:inputText  id="campo" value="#{cursoController.nombreCurso}" required="false" />
-                                                               
-                                                                
-                                                                
-                                                                <label for="categoria">Categoria del curso</label><br></br>
-                                                                <h:selectOneMenu value="#{cursoCategoriaController.id_curso_cat}">
-                                                                    <f:selectItem itemValue="0" itemLabel="Seleccione una Categoria" noSelectionOption="true" /> 
-                                                                        <p:ajax  update="subcategorias"/>
-                                                                        <c:forEach items="#{cursoCategoriaController.cCats()}" var="c"> 
-                                                                            <f:selectItem itemValue="#{c.idCat}" itemLabel="#{c.nomCat}" />   
-                                                                        </c:forEach>
-                                                                </h:selectOneMenu>
-
-                                                                  
-                                                                <label for="subcategoria">Subcategoria del curso</label>
-                                                                <h:selectOneMenu value="#{cursoSubCatController.id_cSub_cat}" id="subcategorias" >
-                                                                    <f:selectItem itemValue="0" itemLabel="Seleccione una Categoria"  noSelectionOption="true"/> 
-                                                                        <c:forEach items="#{cursoSubCatController.listaSubCategorias(cursoCategoriaController.id_curso_cat)}" var="fsc"  >
-                                                                            <f:selectItem itemValue="#{fsc.idSubcat}" itemLabel="#{fsc.nomSubcat}" />
-                                                                            
-                                                                        </c:forEach>
-                                                                    <p:ajax update="ListaCursos" />
-                                                                </h:selectOneMenu>	
-
-                                                               
-                                                                 <p:commandButton  value="Buscar" update="ListaCursos"  process="@all" />
-                                                                 <br/><br/>
-                                                           
-                                                                <p:commandButton  value="Limpiar" update="ListaCursos"  process="@all" action="#{cursoController.setNombreCurso(null)}" actionListener="#{cursoSubCatController.setId_cSub_cat(0)}">
-                                                                       <p:ajax update="campo" resetValues="true" />
-                                                                </p:commandButton>
-                                                                    
-                                                        </h:form>
+                                               
                                                     </h:panelGroup> 
 				
 					<!-- END .event-wrapper -->

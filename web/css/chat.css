@@ -78,7 +78,6 @@
 .user:before{
 	content:'';
 	position:absolute;
-	background:#2ecc71;
 	height:10px;
 	width:10px;
 	left:10px;

@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+        
+        
+     
+        
+    </h:head>
+    <h:body>
+         
+      
+           
+                                                    
+       
+        
+       
+         
+        
+        <p:panel id="pendientes1" header="Cursos pendientes de aprobación - Aún no hay cursos pendientes" rendered="#{empty cursoController.cursosNoAprobadosTodos()}">
+              
+    </p:panel>
+        <p:panel  rendered="#{not empty cursoController.cursosNoAprobadosTodos()}" id="pendientes" header="Cursos pendientes de aprobación">
+          <h:form>
+                 <p:dataTable var="lc" value="#{cursoController.cursosNoAprobadosTodos()}" rows="5" 
+                                         paginator="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15" emptyMessage="No se encontraron resultados" currentPageReportTemplate="(Pagina: {currentPage}/{totalPages})">
+                        <p:column headerText="ID Curso" id="idCursoHeader" filterBy="#{lc.idCurso}" sortBy="#{lc.idCurso}">
+                        <f:facet name="idCursoheader">
+                            <h:outputText value="ID Curso" />
+                        </f:facet>
+                        <h:outputText value="#{lc.idCurso}" />
+                        </p:column>
+
+                        <p:column headerText="Nombre curso" id="nombreCursoHeader" filterBy="#{lc.nomCurso}" sortBy="#{lc.nomCurso}">
+                        <f:facet name="nombreCursoheader">
+                            <h:outputText value="Nombre Curso" />
+                        </f:facet>
+                            <h:outputText value="#{lc.nomCurso}" />
+                        </p:column>
+
+                        <p:column headerText="Sucategoria" id="SubcategoriaCursoHeader" filterBy="#{lc.idCat.nomSubcat}" sortBy="#{lc.idCat.nomSubcat}">
+                        <f:facet name="SubcategoriaCursoHeader">
+                            <h:outputText value="Subcategirua Curso" />
+                        </f:facet>
+                            <h:outputText value="#{lc.idCat.nomSubcat}" />
+                        </p:column>
+                     
+                            <p:column headerText="Opciones">
+                          <p:commandButton value="Aprobar curso" type="button" onclick="PF('#{lc.idCurso}').show();" />
+                          <!-- <p:commandButton onclick="PF('#/{lc.idCurso}').show();" value="Desaprobar curso" />   -->
+                           <p:dialog header="Desaprobar curso" widgetVar="#{lc.idCurso}" modal="true" height="100">
+                        <h:outputText value="¿Está seguro que desea aprobar el curso #{lc.nomCurso} ?" />
+                        <p:commandButton onclick="PF('#{lc.idCurso}').hide();" value="No" />       
+                        <p:commandButton action="#{cursoController.aprobarCurso(lc.idCurso)}" value="Si"  update="@form"/>       
+                    </p:dialog>  
+                        </p:column>
+                      
+                    </p:dataTable>
+                 
+                  
+              </h:form>
+        </p:panel>
+
+      
+       
+        <p:panel id="aprobados" header="Cursos aprobados - Aún no hay cursos aprobados" rendered="#{empty cursoController.cursosAprobadosTodos()}">
+              
+    </p:panel>
+        
+        <p:panel id="aprobadosNotEmpty" header="Cursos aprobados : #{cursoController.cursosAprobadosTodos().size()}" rendered="#{not empty cursoController.cursosAprobadosTodos()}">
+             <h:form>
+                 <p:dataTable var="lc" value="#{cursoController.cursosAprobadosTodos()}" rows="5" 
+                                         paginator="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15" emptyMessage="No se encontraron resultados" currentPageReportTemplate="(Pagina: {currentPage}/{totalPages})">
+                        <p:column headerText="ID Curso" id="idCursoHeader" filterBy="#{lc.idCurso}" sortBy="#{lc.idCurso}">
+                        <f:facet name="idCursoheader">
+                            <h:outputText value="ID Curso" />
+                        </f:facet>
+                        <h:outputText value="#{lc.idCurso}" />
+                        </p:column>
+
+                        <p:column headerText="Nombre curso" id="nombreCursoHeader" filterBy="#{lc.nomCurso}" sortBy="#{lc.nomCurso}">
+                        <f:facet name="nombreCursoheader">
+                            <h:outputText value="Nombre Curso" />
+                        </f:facet>
+                            <h:outputText value="#{lc.nomCurso}" />
+                        </p:column>
+
+                        <p:column headerText="Sucategoria" id="SubcategoriaCursoHeader" filterBy="#{lc.idCat.nomSubcat}" sortBy="#{lc.idCat.nomSubcat}">
+                        <f:facet name="SubcategoriaCursoHeader">
+                            <h:outputText value="Subcategirua Curso" />
+                        </f:facet>
+                            <h:outputText value="#{lc.idCat.nomSubcat}" />
+                        </p:column>
+                        <p:column headerText="Opciones">
+                          <p:commandButton value="Desaprobar curso" type="button" onclick="PF('#{lc.idCurso}').show();" />
+                          <!-- <p:commandButton onclick="PF('#/{lc.idCurso}').show();" value="Desaprobar curso" />   -->
+                           <p:dialog header="Desaprobar curso" widgetVar="#{lc.idCurso}" modal="true" height="100">
+                        <h:outputText value="¿Está seguro que desea desaprobar el curso #{lc.nomCurso} ?" />
+                        <p:commandButton onclick="PF('#{lc.idCurso}').hide();" value="No" />       
+                        <p:commandButton action="#{cursoController.desaprobarCurso(lc.idCurso)}" value="Si"  update="@form" onclick="PF('#{lc.idCurso}').hide();"/>       
+                    </p:dialog>  
+                        </p:column>
+                      
+                    </p:dataTable>
+                 
+                  
+              </h:form>
+
+  
+
+            </p:panel>
+        
+    
+        
+        
+        
+    </h:body>
+</html>
+

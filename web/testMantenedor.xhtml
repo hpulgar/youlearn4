@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui"
+      >
+
+    <h:head>    
+            <title>Teszt</title>        
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>                        
+            <link rel="stylesheet" type="text/css" href="style.css"/>            
+    </h:head>
+
+  
+ <h:form id="form">
+   <p:growl id="msgs" showDetail="true"/>
+ 
+   <p:dataTable id="cars1" var="car" value="#{foroCategoriaController.values}" editable="true" style="margin-bottom:20px">
+       <f:facet name="header">
+           Row Editing
+       </f:facet>
+ 
+       <p:ajax event="rowEdit" listener="#{foroCategoriaController.onRowEdit}" update=":form:msgs" />
+       <p:ajax event="rowEditCancel" listener="#{foroCategoriaController.onRowCancel}" update=":form:msgs" />
+ 
+       <p:column headerText="Id">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{car.idCategoria}" /></f:facet>
+               <f:facet name="input"><p:inputText id="modelInput" value="#{car.idCategoria}" style="width:100%"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column headerText="Year">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{car.descripcion}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{car.descripcion}" style="width:100%" label="Year"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column headerText="Brand">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{car.titulo}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{car.titulo}" style="width:100%" label="Titulo"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+ 
+       <p:column style="width:32px">
+           <p:rowEditor />
+       </p:column>
+   </p:dataTable>
+ </h:form>
+</html>

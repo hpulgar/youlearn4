@@ -90,6 +90,24 @@ public class CursoFacade extends AbstractFacade<Curso> {
         return q.getFirstResult(); //return q.getResultList();
     }
     
+         public List<Curso> cursosNoAprobadoTodos()
+    {
+        EntityManager m2 = getEntityManager();
+        Query q=m2.createNamedQuery("Curso.findByNoAprobadoTodos");
+        
+        
+        return q.getResultList();
+    }
+         
+           public List<Curso> cursosAprobadoTodos()
+    {
+        EntityManager m2 = getEntityManager();
+        Query q=m2.createNamedQuery("Curso.findByAprobadoTodos");
+        
+        
+        return q.getResultList();
+    }
+    
     
     
     

@@ -7,9 +7,7 @@ package ENTITIES;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,14 +17,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -39,8 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Sesion.findAll", query = "SELECT s FROM Sesion s"),
     @NamedQuery(name = "Sesion.findByIdSesion", query = "SELECT s FROM Sesion s WHERE s.idSesion = :idSesion"),
     @NamedQuery(name = "Sesion.findByIp", query = "SELECT s FROM Sesion s WHERE s.ip = :ip"),
-    @NamedQuery(name = "Sesion.findByInicio", query = "SELECT s FROM Sesion s WHERE s.inicio = :inicio"),
-    @NamedQuery(name = "Sesion.findByFin", query = "SELECT s FROM Sesion s WHERE s.fin = :fin")})
+    @NamedQuery(name = "Sesion.findByIdUsuario", query = "SELECT s.idUsuario FROM Usuario s WHERE s.username = :username"),
+    @NamedQuery(name = "Sesion.findByFecha", query = "SELECT s FROM Sesion s WHERE s.fecha = :fecha")})
 public class Sesion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,39 +44,21 @@ public class Sesion implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_sesion")
     private Integer idSesion;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "ip")
     private String ip;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "inicio")
+    @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date inicio;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fin")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fin;
+    private Date fecha;
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
     @ManyToOne(optional = false)
     private Usuario idUsuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSesion")
-    private List<LogSubidas> logSubidasList;
 
     public Sesion() {
     }
 
     public Sesion(Integer idSesion) {
         this.idSesion = idSesion;
-    }
-
-    public Sesion(Integer idSesion, String ip, Date inicio, Date fin) {
-        this.idSesion = idSesion;
-        this.ip = ip;
-        this.inicio = inicio;
-        this.fin = fin;
     }
 
     public Integer getIdSesion() {
@@ -100,20 +77,12 @@ public class Sesion implements Serializable {
         this.ip = ip;
     }
 
-    public Date getInicio() {
-        return inicio;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setInicio(Date inicio) {
-        this.inicio = inicio;
-    }
-
-    public Date getFin() {
-        return fin;
-    }
-
-    public void setFin(Date fin) {
-        this.fin = fin;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public Usuario getIdUsuario() {
@@ -122,15 +91,6 @@ public class Sesion implements Serializable {
 
     public void setIdUsuario(Usuario idUsuario) {
         this.idUsuario = idUsuario;
-    }
-
-    @XmlTransient
-    public List<LogSubidas> getLogSubidasList() {
-        return logSubidasList;
-    }
-
-    public void setLogSubidasList(List<LogSubidas> logSubidasList) {
-        this.logSubidasList = logSubidasList;
     }
 
     @Override

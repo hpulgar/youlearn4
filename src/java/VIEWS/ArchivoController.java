@@ -256,7 +256,62 @@ public class ArchivoController implements Serializable {
           
         }
     }
+      
+            public List<Archivo> archivosNoAprobadosTodos()
+    {
+        return ejbFacade.archivosNoAprobadoTodos();
+    }
+         
+ 
+            public List<Archivo> archivosAprobadosTodos()
+    {
+        return ejbFacade.archivosAprobadoTodos();
+    }
     
+            
+             public void desaprobarArchivo(int idArchivo)
+    {
+       
+          
+        try{
+            
+            System.out.println("Desaprobando "+idArchivo);
+            current = ejbFacade.find(idArchivo);
+            current.setAutorizado(false);
+          
+            ejbFacade.crear(current);
+           
+           
+         
+            
+        }catch(Exception e)
+        {
+            System.out.println("ERRRROOORR "+e);
+          
+        }
+    }
+             
+                    public void aprobarArchivo(int idArchivo)
+    {
+       
+          
+        try{
+            
+            System.out.println("Aprobando "+idArchivo);
+            current = ejbFacade.find(idArchivo);
+            current.setAutorizado(true);
+          
+            ejbFacade.crear(current);
+           
+           
+         
+            
+        }catch(Exception e)
+        {
+            System.out.println("ERRRROOORR "+e);
+          
+        }
+    }
     
      public void creacionA()
     {
@@ -303,7 +358,7 @@ public class ArchivoController implements Serializable {
         
         for(int i=0;i<arArchivo.size();i++)
         {
-            if(arArchivo.get(i).getIdContenido().getIdContenido() == idContenido)
+            if(arArchivo.get(i).getIdContenido().getIdContenido() == idContenido && arArchivo.get(i).getAutorizado()==true)
             {
                 arArchivo2.add(arArchivo.get(i));
             }

@@ -166,7 +166,17 @@ font-size: 11px;
                     <ul id="main-menu">
 
                         <li class="current_page_item"><a href="index.xhtml">Home</a></li>
-                       
+                          <h:form>
+                        <li><h:commandLink  value="Admin" rendered="#{menuController.logeado() and usuarioController.idProfile eq '4'}"/>
+                        <ul>
+                                
+                                <li><h:commandLink  value="Mantenedor plataforma" action="MantenedorGeneral.xhtml"></h:commandLink></li>
+                                <li><h:commandLink  value="Aprobar cursos/contenido" action="aprobar_admin.xhtml"></h:commandLink></li>
+                        </ul>
+                            
+                        </li>
+                        
+                          </h:form>
                         <h:form id="form" rendered="#{menuController.logeado()}">
                         <li id="notification_li">
                             <h:outputText rendered="#{not empty notificacionesController.cantidadNotificaciones(usuarioController.id_user)}"><span id="notification_count">#{notificacionesController.cantidadNotificaciones(usuarioController.id_user)}</span></h:outputText>
@@ -208,7 +218,7 @@ font-size: 11px;
                             <ul>
                                 
                                 <li><h:commandLink  value="Todos los cursos" action="cursos_listado.xhtml"></h:commandLink></li>
-                                <li><h:commandLink  value="Cursos que sigo" action="mis_cursos.xhtml"></h:commandLink></li>
+                                <li><h:commandLink  value="Seguidos/Suscritos" action="mis_cursos.xhtml"></h:commandLink></li>
                                 <li><h:commandLink value="Crear un curso" action="curso_crear.xhtml" rendered="#{usuarioController.idProfile eq '3' or usuarioController.idProfile eq '4' or usuarioController.idProfile eq '5'}"></h:commandLink></li>
                                     <li><h:commandLink value="Administracion cursos" action="mis_cursos_admin.xhtml" rendered="#{not empty cursoController.cursosPendientesAprobacion(usuarioController.id_user) or not empty cursoController.cursosAprobados(usuarioController.id_user)}"></h:commandLink></li>
                                   

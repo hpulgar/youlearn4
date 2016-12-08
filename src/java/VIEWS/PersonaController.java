@@ -147,10 +147,34 @@ public void cargaDatos(int id)
           
         }
     }
+    
+      public String actualizaPersona() {
+       
+            System.out.println("Actualizar persona...");
+             try {
+            getFacade().edit(current);
+          
+            return "perfil.xhtml";
+            
+        } catch (Exception e) {
+           
+            return null;
+        }
+         
+            
+       
+    }
      
              public List<Persona> tablaPersona()
          {
              return ejbFacade.findAll();
+         }
+             
+                public int creditosUsuario(int idUsuario)
+         {
+             System.out.println("ID USUARIO "+idUsuario);
+             System.out.println("Creditos "+ejbFacade.creditosUsuario(idUsuario));
+             return ejbFacade.creditosUsuario(idUsuario);
          }
          
         public void onRowEdit(RowEditEvent event) 

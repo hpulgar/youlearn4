@@ -14,7 +14,7 @@
 	
 		
 	<!--Title-->
-	<title>Youlearn - Curso</title>
+	<title>Youlearn - Curso </title>
   <ui:include src="utilidades.xhtml" />
 
 	
@@ -36,13 +36,11 @@
 		<div class="page-header-inner clearfix">
 		
 		<div class="page-title">	
-			<h2>Cursos</h2>
+			<h2>Curso</h2>
 			<div class="page-title-block"></div>
 		</div>
 		
-		<div class="breadcrumbs">
-			<p><a href="index.html">Home</a> &#187; Cursos</p>
-		</div>
+		
 		
 		</div>
 		
@@ -79,13 +77,33 @@
                                                      
                                                     <div class="event-info">
                                                         
-                                                            
-                                                            <div class="event-meta">
-                                                                    <p><strong>Nombre: </strong>#{cs.nomCurso}</p>
-                                                                    <p><strong>Categoria: </strong>#{cs.idCat.idCategoria.nomCat}</p>
-                                                                    <p><strong>Subcategoria: </strong>#{cs.idCat.nomSubcat}</p>
-                                                                    <p><strong>Autor: </strong>#{cs.idUsuario.username}</p>
-                                                            </div>
+                                      <ul class="portfolio-single-cols">
+							
+					<li class="col-1">
+						<div class="title1 clearfix">
+							<h4>Introduccion</h4>
+							<div class="title-block"></div>
+						</div>
+						<p><h:outputText value="#{cs.introduccionCurso}" escape="false" /></p>
+					</li>
+							
+					<li class="col-2">
+						<div class="title1 clearfix">
+							<h4>Detalles curso</h4>
+							<div class="title-block"></div>
+						</div>
+							
+						<ul class="portfolio-details">
+							<li class="clearfix"><strong>Nombre</strong> <span>#{cs.nomCurso}</span></li>
+							<li class="clearfix"><strong>Categoria</strong> <span>#{cs.idCat.idCategoria.nomCat}</span></li>
+							<li class="clearfix"><strong>Subcategoria</strong> <span>#{cs.idCat.nomSubcat}</span></li>
+							<li class="clearfix"><strong>Autor</strong> <span>#{cs.idUsuario.username}</span></li>
+						</ul>
+								
+					</li>
+
+				</ul>
+                                            
 
                                                         <img src="#{cs.imagenPortadaCurso}"  class="event-image" />
 
@@ -98,22 +116,43 @@
                                                                      
                                                                   <p:commandButton actionListener="#{inscripcionCursoController.crearSuscripcion()}" disabled="#{!inscripcionCursoController.suscripcionCurso(cs.idCurso,usuarioController.id_user)}" value="#{inscripcionCursoController.nboton(cs.idCurso,usuarioController.id_user)}" style="float: left"/>
                                                                      <p:commandButton action="#{cursoController.irTablero(cs.idCurso)}" value="Ir al tablero del cuso" style="float: right"/>
-                                </h:form>	
-                                                                <p><strong>Personas Inscritas: </strong>#{inscripcionCursoController.suscriptores(cs.idCurso)}</p>
-                                                                <p><strong>Seguidores: </strong>#{inscripcionCursoController.seguidores(cs.idCurso)}</p>
-                                                                <p><strong>Autor: </strong>#{cs.idUsuario.username}</p>
+                                                                 </h:form><br></br>	
+                                                                
+                                                    
                                                             </div>
+                                                            <br/><br></br>
+                                                            <table style="width:100%;">
+				<thead>
+					<tr>
+						<th>Seguidores</th>
+						<th>Suscriptores</th>
+						
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td data-title="Column 1">#{inscripcionCursoController.seguidores(cs.idCurso)}</td>
+						<td data-title="Column 1">#{inscripcionCursoController.suscriptores(cs.idCurso)}</td>
+						
+					</tr>
+					
+						
+					
+				</tbody>
+			</table>
                                                                 <br/>
+                                                              
+                                          <div class="title1 clearfix">
+					  <h4>Descripcion</h4>
+                                          <div class="title-block"></div>
+					  </div>
+                                                                <p><h:outputText value="#{cs.descripcionCurso}" escape="false" /></p>
                                                                 <br/>
-                                                            
-                                                            <p><strong>Introduccion</strong></p>
-                                                            <p><h:outputText value="#{cs.introduccionCurso}" escape="false" /></p>
-                                                            <br/>
-                                                            <p><strong>Descripcion</strong></p>
-                                                            <p><h:outputText value="#{cs.descripcionCurso}" escape="false" /></p>
-                                                            <br/>
-                                                            <p><strong>Contenido</strong></p>
-                                                            <p><h:outputText value="#{cs.contenidos}" escape="false" /></p>
+                                           <div class="title1 clearfix">
+					  <h4>Contenido</h4>
+                                          <div class="title-block"></div>
+					  </div>
+                                         <p><h:outputText value="#{cs.contenidos}" escape="false" /></p>
 
                                                     </div>
                                             
@@ -127,10 +166,7 @@
                         
                          <div id="tabs-tab-title-2">
 						
-						<div class="title1 clearfix">
-							<h4>Unidades</h4>
-							<div class="title-block"></div>
-						</div>
+						
 						
 						<table style="width:100%;">
 							<thead>
@@ -147,7 +183,10 @@
                                                                     <tr>
                                                                    
                                                                             <td data-title="Column 1">#{cont.unidad}</td>
-                                                                            <td data-title="Column 1">  <h:commandLink rendered="#{inscripcionCursoController.esSeguidor(usuarioController.id_user, cursoController.idCurso) eq 'true' and cont.tipoAlumno eq '1'}" value="#{cont.nombreUnidad}" action="#{contenidosController.verContenidoI(cont.idContenido)}"/>  <h:outputText rendered="#{inscripcionCursoController.esSeguidor(usuarioController.id_user, cursoController.idCurso) eq 'true' and cont.tipoAlumno eq '2'}" value="Este contenido está solo para suscriptores"/></td>
+                                                                            <td data-title="Column 1">  <h:commandLink rendered="#{inscripcionCursoController.esSeguidor(usuarioController.id_user, cursoController.idCurso) eq 'true' and cont.tipoAlumno eq '1'}" value="#{cont.nombreUnidad}" action="#{contenidosController.verContenidoI(cont.idContenido)}"/>  
+                                                                                <h:outputText rendered="#{inscripcionCursoController.esSeguidor(usuarioController.id_user, cursoController.idCurso) eq 'true' and cont.tipoAlumno eq '2'}" value="Este contenido está solo para suscriptores"/>
+                                                                            
+                                                                            </td>
                                                                        
                                                                             
                                                                             <td data-title="Column 1">#{cont.fecha}</td>

@@ -9,6 +9,7 @@ import ENTITIES.Sesion;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +28,15 @@ public class SesionFacade extends AbstractFacade<Sesion> {
 
     public SesionFacade() {
         super(Sesion.class);
+    }
+    
+      public int cargaID(String username)
+    {
+        EntityManager em3 = getEntityManager();
+        Query q= em3.createNamedQuery("Sesion.findByIdUsuario").setParameter("username",username);
+      
+        return (int)q.getResultList().get(0);
+        
     }
     
 }

@@ -1469,6 +1469,11 @@ div.selector.disabled span, div.selector.disabled.active span {
 	width: 50px;
 	margin: 0 15px 0 0;
 }
+.event-date-derecha {
+	float: right;
+	width: 50px;
+	margin: 0 15px 0 0;
+}
 
 .event-info {
 	float: left;

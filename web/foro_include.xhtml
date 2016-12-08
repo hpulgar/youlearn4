@@ -27,7 +27,7 @@
                                                 <h:commandLink action="#{foroPosteosController.verPost(fo.idPost)}" value="#{fo.titulo}"/>
                                             </p:column>
                                             <p:column headerText="Iniciado Por">
-                                                <h:outputText value="#{fo.idUser.username}"/>
+                                                <h:outputText value="#{fo.idUser}"/>
                                             </p:column>
                                             <p:column headerText="Mensajes">
                                                 <h:outputText value="#{masterComentarioController.cuentaMensajes(fo.idPost)}"/> 

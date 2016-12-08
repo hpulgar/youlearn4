@@ -1,13 +1,17 @@
 package VIEWS;
 
 import ENTITIES.Sesion;
+import ENTITIES.Usuario;
 import VIEWS.util.JsfUtil;
 import VIEWS.util.PaginationHelper;
 import MODELS.SesionFacade;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.SimpleTimeZone;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -19,6 +23,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletRequest;
 import org.primefaces.event.RowEditEvent;
 
 @Named("sesionController")
@@ -194,6 +199,46 @@ public class SesionController implements Serializable {
     public Sesion getSesion(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
+    
+      public void creacionSesion(String username)
+    {
+        System.out.println("Antes de Crear sesion");
+          
+        try{
+            
+            int id_usuario = ejbFacade.cargaID(username);
+        
+             Usuario ou = new Usuario();
+            ou.setIdUsuario(id_usuario);
+            
+            HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();  
+            String ip = httpServletRequest.getRemoteAddr();  
+            
+              SimpleDateFormat sdf = new SimpleDateFormat();
+                sdf.setTimeZone(new SimpleTimeZone(-3, "GMT"));
+                sdf.applyPattern("yyyy/mm/dd");
+                Date fecha = new Date();
+
+            
+            Sesion obj = new Sesion();
+            obj.setIdUsuario(ou);
+            obj.setIp(ip);
+            obj.setFecha(fecha);
+           
+            
+
+            ejbFacade.create(obj);
+            current = null;
+           
+         
+            
+        }catch(Exception e)
+        {
+            System.out.println("ERROR al crear sesion "+e);
+          
+        }
+    }
+ 
     
     /////////////////////////////////////////////MANTENEDOR
     

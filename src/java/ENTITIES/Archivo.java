@@ -42,6 +42,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Archivo.findByNomArchivo", query = "SELECT a FROM Archivo a WHERE a.nomArchivo = :nomArchivo"),
     @NamedQuery(name = "Archivo.findByUbicacion", query = "SELECT a FROM Archivo a WHERE a.ubicacion = :ubicacion"),
     @NamedQuery(name = "Archivo.findByAutorizado", query = "SELECT a FROM Archivo a WHERE a.autorizado = :autorizado"),
+    @NamedQuery(name = "Archivo.findByNoAprobadoTodos", query = "SELECT c FROM Archivo c WHERE c.autorizado = 0"),
+    @NamedQuery(name = "Archivo.findByAprobadoTodos", query = "SELECT c FROM Archivo c WHERE c.autorizado = 1"),
     @NamedQuery(name = "Archivo.findByIdContenido", query = "SELECT a FROM Archivo a WHERE a.idContenido.idContenido = :idContenido"),
     @NamedQuery(name = "Archivo.findByFecha", query = "SELECT a FROM Archivo a WHERE a.fecha = :fecha")})
 public class Archivo implements Serializable {

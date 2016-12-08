@@ -40,6 +40,16 @@ public class PersonaFacade extends AbstractFacade<Persona> {
         return obP = (Persona) q.getSingleResult();
     }
     
+       public int creditosUsuario(int idUsuario)
+    {
+   
+        
+        EntityManager m2=getEntityManager();
+        Query q = m2.createNamedQuery("Persona.creditosUsuario").setParameter("idUsuario", idUsuario);
+        
+        return q.getFirstResult();
+    }
+    
     
     
 }

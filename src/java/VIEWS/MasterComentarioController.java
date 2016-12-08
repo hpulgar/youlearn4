@@ -462,7 +462,7 @@ public class MasterComentarioController implements Serializable {
 
             if(current.getComentario() != null)
             {
-                getFacade().create(current);
+                getFacade().crear(current);
                 this.current = null;
                 System.out.println(" Crea el Comentario");
             }

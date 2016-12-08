@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
 
 
@@ -52,10 +53,7 @@
 			<div class="page-title-block"></div>
 		</div>
 		
-		<div class="breadcrumbs">
-			<p><a href="index-2.html">Home</a> &#187;Login</p>
-		</div>
-		
+	
 		</div>
 		
 	<!-- END .page-header -->
@@ -93,6 +91,7 @@
 
 				<p>
                                     <h:commandButton class="button1" value="Login" id="submit" action="#{usuarioController.acceso()}">
+                                        <f:actionListener binding="#{sesionController.creacionSesion(usuarioController.nombreUsuario)}"/>
                                   </h:commandButton>
                                   
                                 </p> <br></br>

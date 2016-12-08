@@ -67,4 +67,24 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         
     }
     
+    public String creditos(int idUsuario)
+    {
+        EntityManager em3 = getEntityManager();
+        Query q= em3.createNamedQuery("Usuario.creditos").setParameter("idUsuario",idUsuario);
+        
+        return q.toString();
+        
+    }
+    
+      public String creditosUsuario(int idUsuario)
+    {
+        EntityManager em3 = getEntityManager();
+        Query q= em3.createNamedQuery("Usuario.creditosUsuario").setParameter("idUsuario",idUsuario);
+        
+        return q.toString();
+        
+    }
+    
+  
+    
 }

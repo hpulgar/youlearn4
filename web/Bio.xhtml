@@ -32,17 +32,19 @@
                                             
                                           
                                                     
-                                                    <h3><img src="#{personaController.selected.idUsuario.imagen_foto_perfil}" class="foto-perfil" /></h3>
+                                                   <img src="#{personaController.selected.idUsuario.imagen_foto_perfil}" class="foto-perfil" />
                                                      <div class="bio-info">
                                               
-                                                    <h2><h:outputText value="#{personaController.selected.idUsuario.username}" ></h:outputText></h2>
+                                                        <strong><h:outputText value="Nombre"></h:outputText></strong>  <br/>
+                                                         <h:outputText value="#{personaController.selected.nombre} #{personaController.selected.apellido}" ></h:outputText>
+     
+                                                    <br/> <br/>
                                                     
-                                                    <br/><br/>
+                                                    <strong><h:outputText value="Apodo"></h:outputText></strong>  <br/>
+                                                    <h:outputText value="#{personaController.selected.idUsuario.username}" ></h:outputText>
+     
+                                                    <br/> <br/>
                                                     
-                                                    <strong> <h:outputText value="Nombre "></h:outputText></strong>
-                                                    <br/>
-                                                    <h:outputText value="#{personaController.selected.nombre} #{personaController.selected.apellido}"></h:outputText>
-                                                    <br/><br/>
                                                     
                                                     <strong><h:outputText value="Descripcion"></h:outputText></strong>
                                                     <br/>
@@ -67,7 +69,7 @@
                                                     <h:outputText value="#/{personaController.selected.idUsuario.correo}" ></h:outputText>
                                                     <br/><br/> -->
                                                     <h:form>
-                                                        <h:commandLink value="Editaar" action="#"  disabled="true" style=" margin-right: 20px"/>
+                                                        <h:commandLink value="Editar" action="#"  disabled="true" style=" margin-right: 20px"/>
 
                                                         <!--  -->
                                                    

@@ -261,9 +261,13 @@ public void cargaDatos(int id)
         return uo.getUsername();
     }
     
-    public String cargaUsername(int idUsuario)
+    
+    
+    public int creditosUsuario(int idUsuario)
     {
-        return ejbFacade.username(idUsuario);
+        System.out.println("Intento obtener creditos");
+       current = ejbFacade.find(idUsuario);
+       return current.getCreditos();
     }
     
     
@@ -503,6 +507,9 @@ public void cargaDatos(int id)
         recreateModel();
         return "List";
     }
+    
+    
+    
 
     public void creacionU()
     {

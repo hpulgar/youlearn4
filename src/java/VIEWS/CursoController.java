@@ -22,6 +22,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
@@ -29,6 +30,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletRequest;
 import org.primefaces.event.RowEditEvent;
 
 
@@ -221,6 +223,52 @@ public void resetValues()
               
               System.out.println("Entra al metodo test..");
        
+    }
+          
+          public void aprobarCurso(int idCurso)
+    {
+       
+          
+        try{
+            
+            System.out.println("Aprobando "+idCurso);
+
+            current = ejbFacade.find(idCurso);
+            current.setAutorizado(true);
+          
+            ejbFacade.crear(current);
+           
+           
+           
+         
+            
+        }catch(Exception e)
+        {
+            System.out.println("ERRRROOORR "+e);
+          
+        }
+    }
+          
+       public void desaprobarCurso(int idCurso)
+    {
+       
+          
+        try{
+            System.out.println("Desaprobando "+idCurso);
+
+            current = ejbFacade.find(idCurso);
+            current.setAutorizado(false);
+          
+            ejbFacade.crear(current);
+        
+           
+         
+            
+        }catch(Exception e)
+        {
+            System.out.println("ERRRROOORR "+e);
+          
+        }
     }
 
     public String update() {
@@ -514,9 +562,19 @@ public void resetValues()
         return ejbFacade.cursosNoAprobado(idUsuario);
     }
          
+          public List<Curso> cursosNoAprobadosTodos()
+    {
+        return ejbFacade.cursosNoAprobadoTodos();
+    }
+         
           public List<Curso> cursosAprobados(int idUsuario)
     {
         return ejbFacade.cursosAprobado(idUsuario);
+    }
+          
+            public List<Curso> cursosAprobadosTodos()
+    {
+        return ejbFacade.cursosAprobadoTodos();
     }
           
           public String retornaNombre(int idCurso)
@@ -549,7 +607,7 @@ public void resetValues()
          }
         
          public List<String> autoCompletado(String query) {
-            arCurso = ejbFacade.findAll();
+            arCurso = ejbFacade.cursosAprobadoTodos();
              List<String> results = new ArrayList();
             for(int i = 0; i < arCurso.size(); i++) {
             

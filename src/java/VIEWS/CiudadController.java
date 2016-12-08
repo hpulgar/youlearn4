@@ -96,6 +96,15 @@ public class CiudadController implements Serializable {
     private CiudadFacade getFacade() {
         return ejbFacade;
     }
+    
+    public List<Ciudad> listaCiudades(int idPais)
+    {
+        arCiudad.clear();
+        arCiudad = ejbFacade.paisesList(idPais);
+        
+        
+         return arCiudad;
+    }
 
     public PaginationHelper getPagination() {
         if (pagination == null) {

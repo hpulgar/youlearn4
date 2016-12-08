@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+        
+        
+     
+        
+    </h:head>
+    <h:body>
+         
+      
+           
+                                                    
+       
+        
+       
+         
+        
+        <p:panel id="pendientes2" header="Archivos pendientes de aprobación - Aún no hay archivos pendientes" rendered="#{empty archivoController.archivosNoAprobadosTodos()}">
+              
+    </p:panel>
+        <p:panel  rendered="#{not empty archivoController.archivosNoAprobadosTodos()}" id="ArchivospendientesAprobacion" header="Archivos pendientes de aprobación">
+       <h:form id="ArchivonoAprobados">
+                 <p:dataTable id="recorreArchivos" var="ar" value="#{archivoController.archivosNoAprobadosTodos()}" rows="5" paginator="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15" emptyMessage="No se encontraron resultados" currentPageReportTemplate="(Pagina: {currentPage}/{totalPages})">
+                     <p:column headerText="IDArchivo" id="IDArchivo" filterBy="#{ar.idArchivo}" sortBy="#{ar.idArchivo}">
+                        <f:facet name="IDArchivo">
+                            <h:outputText value="ID Archivo" />
+                        </f:facet>
+                        <h:outputText value="#{ar.idArchivo}" />
+                        </p:column>
+                                         
+                        <p:column headerText="nombreArchivo" id="nombreArchivo" filterBy="#{ar.nomArchivo}" sortBy="#{ar.nomArchivo}">
+                        <f:facet name="nombreArchivo">
+                            <h:outputText value="Nombre Archivo" />
+                        </f:facet>
+                            <h:outputText value="#{ar.nomArchivo}" />
+                        </p:column>
+                     
+                     <p:column headerText="Ver archivo">
+                        <f:facet name="Ver archivo">
+                            <h:outputText value="Nombre Archivo" />
+                        </f:facet>
+                            <h:outputText value="#{ar.nomArchivo}" />
+                        </p:column>
+                                         
+                         <p:column headerText="descripcionArchivo" id="descripcionArchivo" filterBy="#{ar.descripcion}" sortBy="#{ar.descripcion}">
+                        <f:facet name="descripcionArchivo">
+                            <h:outputText value="Descripcion Archivo" />
+                        </f:facet>
+                             <h:outputText value="#{ar.descripcion}" />
+                        </p:column>
+                     
+                       <p:column headerText="Opciones">
+                          <p:commandButton value="Aprobar archivo" type="button" onclick="PF('#{ar.idArchivo}').show();" />
+                          <!-- <p:commandButton onclick="PF('#/{lc.idCurso}').show();" value="Desaprobar curso" />   -->
+                          <p:dialog header="Aprobar curso" widgetVar="#{ar.idArchivo}" modal="true">
+                              <h:graphicImage  value="#{ar.ubicacion}" rendered="#{ar.idTipoArchivo.idTipo eq '1' or ar.idTipoArchivo.idTipo eq '2' or ar.idTipoArchivo.idTipo eq '3'}" />
+                                              <!-- Si es un PDF -->  
+                                                  <h:panelGroup id="formatoPDF"  rendered="#{ar.idTipoArchivo.idTipo eq '4'}">
+                                                 
+                                                  <object  type="application/pdf" data="#{ar.ubicacion}" height="auto" width="100%" internalinstanceid="3">
+                                                        Su navegador no puede mostrar este archivo. haga , <a href="#{ar.ubicacion}">click</a> para descargarlo.
+                                                    </object>
+                                                  </h:panelGroup>
+                                                
+                                                      <!-- Si es un word,excel o ppt -->  
+                                                    <h:outputLink rendered="#{ar.idTipoArchivo.idTipo eq '5' or ar.idTipoArchivo.idTipo eq '6' or ar.idTipoArchivo.idTipo eq '7'}" value="#{ar.ubicacion}">
+                                                            <h:outputText value="Descargar archivo" />
+
+                                                    </h:outputLink>
+                                                      <br></br>  <h:outputText value="¿Está seguro que desea aprobar el archivo #{ar.nomArchivo} ?" />
+                        <p:commandButton onclick="PF('#{ar.idArchivo}').hide();" value="No" />       
+                        <p:commandButton action="#{archivoController.aprobarArchivo(ar.idArchivo)}" value="Si" onclick="PF('#{ar.idArchivo}').hide();" update="@form" />       
+                    </p:dialog>  
+                        </p:column>
+                                         
+
+                       
+
+                      
+                    </p:dataTable>
+       </h:form>
+        </p:panel>
+
+      
+       
+        <p:panel id="archivosAprobados" header="Archivos aprobados - Aún no hay archivos aprobados" rendered="#{empty archivoController.archivosAprobadosTodos()}">
+              
+    </p:panel>
+        
+        <p:panel id="archivosAprobadosNot" header="Archivos aprobados : #{archivoController.archivosAprobadosTodos().size()}" rendered="#{not empty archivoController.archivosAprobadosTodos()}">
+             <h:form id="Archivosaprobados">
+                 <p:dataTable id="recorreArchivos" var="ar" value="#{archivoController.archivosAprobadosTodos()}" rows="5" paginator="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15" emptyMessage="No se encontraron resultados" currentPageReportTemplate="(Pagina: {currentPage}/{totalPages})">
+                     <p:column headerText="IDArchivo" id="IDArchivo" filterBy="#{ar.idArchivo}" sortBy="#{ar.idArchivo}">
+                        <f:facet name="IDArchivo">
+                            <h:outputText value="ID Archivo" />
+                        </f:facet>
+                        <h:outputText value="#{ar.idArchivo}" />
+                        </p:column>
+                                         
+                        <p:column headerText="nombreArchivo" id="nombreArchivo" filterBy="#{ar.nomArchivo}" sortBy="#{ar.nomArchivo}">
+                        <f:facet name="nombreArchivo">
+                            <h:outputText value="Nombre Archivo" />
+                        </f:facet>
+                            <h:outputText value="#{ar.nomArchivo}" />
+                        </p:column>
+                     
+                     <p:column headerText="Ver archivo">
+                        <f:facet name="Ver archivo">
+                            <h:outputText value="Nombre Archivo" />
+                        </f:facet>
+                            <h:outputText value="#{ar.nomArchivo}" />
+                        </p:column>
+                                         
+                         <p:column headerText="descripcionArchivo" id="descripcionArchivo" filterBy="#{ar.descripcion}" sortBy="#{ar.descripcion}">
+                        <f:facet name="descripcionArchivo">
+                            <h:outputText value="Descripcion Archivo" />
+                        </f:facet>
+                             <h:outputText value="#{ar.descripcion}" />
+                        </p:column>
+                     
+                      <p:column headerText="Opciones">
+                          <p:commandButton value="Desaprobar archivo" type="button" onclick="PF('#{ar.idArchivo}').show();" />
+                          <!-- <p:commandButton onclick="PF('#/{lc.idCurso}').show();" value="Desaprobar curso" />   -->
+                          <p:dialog header="Desaprobar curso" widgetVar="#{ar.idArchivo}" modal="true" height="100">
+                               <h:outputText value="¿Está seguro que desea desaprobar el archivo #{ar.nomArchivo} ?" />
+                        <p:commandButton onclick="PF('#{ar.idArchivo}').hide();" value="No" />       
+                        <p:commandButton action="#{archivoController.desaprobarArchivo(ar.idArchivo)}" value="Si" update="@form" />       
+                    </p:dialog>  
+                        </p:column>
+                                         
+
+                       
+
+                      
+                    </p:dataTable>
+                 
+                  
+              </h:form>
+
+  
+
+            </p:panel>
+        
+    
+        
+        
+        
+    </h:body>
+</html>
+

@@ -38,5 +38,23 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
         
        return q.getResultList(); 
     }
+       
+         public List<Archivo> archivosNoAprobadoTodos()
+    {
+        EntityManager m2 = getEntityManager();
+        Query q=m2.createNamedQuery("Archivo.findByNoAprobadoTodos");
+        
+        
+        return q.getResultList();
+    }
+         
+           public List<Archivo> archivosAprobadoTodos()
+    {
+        EntityManager m2 = getEntityManager();
+        Query q=m2.createNamedQuery("Archivo.findByAprobadoTodos");
+        
+        
+        return q.getResultList();
+    }
     
 }
