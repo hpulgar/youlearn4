@@ -14,10 +14,14 @@
 	padding:5px 0px;
         list-style: none;
         overflow: auto;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #209b60;
+        border-bottom-style: none;
 }
 
 .chat_head,.msg_head{
-	background:#285c00;
+	background:#209b60;
 	color:white;
 	padding:15px;
 	font-weight:bold;
