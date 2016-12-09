@@ -49,11 +49,20 @@ public class UsuarioController implements Serializable {
     private String correo;
     private int id_muro;
     private int id_usuario_amigo;
+    private int usuarioCreditos;
 
     
     
     
     public UsuarioController() {
+    }
+
+    public int getUsuarioCreditos() {
+        return usuarioCreditos;
+    }
+
+    public void setUsuarioCreditos(int usuarioCreditos) {
+        this.usuarioCreditos = usuarioCreditos;
     }
     
      public void prepararCrear()
@@ -264,14 +273,14 @@ public void cargaDatos(int id)
     }
     
     
-    
+    ///////////////////////
     public int creditosUsuario(int idUsuario)
     {
         System.out.println("Intento obtener creditos");
        current = ejbFacade.find(idUsuario);
        return current.getCreditos();
     }
-    
+    //////////////////////////////////
     
     public List<Usuario> verUser(int idUser)
     {
@@ -283,7 +292,7 @@ public void cargaDatos(int id)
     
    
     
-    
+    //////   
      private int getPerfil(String nomU,String PassUS)
      {
          //Usuario uss;
@@ -293,6 +302,8 @@ public void cargaDatos(int id)
              setIdProfile((int) idp.get(i).getIdPerfil().getIdPerfil());
              setId_user((int) idp.get(i).getIdUsuario());
              setId_usuario_amigo((int)idp.get(i).getIdUsuario());
+             // aca se guardan los creditos
+             this.setUsuarioCreditos((int)idp.get(i).getCreditos());
          }
          return getIdProfile();
          
@@ -317,14 +328,15 @@ public void cargaDatos(int id)
            
            if(creditos_usuario>=creditos_curso)
            {
-               System.out.println("total=creditos_usuario-creditos_curso");
-               System.out.println("total="+creditos_usuario+"-"+creditos_curso);
-               total=creditos_usuario-creditos_curso;
-               current = ejbFacade.find(id_usuario); 
-        System.out.println("Creditos del current "+current.getCreditos());
-         current.setCreditos(total);
-         System.out.println("Luego de setear con Total del current con la id "+current.getIdUsuario()+" queda con creditos "+current.getCreditos());
-         ejbFacade.edit(current);
+                System.out.println("total=creditos_usuario-creditos_curso");
+                System.out.println("total="+creditos_usuario+"-"+creditos_curso);
+                total=creditos_usuario-creditos_curso;
+                current = ejbFacade.find(id_usuario); 
+                System.out.println("Creditos del current "+current.getCreditos());
+                current.setCreditos(total);
+                System.out.println("Luego de setear con Total del current con la id "+current.getIdUsuario()+" queda con creditos "+current.getCreditos());
+                 this.setUsuarioCreditos(total);
+                ejbFacade.edit(current);
                
            }
            else
