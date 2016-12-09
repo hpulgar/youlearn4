@@ -7,6 +7,7 @@ import ENTITIES.Usuario;
 import VIEWS.util.JsfUtil;
 import VIEWS.util.PaginationHelper;
 import MODELS.UsuarioFacade;
+import java.io.IOException;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -20,6 +21,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
@@ -303,6 +305,37 @@ public void cargaDatos(int id)
         return !ejbFacade.log(nombreU, passU).isEmpty();
        
     }
+        
+        public void actualizaCreditosCurso(int creditos_usuario,int id_usuario) throws IOException
+        {
+            System.out.println("Actualizo creditos de usuario");
+            System.out.println("Recibo creditos del usuario "+creditos_usuario);
+            System.out.println("ID de usuario "+id_usuario);
+            
+           int creditos_curso = 1000;
+           int total;
+           
+           if(creditos_usuario>=creditos_curso)
+           {
+               System.out.println("total=creditos_usuario-creditos_curso");
+               System.out.println("total="+creditos_usuario+"-"+creditos_curso);
+               total=creditos_usuario-creditos_curso;
+               current = ejbFacade.find(id_usuario); 
+        System.out.println("Creditos del current "+current.getCreditos());
+         current.setCreditos(total);
+         System.out.println("Luego de setear con Total del current con la id "+current.getIdUsuario()+" queda con creditos "+current.getCreditos());
+         ejbFacade.edit(current);
+               
+           }
+           else
+           {
+                FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN,"No tiene suficientes creditos","Intentalo denuevo"));
+                 ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+                 ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
+           }
+           
+            
+        }
      public String acceso()
    {
        if(verifica(getNombreUsuario(), getContraseña()))

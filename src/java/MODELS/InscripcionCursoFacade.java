@@ -65,5 +65,7 @@ public class InscripcionCursoFacade extends AbstractFacade<InscripcionCurso> {
        return q.getResultList();
         
     }
+     
+     
     
 }

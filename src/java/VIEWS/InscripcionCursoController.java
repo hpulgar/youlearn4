@@ -21,12 +21,14 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletRequest;
 import org.primefaces.event.RowEditEvent;
 
 @Named("inscripcionCursoController")
@@ -40,7 +42,7 @@ public class InscripcionCursoController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private String estadoS;
-
+    private final int creditos_curso = 1000;
     public InscripcionCursoController() {
     }
 
@@ -392,8 +394,9 @@ public class InscripcionCursoController implements Serializable {
             return pagina;
         }
      
-     public String nboton(int idCurso,int idUs)
+     public String nboton(int idCurso,int idUs,int creditos_usuario)
      { 
+   
     
          String estado="";
          
@@ -402,6 +405,7 @@ public class InscripcionCursoController implements Serializable {
              estado="Suscribir";
              
          }
+         
          else
          {
              estado="Suscrito";
@@ -413,6 +417,7 @@ public class InscripcionCursoController implements Serializable {
      
     public boolean suscripcionCurso(int idCurso,int idUs)
     {
+    
         boolean suscrito=false;
         List<InscripcionCurso> ars = new ArrayList();
         ars.clear();
@@ -426,6 +431,7 @@ public class InscripcionCursoController implements Serializable {
                     current = ars.get(i);
                     suscrito=true;  
                 } 
+                      
                 else
                {       
                    this.setEstadoS("Suscrito");
@@ -437,16 +443,30 @@ public class InscripcionCursoController implements Serializable {
     }    
     
     
-    public void crearSuscripcion()
+    public void crearSuscripcion(int creditos_usuario)
     {
+    
         try{
             if(current != null)
             {
-                System.out.println("Entra al try para comenzar la suscripcion del curso");
+                
+                 if(creditos_usuario>=creditos_curso)
+                 {
+                
+                 System.out.println("Entra al try para comenzar la suscripcion del curso");
                 TipoAlumno ta = new TipoAlumno();
                 ta.setIdTipo(2);
                 current.setTipoAlumno(ta);
                 ejbFacade.edit(current);
+                 ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+                 ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
+                 }
+                 
+                
+            
+                    
+                
+              
                 
                 
 //                PublicacionPerfilController a = new PublicacionPerfilController();
@@ -455,6 +475,9 @@ public class InscripcionCursoController implements Serializable {
             }
         }catch(Exception e)
         {
+                    
+                 FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN,"No tiene suficientes creditos","Intentalo denuevo"));
+         
             System.out.println("Error al crear suscripcion = "+e);
         }
     }

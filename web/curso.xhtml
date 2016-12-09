@@ -37,6 +37,7 @@
 		
 		<div class="page-title">	
 			<h2>Curso</h2>
+                         <h:messages errorStyle="color: red" class="msg fail"/>
 			<div class="page-title-block"></div>
 		</div>
 		
@@ -114,7 +115,10 @@
                                                                  <h:form>
                                                                      
                                                                      
-                                                                  <p:commandButton actionListener="#{inscripcionCursoController.crearSuscripcion()}" disabled="#{!inscripcionCursoController.suscripcionCurso(cs.idCurso,usuarioController.id_user)}" value="#{inscripcionCursoController.nboton(cs.idCurso,usuarioController.id_user)}" style="float: left"/>
+                                                                     <p:commandButton disabled="#{!inscripcionCursoController.suscripcionCurso(cs.idCurso,usuarioController.id_user)}" value="#{inscripcionCursoController.nboton(cs.idCurso,usuarioController.id_user,usuarioController.creditosUsuario(usuarioController.id_user))}" style="float: left">
+                                                                         <f:actionListener binding="#{inscripcionCursoController.crearSuscripcion(usuarioController.creditosUsuario(usuarioController.id_user))}"/>  
+                                                                         <f:actionListener binding="#{usuarioController.actualizaCreditosCurso(usuarioController.creditosUsuario(usuarioController.id_user), usuarioController.id_user)}"/>  
+                                                                     </p:commandButton>
                                                                      <p:commandButton action="#{cursoController.irTablero(cs.idCurso)}" value="Ir al tablero del cuso" style="float: right"/>
                                                                  </h:form><br></br>	
                                                                 
