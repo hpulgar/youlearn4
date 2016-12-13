@@ -48,22 +48,19 @@
 				
 						<div class="event-info">	
                                                     <div class="event-meta">
-								<h4><a>#{lc.nomCurso} » <div class="event-meta" align="right">
-							 <h:form> <h:commandLink actionListener="#{cursoController.setIdCurso(lc.idCurso)}" action="#{inscripcionCursoController.cargarCurso(lc.idCurso,usuarioController.id_user)}" class="button4 rounded-button">Ir al curso</h:commandLink></h:form>	
+							<h4><a>#{lc.nomCurso} » 
+                                                            <div class="event-meta" align="right">
+                                                            <h:form> 
+                                                                <h:commandLink actionListener="#{cursoController.setIdCurso(lc.idCurso)}" action="#{inscripcionCursoController.cargarCurso(lc.idCurso,usuarioController.id_user)}" class="button4 rounded-button">Ir al curso</h:commandLink>
+                                                            </h:form>	
                                                                 
-							</div></a></h4>
-                                     
+                                                            </div></a>
+                                                        </h4>
                                                                 <p><strong>Categoria</strong> #{lc.idCat.idCategoria.nomCat}</p>
                                                                 <p><strong>Subcategoria</strong> #{lc.idCat.nomSubcat}</p>
 								<p><strong>Seguidores</strong> #{inscripcionCursoController.seguidores(lc.idCurso)}</p>
 								<p><strong>Suscriptores</strong> #{inscripcionCursoController.suscriptores(lc.idCurso)}</p>
-								
-                                                                
 							</div>
-                                                    
-                                                      
-                                                    
-                                                     
 						</div>
                                     
                                       

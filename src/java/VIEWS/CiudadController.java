@@ -312,8 +312,10 @@ public class CiudadController implements Serializable {
           
         public void eliminarCiudad(int id)
         {
-            current.setIdCiudad(id);
-            ejbFacade.remove(current);
+            current = null;
+            current = ejbFacade.find(id);
+            ejbFacade.borrarCiudad(current);
+            current = null;
         
         }
         

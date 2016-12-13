@@ -427,8 +427,10 @@ public void cargaDatos(int id)
           
         public void eliminaMasterRespuesta(int id)
         {
-            current.setIdRespuestas(id);
-            ejbFacade.remove(current);
+            current = null;
+            current = ejbFacade.find(id);
+            ejbFacade.borrarMasterRespuestas(current);
+            current = null;
         
         }
         

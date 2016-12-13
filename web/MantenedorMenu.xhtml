@@ -51,7 +51,7 @@
                     
                     
                    <br/>
-                   <p:commandButton id="btoCrear" value="crea"  action="#{menuController.crearMenu()}" actionListener="#{util.setVerCrear(false)}" update="paginas" process="@all" rendered="#{util.getVerCrear()}">
+                   <p:commandButton id="btoCrear" value="crea"  action="#{menuController.crearMenu()}" actionListener="#{util.setVerCrear(false)}" update="menuMant" process="@all" rendered="#{util.getVerCrear()}">
                      
                  </p:commandButton>
                     
@@ -115,7 +115,7 @@
                 <p:column  headerText="Acciones" style="width:50px" id="acc"   >
                         <p:rowEditor />
                         
-                        <p:commandButton icon="ui-icon-close"   action="#{menuController.eliminarMenu(p.idMenu)}" update="general">
+                        <p:commandButton icon="ui-icon-close"   action="#{menuController.eliminarMenu(p.idMenu)}" update="menuMant">
                                  <p:confirm header="Confirmation" message="¿Estas Seguro?" icon="ui-icon-alert" />
                             </p:commandButton>
                     

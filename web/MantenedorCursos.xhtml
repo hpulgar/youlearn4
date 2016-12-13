@@ -241,7 +241,7 @@
                     
                     <p:rowEditor  />
                     
-                    <p:commandLink value="Eliminar" actionListener="#{cursoController.eliminarCurso(p.idCurso)}" update="general">
+                    <p:commandLink value="Eliminar" actionListener="#{cursoController.deleteCurso(p.idCurso)}" update="general">
                                 <p:confirm header="Confirmation" message="¿Estas Seguro?" icon="ui-icon-alert" />
                             </p:commandLink>
                     

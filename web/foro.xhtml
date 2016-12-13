@@ -20,8 +20,8 @@
 	
 <!-- END head -->
    </h:head>
-    	<f:event listener="#{foroPosteosController.setTit(null)}" type="preRenderView" />
-       <f:event listener="#{foroSubcategoriaController.setId_subCat(0)}" type="preRenderView" />
+    	
+       
        
     <h:body id="top" class="loading">
   <!-- BEGIN #header-wrapper -->
@@ -65,7 +65,7 @@
 				<div class="blog-entry clearfix">
                                     
                                         
-				
+                                    
                                     <ui:include src="foro_include.xhtml"/>
                                     
                                             
@@ -105,34 +105,27 @@
                                     
                                     <div class="field-row" id="algo">
 					<label for="categoria">Categoria</label>
-                                        <h:selectOneMenu value="#{foroCategoriaController.id_cat}"  >
+                                        <h:selectOneMenu value="#{foroCategoriaController.id_cat}">
                                                 
                                             <f:selectItem itemValue="0" itemLabel="Seleccione una Categoria" noSelectionOption="true" /> 
+                                            <f:selectItems value="#{foroCategoriaController.listaCategorias()}" var="c" itemLabel="#{c.titulo}" itemValue="#{c.idCategoria}"/> 
                                             <p:ajax  update="subcategorias"/>
-                                                <c:forEach items="#{foroCategoriaController.listaCategorias()}" var="c"> 
-                                                    <f:selectItem itemValue="#{c.idCategoria}" itemLabel="#{c.titulo}" />  
-                                                    
-                                                </c:forEach>
-                                             </h:selectOneMenu>
+                                        </h:selectOneMenu>
                                     </div>
                                     
                                     <div class="field-row">
-				  <label for="subcategoria">Subcategoria</label>
+                                        <label for="subcategoria">Subcategoria</label>
+                                        <h:selectOneMenu value="#{foroSubcategoriaController.id_subCat}" id="subcategorias" >
+                                            <f:selectItem itemValue="0" itemLabel="Seleccione una Categoria"  noSelectionOption="true"/> 
+                                            <f:selectItems value="#{foroSubcategoriaController.listaCategorias(foroCategoriaController.id_cat)}" var="fsc" itemLabel="#{fsc.titulo}" itemValue="#{fsc.idSubcategoria}" />    
+                                            <p:ajax update="foroListado"/>
+                                       </h:selectOneMenu>	
                                   
-                                
-                                  <h:selectOneMenu value="#{foroSubcategoriaController.id_subCat}" id="subcategorias" >
-                                      <f:selectItem itemValue="0" itemLabel="Seleccione una Categoria"  noSelectionOption="true"/> 
-                                        <c:forEach items="#{foroSubcategoriaController.listaCategorias(foroCategoriaController.id_cat)}" var="fsc"  >
-                                        <f:selectItem itemValue="#{fsc.idSubcategoria}" itemLabel="#{fsc.titulo}" />                                        
-                                        </c:forEach>
-                                      <p:ajax update="foroListado"/>
-                                     </h:selectOneMenu>	
-                                  
-				</div>
+                                    </div>
 						
                                         
                                         
-                                        <label for="Buscar Por nombre">Subcategoria del curso</label>
+                                        <label for="Buscar Por nombre">Nombre del curso</label>
                                         <h:inputText  value="#{foroPosteosController.tit}" required="false" />
                                         <p:commandButton  value="Buscar" update="foroListado"  process="@all" />
                                         <br></br>

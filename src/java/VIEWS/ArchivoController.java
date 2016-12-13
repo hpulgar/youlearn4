@@ -587,9 +587,10 @@ public class ArchivoController implements Serializable {
           
         public void eliminarArchivo(int id)
         {
-            current.setIdArchivo(id);
-            ejbFacade.remove(current);
-        
+            current = null;
+            current = ejbFacade.find(id);
+            ejbFacade.borrarArchivo(current);
+            current = null;
         }
         
             public void onRowCancel(RowEditEvent event) {

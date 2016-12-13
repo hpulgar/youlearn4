@@ -461,10 +461,10 @@ public class ContenidosController implements Serializable {
     
     public void eliminarContenido(int id)
     {
-        System.out.println("Unidad a eliminar "+id);
+        current = null;
         current = ejbFacade.find(id);
-        ejbFacade.remove(current);
-       
+        ejbFacade.borrarContenidos(current);
+        current = null;
     }
     
     public String verContenido(int id)

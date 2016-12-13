@@ -677,6 +677,15 @@ public void resetValues()
         
         }
         
+        
+        public void deleteCurso(int id)
+        {
+            current =null;
+            current = ejbFacade.find(id);
+            ejbFacade.borrarCurso(current);
+            current = null;
+        }
+        
         public String verCont(int id)
         {
             return "cont"+id;

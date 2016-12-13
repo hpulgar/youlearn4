@@ -270,17 +270,10 @@ public class MenuController implements Serializable {
      
      public void eliminarMenu(int idm)
         {
-            try
-            {
-                current.setIdMenu(idm);
-
-                
-                getFacade().remove(current);
-            }
-            catch(Exception e)
-            {
-                System.out.println("Error en Eliminacion "+e);
-            }
+            current = null;
+            current = ejbFacade.find(idm);
+            ejbFacade.borrarMasterMenu(current);
+            current = null;
         }
      
      public void crearMenu()

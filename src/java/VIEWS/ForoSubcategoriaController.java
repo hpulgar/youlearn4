@@ -74,6 +74,7 @@ public class ForoSubcategoriaController implements Serializable {
     }
 
     public void setId_subCat(int id_subCat) {
+        System.out.println("se ejecuta");
         this.id_subCat = id_subCat;
     }
 
@@ -312,8 +313,10 @@ public class ForoSubcategoriaController implements Serializable {
           
         public void eliminarForoSub(int id)
         {
-            current.setIdSubcategoria(id);
-            ejbFacade.remove(current);
+            current = null;
+            current = ejbFacade.find(id);
+            ejbFacade.borrarForoSubCat(current);
+            current = null;
         
         }
         

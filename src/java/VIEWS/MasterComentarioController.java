@@ -308,8 +308,10 @@ public class MasterComentarioController implements Serializable {
           
         public void eliminaMasterC(int id)
         {
-            current.setIdComentario(id);
-            ejbFacade.remove(current);
+            current = null;
+            current = ejbFacade.find(id);
+            ejbFacade.borrarMasterComentarios(current);
+            current = null;
         
         }
         

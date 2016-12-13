@@ -5,6 +5,18 @@
  */
 package MODELS;
 
+import ENTITIES.Archivo;
+import ENTITIES.Ciudad;
+import ENTITIES.Contenidos;
+import ENTITIES.Curso;
+import ENTITIES.CursoSubCat;
+import ENTITIES.ForoPosteos;
+import ENTITIES.ForoSubcategoria;
+import ENTITIES.InscripcionCurso;
+import ENTITIES.MasterComentario;
+import ENTITIES.MasterRespuestas;
+import ENTITIES.Menu;
+import ENTITIES.Persona;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -93,4 +105,100 @@ public abstract class AbstractFacade<T> {
 //               
 //        em2.remove(b);
 //    }
+    
+    public void borrarArchivo(Archivo e)
+    {
+        EntityManager em2= getEntityManager();
+        Archivo  b = em2.getReference(Archivo.class,e.getIdArchivo());
+               
+        em2.remove(b);
+    }
+    
+    public void borrarCiudad(Ciudad e)
+    {
+        EntityManager em2= getEntityManager();
+        Ciudad  b = em2.getReference(Ciudad.class,e.getIdCiudad());
+               
+        em2.remove(b);
+    }
+    
+    public void borrarContenidos(Contenidos e)
+    {
+        EntityManager em2= getEntityManager();
+        Contenidos  b = em2.getReference(Contenidos.class,e.getIdContenido());
+               
+        em2.remove(b);
+    }
+    
+    public void borrarCurso(Curso e)
+    {
+        EntityManager em2= getEntityManager();
+        Curso  b = em2.getReference(Curso.class,e.getIdCurso());
+               
+        em2.remove(b);
+    }
+    
+    public void borrarCursoSubCat (CursoSubCat e)
+    {
+        EntityManager em2= getEntityManager();
+        CursoSubCat  b = em2.getReference(CursoSubCat.class,e.getIdSubcat());
+               
+        em2.remove(b);
+    }
+    
+    public void borrarForo (ForoPosteos e)
+    {
+        EntityManager em2= getEntityManager();
+        ForoPosteos  b = em2.getReference(ForoPosteos.class,e.getIdPost());
+               
+        em2.remove(b);
+    }
+    
+    public void borrarForoSubCat (ForoSubcategoria e)
+    {
+        EntityManager em2= getEntityManager();
+        ForoSubcategoria  b = em2.getReference(ForoSubcategoria.class,e.getIdSubcategoria());
+               
+        em2.remove(b);
+    }
+    public void borrarInscripcionCurso (InscripcionCurso e)
+    {
+        EntityManager em2= getEntityManager();
+        InscripcionCurso  b = em2.getReference(InscripcionCurso.class,e.getIdInsc());
+               
+        em2.remove(b);
+    }
+    
+    public void borrarMasterComentarios (MasterComentario e)
+    {
+        EntityManager em2= getEntityManager();
+        MasterComentario  b = em2.getReference(MasterComentario.class,e.getIdComentario());
+               
+        em2.remove(b);
+    }
+    
+    public void borrarMasterRespuestas (MasterRespuestas e)
+    {
+        EntityManager em2= getEntityManager();
+        MasterRespuestas  b = em2.getReference(MasterRespuestas.class,e.getIdRespuestas());
+               
+        em2.remove(b);
+    }
+    
+    public void borrarMasterMenu (Menu e)
+    {
+        EntityManager em2= getEntityManager();
+        Menu  b = em2.getReference(Menu.class,e.getIdMenu());
+               
+        em2.remove(b);
+    }
+    
+    
+    public void borrarPersona(Persona e)
+    {
+        EntityManager em2= getEntityManager();
+        Persona  b = em2.getReference(Persona.class,e.getIdPersona());
+               
+        em2.remove(b);
+    }
 }

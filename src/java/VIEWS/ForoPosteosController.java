@@ -373,28 +373,28 @@ public class ForoPosteosController implements Serializable {
        }
    public List<ForoPosteos> listaForos(String tituloForo,int idSubcat)
     {
-        
+        System.out.println("Titulo Foro "+tituloForo);
+        System.out.println("idsubcat "+idSubcat);
 
             if(idSubcat != 0 && tituloForo.isEmpty())
             {
-                 
-
+                System.out.println("Entra al IF 1 titulo vacio && idsubcat diferente de 0");
                 arForo.clear();
                 arForo = ejbFacade.foroSubcategoria(idSubcat);
             }else if(!tituloForo.isEmpty()  && idSubcat == 0)
             {
-                
+                System.out.println("Entra al IF 2 titulo con datos && idsubcat =0  ");
                 arForo.clear();
                 arForo= ejbFacade.nombreForo(tituloForo);
             }
             else if(!tituloForo.isEmpty() && idSubcat != 0)
             {
-                
+                System.out.println("Entra al IF 3 titulo con datos && idsubcat  diferente de 0  ");
                 arForo.clear();
                 arForo=ejbFacade.nombreYsubcategoria(tituloForo, idSubcat);
             }else
             {
-             
+             System.out.println("Entra al else, muestra todo ");
                 this.arForo.clear();
                 arForo = ejbFacade.findAll();
 
@@ -404,7 +404,12 @@ public class ForoPosteosController implements Serializable {
         return arForo;
     }
    
-   
+   public List<ForoPosteos> listaForosIndex()
+   {
+                arForo.clear();
+                arForo = ejbFacade.foroSubcategoria(1);
+                return arForo;
+   }
    public List<ForoPosteos> tablaForoPosteos()
    {
        return ejbFacade.findAll();
@@ -455,9 +460,11 @@ public class ForoPosteosController implements Serializable {
           
         public void eliminarForoPosteo(int id)
         {
-            current.setIdPost(id);
-            ejbFacade.remove(current);
-        
+            current = null;
+            current = ejbFacade.find(id);
+            ejbFacade.borrarForo(current);
+            current = null;
+            
         }
         
             public void onRowCancel(RowEditEvent event) {

@@ -309,8 +309,9 @@ public class CursoSubCatController implements Serializable {
                
     public void eliminarCategoriaCurso(int id)
     {
-        current.setIdSubcat(id_cSub_cat);
-        ejbFacade.remove(current);
+        current = null;
+        current = ejbFacade.find(id);
+        ejbFacade.borrarCursoSubCat(current);
         current=null;
         
     }

@@ -539,9 +539,9 @@ public class InscripcionCursoController implements Serializable {
     public void eliminarInscripcion(int id)
     {
        
-       current.setIdInsc(id);
-       System.out.println("id a eliminar "+current.getIdInsc());
-       ejbFacade.remove(current);
+       current = null;
+       current = ejbFacade.find(id);
+       ejbFacade.borrarInscripcionCurso(current);
        current = null;
       
     }

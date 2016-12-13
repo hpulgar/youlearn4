@@ -193,9 +193,10 @@ public void cargaDatos(int id)
           
         public void eliminarPersona(int id)
         {
-            current.setIdPersona(id);
-            ejbFacade.remove(current);
-        
+            current = null;
+            current = ejbFacade.find(id);
+            ejbFacade.borrarPersona(current);
+            current = null;
         }
         
             public void onRowCancel(RowEditEvent event) {
