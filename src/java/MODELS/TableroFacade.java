@@ -39,4 +39,22 @@ public class TableroFacade extends AbstractFacade<Tablero> {
        return q.getResultList(); 
     }
     
+       public boolean esCreador(int idUsuario)
+    {
+        EntityManager m2 = getEntityManager();
+        Query q=m2.createNamedQuery("Tablero.esCreador").setParameter("idUsuario",idUsuario);
+        
+        if (q.getResultList().size()>0)
+        {
+            return true;
+            
+        }
+        else
+        {
+            return false;
+        }
+        
+         
+    }
+    
 }

@@ -259,6 +259,43 @@ public class TableroController implements Serializable {
         return arTablero2;
     }
     
+    public boolean esCreador(int idUsuario)
+    {
+         if(ejbFacade.esCreador(idUsuario)==true)
+         {
+             return true;
+         }
+         else
+         {
+             return false;
+         }
+     
+        
+    }
+   
+    
+    public String prepareEdicionTablero(int id_tablero) {
+        current = ejbFacade.find(id_tablero);
+        return "tablero_editar.xhtml";
+    }
+    
+     public String actualizaTalero() {
+       
+            System.out.println("Actualizar tablero...");
+             try {
+            getFacade().edit(current);
+          
+            return "tablero_detalle.xhtml";
+            
+        } catch (Exception e) {
+           
+            return null;
+        }
+         
+            
+       
+    }
+    
     public String verDetalle(int idTablero)
     {
         this.setIdTablero(idTablero);

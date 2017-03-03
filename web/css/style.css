@@ -1289,7 +1289,7 @@ div.selector.disabled span, div.selector.disabled.active span {
 }
 
 .sidebar-left {
-	background: url(../images/dot_border_v.png) repeat-y top right;
+	/*background: url(../images/dot_border_v.png) repeat-y top right;*/
 	width: 27%;
 	float: left;
 	display: block;
@@ -1300,7 +1300,7 @@ div.selector.disabled span, div.selector.disabled.active span {
 }
 
 .sidebar-right {
-	background: url(../images/dot_border_v.png) repeat-y top left;
+	/*background: url(../images/dot_border_v.png) repeat-y top left;-*/
 	width: 20%;
 	float: left;
 	position: relative;
@@ -1311,7 +1311,7 @@ div.selector.disabled span, div.selector.disabled.active span {
         padding-top : 3%;
 }
 .sidebar-right2 {
-	background: url(../images/dot_border_v.png) repeat-y top left;
+	/*background: url(../images/dot_border_v.png) repeat-y top left;*/
 	width: 25%;
 	float: left;
 	position: relative;

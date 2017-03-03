@@ -23,6 +23,16 @@
 
 <!-- BEGIN body -->
 <h:body id="top" class="loading">
+        <style>
+          
+            .portfolio-single-cols .col-2 {
+	float: left;
+	width: 30%;
+        padding-left: 5%;
+}
+            
+            
+        </style>
 
 	<!-- BEGIN #header-wrapper -->
 	<div id="header" >
@@ -36,6 +46,7 @@
 		<div class="page-header-inner clearfix">
 		
 		<div class="page-title">	
+                    <br/>
 			<h2>Curso</h2>
                          <h:messages errorStyle="color: red" class="msg fail"/>
 			<div class="page-title-block"></div>
@@ -157,6 +168,12 @@
                                           <div class="title-block"></div>
 					  </div>
                                          <p><h:outputText value="#{cs.contenidos}" escape="false" /></p>
+                                         
+                                           <div class="title1 clearfix">
+					  <h4>Unidades</h4>
+                                          <div class="title-block"></div>
+					  </div>
+                                         <p><h:outputText rendered="#{empty contenidosController.verTodosCont(cursoController.idCurso)}" value="El administrador del curso aun no ha creado unidades"/></p>
 
                                                     </div>
                                             
@@ -171,7 +188,7 @@
                          <div id="tabs-tab-title-2">
 						
 						
-						
+                             <p:panel rendered="#{not empty contenidosController.verTodosCont(cursoController.idCurso)}">
 						<table style="width:100%;">
 							<thead>
 								<tr>
@@ -182,7 +199,7 @@
 								</tr>
 							</thead>
 							<tbody>
-                                                             <h:form id="lista_contenidos">
+                                                            <h:form id="lista_contenidos">
                                                                  <c:forEach items="#{contenidosController.verTodosCont(cursoController.idCurso)}" var="cont">
                                                                     <tr>
                                                                    
@@ -200,12 +217,20 @@
                                                                          
                                                                     </tr>
                                                                  </c:forEach>
+                                              
 								</h:form>
+                                                            
 							</tbody>
 						</table>
+                                 </p:panel>
+                               
+                             
 						
 					</div>
                         
+                      
+                        
+                       
                         
 			</div>
                         

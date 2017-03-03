@@ -27,7 +27,8 @@
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'></link>
         <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,700,900' rel='stylesheet' type='text/css'></link>
 
-
+  <link href="css/chat.css" rel="stylesheet" type="text/css"/>
+            <script type="text/javascript" src="js/chat.js"></script>
 
 <!-- END head -->
    </h:head>
@@ -46,7 +47,8 @@
 		<div class="page-header-inner clearfix">
 		
 		<div class="page-title">	
-			<h2>Título
+                    <br></br>	
+                    <h2>Título
                           
                             
                             #{tableroController.selected.titulo}
@@ -56,9 +58,7 @@
 			<div class="page-title-block"></div>
 		</div>
 		
-		<div class="breadcrumbs">
-			<p><a href="tablero.xhtml">Tablero</a> &#187; Tablero detalle</p>
-		</div>
+		
 		
 		</div>
 		
@@ -81,7 +81,7 @@
                                            
                                        
                                                 <div>
-                                                    (por mientras)
+                                                   
                                                     <h3><img src="#{tableroController.selected.idUsuario.imagen_foto_perfil}" class="blog-date"  style='height: 100px; width:100px; object-fit: cover;' /></h3> <br/>
 						
                                                 </div>	
@@ -112,11 +112,24 @@
 						
 					
 					</div>
-				
-					<div class="clearboth"></div>
-					
+				 <h:form>
+                                     <h:commandButton action="#{tableroController.prepareEdicionTablero(tableroController.selected.idTablero)}" value="Editar" style="float: right"/>    
+                                </h:form>
+                                     <h:form>
+                                    <h:commandButton  action="tablero_crear.xhtml" value="Eliminar" style="float: right"/>
+                                </h:form>
+                                     <p:dialog header="#{lc.nomCurso}" widgetVar="#{lc.idCurso}" modal="true">
+                                              
+                                   <h:outputText value="¿Está seguro que desea borrar esta discusion?" />
+                                            <p:commandButton onclick="PF('#{lc.idCurso}').hide();" value="No" />       
+                                            <p:commandButton action="#{cursoController.eliminarCurso(lc.idCurso)}" value="Si" />       
+                                                 
+                                                  
+                                          </p:dialog>
     
 
+					<div class="clearboth"></div>
+					
 
 
                                         <h:panelGrid id="parametroBody" style="float: right" >
@@ -211,79 +224,7 @@
 	</div>
 	
 	<!-- BEGIN #footer-wrapper -->
-	<div id="footer-wrapper">
-		
-		<!-- BEGIN #footer -->
-		<div id="footer">
-			
-			<ul class="columns-4 clearfix">	
-			
-				<li class="col">
-					<div class="widget-title clearfix">
-						<h4>About Us</h4>
-						<div class="widget-title-block"></div>
-					</div>
-					<p>Quisque bibendum erat feugiat rhoncus tincidunt ipsum mi facilisis nisl, nec eleifend enim massa ac purus. Integer malesuada faucibus auctor vivamus accumsan justo.</p>
-				</li>
-				
-				<li class="col">
-					<div class="widget-title clearfix">
-						<h4>Tag Cloud</h4>
-						<div class="widget-title-block"></div>
-					</div>
-					
-					<ul class="wp-tag-cloud">
-						<li><a href="#">Education</a></li>
-						<li><a href="#">University</a></li>
-						<li><a href="#">College</a></li>
-						<li><a href="#">Learning</a></li>
-						<li><a href="#">Art</a></li>
-						<li><a href="#">Design</a></li>
-						<li><a href="#">Music</a></li>
-						<li><a href="#">Environment</a></li>
-					</ul>
-					
-				</li>
-				
-				<li class="col">
-					<div class="widget-title clearfix">
-						<h4>Twitter Feed</h4>
-						<div class="widget-title-block"></div>
-					</div>
-		
-					<ul id="twitter_update_list">
-						<li>Twitter feed loading</li>
-					</ul>
-					
-				</li>
-				
-				<li class="col">
-					<div class="widget-title clearfix">
-						<h4>Recent Posts</h4>
-						<div class="widget-title-block"></div>
-					</div>
-					
-					<ul>
-						<li><a href="blog-single.html">Proin imperdiet adipiscing elit</a></li>
-						<li><a href="blog-single.html">Vestibulum blandit</a></li>
-						<li><a href="blog-single.html">Nulla semper arcu at tincidunt</a></li>
-						<li><a href="blog-single.html">Morbi quam arcu sagittis</a></li>
-					</ul>
-					
-				</li>
-			
-			</ul>
-			
-			<div id="footer-bottom" class="clearfix">
-				<p class="fl">&copy; Copyright - <a href="#">ParkCollege</a> by <a href="#">Quite Nice Stuff</a></p>
-				<p class="go-up fr"><a href="#top" class="scrollup">Top</a></p>
-			</div>
-			
-		<!-- END #footer -->
-		</div>
-	
-	<!-- END #footer-wrapper -->
-	</div>
+	 <ui:include src="Footer.xhtml" />
 
 <!-- END body -->
 </h:body>
