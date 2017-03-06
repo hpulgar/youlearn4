@@ -208,6 +208,60 @@ public void cargaDatos(int id)
         selectedItemIndex = -1;
         return "Create";
     }
+    
+     public void aumentaPriv(int idUSuario,int idPerfil)
+    {
+       System.out.println("ID USUARIO "+idUSuario+" ID PERFIL"+idPerfil);
+          
+        try{
+            
+            
+            Perfil us = new Perfil();
+            us.setIdPerfil(idPerfil+1);
+       
+
+            current = ejbFacade.find(idUSuario);
+            current.setIdPerfil(us);
+          
+            ejbFacade.crear(current);
+           
+           
+           
+         
+            
+        }catch(Exception e)
+        {
+            System.out.println("ERRRROOORR "+e);
+          
+        }
+    }
+     
+      public void disminPriv(int idUSuario,int idPerfil)
+    {
+       System.out.println("ID USUARIO "+idUSuario+" ID PERFIL"+idPerfil);
+          
+        try{
+            
+            
+            Perfil us = new Perfil();
+            us.setIdPerfil(idPerfil-1);
+       
+
+            current = ejbFacade.find(idUSuario);
+            current.setIdPerfil(us);
+          
+            ejbFacade.crear(current);
+           
+           
+           
+         
+            
+        }catch(Exception e)
+        {
+            System.out.println("ERRRROOORR "+e);
+          
+        }
+    }
 
     
     

@@ -53,15 +53,10 @@
                         <f:facet name="Opciones">
                             <h:outputText value="Opciones" />
                         </f:facet>
-                     <p:commandButton value="Editar" type="button" onclick="PF('#{ar.idPerfil.idPerfil}').show();"/>
+                     <p:commandButton action="#{usuarioController.aumentaPriv(ar.idUsuario,ar.idPerfil.idPerfil)}" value="+" update="@form" />   
+                     <p:commandButton action="#{usuarioController.disminPriv(ar.idUsuario,ar.idPerfil.idPerfil)}" value="-" update="@form" />   
                             
-                     <p:dialog header="Editar privilegio" widgetVar="#{ar.idPerfil.idPerfil}" modal="true">
-    <p:selectOneMenu value="#{perfilController.selected.nomPerfil}">
-        <f:selectItems value="#{perfilController.tablaPerfil()}" var="var" itemLabel="#{var.descripcion}"/>    
-                            </p:selectOneMenu>
-                         <br></br>
-                        <p:commandButton value="Actualizar"/>       
-                    </p:dialog>
+                   
                         </p:column>
                                          
                      
