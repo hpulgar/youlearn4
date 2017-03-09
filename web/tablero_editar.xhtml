@@ -2,6 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
 
@@ -11,25 +14,25 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		
 	<!--Title-->
-	<title>Youlearn - Registro</title>
-
+	<title>Youlearn - Edicion Tablero</title>
 
 	<link rel="stylesheet" href="css/style.css" type="text/css"  media="all" />
 	<link rel="stylesheet" href="css/colour.css" type="text/css"  media="all" />
 	<link rel="stylesheet" href="css/flexslider.css" type="text/css"  media="all" />
 	<link rel="stylesheet" href="css/superfish.css" type="text/css"  media="all" />
 	<link rel="stylesheet" href="css/responsive.css" type="text/css"  media="all" />
+         <link rel="stylesheet" href="css/chat.css" type="text/css"  media="all" />
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'></link>
         <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,700,900' rel='stylesheet' type='text/css'></link>
 
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+	  <script type="text/javascript" src="js/chat.js"></script>
+        <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 	<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js'></script>
 	<script type="text/javascript" src="js/superfish.js"></script>
 	<script type="text/javascript" src="js/jquery.flexslider-min.js"></script>
 	<script type="text/javascript" src="js/tinynav.min.js"></script>
 	<script type="text/javascript" src="js/jquery.uniform.js"></script>
-	<script type="text/javascript" src="js/scripts.js"></script>
-	
+	<script type="text/javascript" src="js/scripts.js"></script>-->
 <!-- END head -->
    </h:head>
     
@@ -47,16 +50,17 @@
 		<div class="page-header-inner clearfix">
 		
 		<div class="page-title">	
-                    <br/><h2>Registro en YouLearn</h2>
+                    <br></br><h2>Edicion Tablero</h2>
 			<div class="page-title-block"></div>
 		</div>
 		
-		
+	
 		
 		</div>
 		
 	<!-- END .page-header -->
 	</div>
+
 	
 	<!-- BEGIN .content-wrapper -->
 	<div class="content-wrapper page-content-wrapper clearfix">
@@ -67,53 +71,52 @@
 			<!-- BEGIN .inner-content-wrapper -->
 			<div class="inner-content-wrapper">
 			
-			<p>&nbsp;</p>
 			
-                        
-			<h:form  id="contactform" class="clearfix">
-
-				<div class="field-row">
-					<label for="user">Apodo</label>
-                                        <h:inputText class="text_input" id="user" value="#{usuarioController.selected.username}" size="10" />
-				</div>
-
-				<div class="field-row">
-				  <label for="password">Password</label>
 			
-                                  <h:inputText class="text_input" id="password" value="#{usuarioController.selected.password}" size="10" />
+			<h:form class="clearfix">
+             
+                            <div class="field-row">
+				  <label for="tituloDiscusion">Titulo</label>
+                                  <h:inputText value="#{tableroController.selected.titulo}" class="text_input" id="numeroUnidad"  />
 				</div>
                             
                             <div class="field-row">
-				  <label for="email">E-mail</label>
-			
-                                  <h:inputText class="text_input" id="email" value="#{usuarioController.selected.correo}" size="10" />
+				   <p:outputLabel  value="Descripcion"/>
+                                   <p:inputTextarea value="#{tableroController.selected.descripcion}" rows="5" cols="30" counter="display" maxlength="500" counterTemplate=" {0}." autoResize="false" />
+                    <h:outputText id="display" />
 				</div>
-
-			  <div class="field-row">
+                            
+                            
+                        
+                            
+                             <div class="field-row">
 
 				<p>
-                                    <h:commandButton class="button1" type="submit" value="Crear cuenta" id="submit" action="#{usuarioController.crearUsuario()}">
-                                  </h:commandButton>
-                                  
-				  </p>
-				
-                                 
-              </div>
+                                    <h:commandButton action="#{tableroController.actualizaTalero()}" class="button1" type="submit"  style="float:right" value="Actualizar Unidad" id="submit"/>
+                                </p>
+                            </div>
                                
                         </h:form>
 			
+                        
+                        
+                        
 			<!-- END .inner-content-wrapper -->
 			</div>
+                        
+                        
 			
 		<!-- END .main-content -->
 		</div>
+                
+               
 		
-	
+		
 	
 	<!-- END .content-wrapper -->
 	</div>
 	
-	 <ui:include src="Footer.xhtml" />
+
 
 <!-- END body -->
  </h:body>

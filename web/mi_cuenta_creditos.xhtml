@@ -47,16 +47,25 @@
 				</tbody>
 			</table>
         
-             <div class="toggle">
-				<div class="title">
-					<h4>Obtener creditos</h4>
-				</div>
-				<div class="inner">Para obtener creditos..</div>
-			</div>
-    
-      
+          
+				
+        
    
     </h:form>
+
+    <p:commandButton value="Obtener creditos" onclick="PF('dlg').show();" type="button" />
+ 
+<p:dialog header="Obtener creditos en Youlearn" widgetVar="dlg" modal="true"  resizable="false">
+    <h:outputText value="Seleccione un metodo de pago." />
+    
+    <h:selectOneRadio>
+   	<f:selectItem itemValue="Red" itemLabel="Webpay" />
+   	<f:selectItem itemValue="Green" itemLabel="Khipu" />
+   
+</h:selectOneRadio>
+    <br/>
+    <p:commandButton value="Siguiente"  type="button" />
+</p:dialog>
 </h:body>
 
 </html>

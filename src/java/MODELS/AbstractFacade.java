@@ -48,19 +48,19 @@ public abstract class AbstractFacade<T> {
     }
 
     public void remove(T entity) {
-        System.out.println("ENTRA ==?????");
+       
         getEntityManager().remove(getEntityManager().merge(entity));
         
-        System.out.println("PASA ==?????");
+      
     }
     
     public void eliminar(T entity) {
-     System.out.println("ENTRA ==?????");
+    
         EntityManager em = getEntityManager();
         em.remove(getEntityManager().merge(entity));
 
         
-        System.out.println("PASA ==?????");
+      
 }
     
 
