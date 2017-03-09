@@ -133,11 +133,11 @@
                     <p:cellEditor>
                         <f:facet name="output">
                             
-                            <p:commandButton value="Ver" type="button" onclick="PF('#{inscripcionCursoController.verDescripcion(idInsc)}').show();" />
+                            <p:commandButton value="Ver" type="button" onclick="PF('#{inscripcionCursoController.verDescripcion(p.idInsc)}').show();" />
                             
-                            <p:dialog header="Basic Dialog" widgetVar="#{inscripcionCursoController.verDescripcion(idInsc)}"  >
+                            <p:dialog header="Basic Dialog" widgetVar="#{inscripcionCursoController.verDescripcion(p.idInsc)}"  >
                            
-                                <h:outputText value="#{p.descripcion}" />
+                                <h:outputText value="#{inscripcionCursoController.selected.descripcion}" />
                             </p:dialog>
                             
                         </f:facet>

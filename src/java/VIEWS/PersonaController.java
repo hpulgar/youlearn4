@@ -38,6 +38,8 @@ public class PersonaController implements Serializable {
     private List<Persona> arPersona = new ArrayList();
     private List<Persona> arPersona2 = new ArrayList();
     private String modificar;
+    private String nombreBusqueda;
+    
 
     public PersonaController() {
     }
@@ -57,6 +59,14 @@ public class PersonaController implements Serializable {
             current = arMe.get(i);
         }
                 
+    }
+
+    public String getNombreBusqueda() {
+        return nombreBusqueda;
+    }
+
+    public void setNombreBusqueda(String nombreBusqueda) {
+        this.nombreBusqueda = nombreBusqueda;
     }
 
 public void cargaDatos(int id)
@@ -376,11 +386,34 @@ public void cargaDatos(int id)
         
     }
     
-     public List<Persona> verPersona()
+     public List<Persona> verPersona(String nbusqueda)
     {
-        List<Persona> arPersonas =ejbFacade.findAll();
-       
-        return arPersonas;
+        
+        List<Persona> arPersonas2 = new ArrayList();
+        if(nbusqueda.isEmpty())
+        {
+            List<Persona> arPersonas =ejbFacade.findAll();
+            return arPersonas;
+        }else
+        {
+            List<Persona> arPersonas =ejbFacade.findAll();
+            for(int i=0;i<arPersonas.size();i++)
+            {
+                if(nbusqueda.equals(arPersonas.get(i).getIdUsuario().getUsername().toLowerCase()))
+                {
+                    System.out.println("no funciona porque imprime "+ arPersonas.get(i).getIdUsuario().getUsername());
+                    System.out.println("y esta buscando "+ nbusqueda);
+                    
+                    arPersonas2.add(arPersonas.get(i));
+                    System.out.println("contenido arpersona2 "+arPersonas2.get(0).getNombre());
+                }else if(nbusqueda.equals(arPersonas.get(i).getNombre().toLowerCase()+" "+arPersonas.get(i).getApellido().toLowerCase()))
+                {
+                    
+                    arPersonas2.add(arPersonas.get(i));
+                }
+            }
+            return arPersonas2;
+        }
         
     }
      
