@@ -31,10 +31,10 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
         super(Archivo.class);
     }
     
-       public List<Archivo> obtenerArchivos(int idContenido)
+       public List<Archivo> obtenerArchivos(int idIdentificador,int idAux)
     {
         EntityManager t2= getEntityManager();
-        Query q = t2.createNamedQuery("Archivo.findByIdContenido").setParameter("idContenido", idContenido);   
+        Query q = t2.createNamedQuery("Archivo.findByIdContenido").setParameter("idIdentificador", idIdentificador).setParameter("idAux", idAux);   
         
        return q.getResultList(); 
     }

@@ -2,6 +2,7 @@ package VIEWS;
 
 import ENTITIES.Archivo;
 import ENTITIES.Contenidos;
+import ENTITIES.IdentificadorArchivo;
 import ENTITIES.TipoArchivo;
 import VIEWS.util.JsfUtil;
 import VIEWS.util.PaginationHelper;
@@ -350,19 +351,24 @@ public class ArchivoController implements Serializable {
         }
     }
      
-        public List<Archivo> verArchivos(int idContenido)
+        public List<Archivo> verArchivos(int idIdentificador)
     {
         arArchivo.clear();
         arArchivo2.clear();
         arArchivo = ejbFacade.findAll();        
         
-        for(int i=0;i<arArchivo.size();i++)
+        if(idIdentificador==3)//Identificador de archivo subido
         {
-            if(arArchivo.get(i).getIdContenido().getIdContenido() == idContenido && arArchivo.get(i).getAutorizado()==true)
-            {
-                arArchivo2.add(arArchivo.get(i));
-            }
-        }        
+                for(int i=0;i<arArchivo.size();i++)
+                {
+                    if(arArchivo.get(i).getIdIdentificadorArchivo().getIdIdentificadorArchivo()== idIdentificador && arArchivo.get(i).getAutorizado()==true)
+                    {
+                        arArchivo2.add(arArchivo.get(i));
+                    }
+                }        
+        
+        }
+        
         return arArchivo2;
     }
         
@@ -376,10 +382,18 @@ public class ArchivoController implements Serializable {
         //FacesContext.getCurrentInstance().addMessage(null, msg);
             
         try {
-                        //Estos valores deben ser declarados con el controlador curso
-                         String nomcurso = (String) event.getComponent().getAttributes().get("nombreCurso"); 
-                         String nomunidad = (String) event.getComponent().getAttributes().get("nombreUnidad");
-                         int idContenido =  (int) event.getComponent().getAttributes().get("idContenido");
+            
+            
+                    
+                        String nomcurso = (String) event.getComponent().getAttributes().get("nombreCurso"); 
+                        String nomunidad = (String) event.getComponent().getAttributes().get("nombreUnidad");
+                        int idAux =  (int) event.getComponent().getAttributes().get("idAux");
+                         int idIdentificador =  3;
+                         //Identificador Archivo Contenidos
+                        if(idIdentificador==3){
+                    
+                        
+                        
                         
                          //Path directorio .WAR de proyecto
                          File dataDir = new File(extContext.getRealPath("//files//"));
@@ -419,11 +433,11 @@ public class ArchivoController implements Serializable {
                          //String prefijo = FilenameUtils.getBaseName(str);
                          String extension = FilenameUtils.getExtension(str);
                   
-                         copyFile(nomunidad+"."+extension, event.getFile().getInputstream(),directorio,idContenido);
+                         copyFile(nomunidad+"."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador);
                          System.out.println("Archivos en directorio");
                        // listFiles(directorio);
-                        archivoSubido(idContenido, extension, nomunidad, directorioDB);
-                  
+                        archivoSubido(idIdentificador, extension, nomunidad, directorioDB,idAux);
+                        }
                          
                 }       catch (IOException e) {
                         e.printStackTrace();
@@ -431,44 +445,52 @@ public class ArchivoController implements Serializable {
  
     }  
  
-    public void copyFile(String fileName, InputStream in,String directorioFinal,int idContenido) {
+    public void copyFile(String fileName, InputStream in,String directorioFinal,int idAux,int idIdentificadorArchivo) {
            try {
+               
+               if(idIdentificadorArchivo==3)
+               {
                 
                   
                   
-               List<Archivo> obtenerArchivos = ejbFacade.obtenerArchivos(idContenido);
-               
-                int cantidadArchivos = obtenerArchivos.size();
-               //Necesito obtener la cantidad de archivos actuales para que no se repitan...la consulta podría ser mejor.(OBTENER CANT_ARCHIVOS DONDE UNIDAD=UNIDAD_CURSO)
-                 
-                   
-                   
-                   String nombre_final_a=cantidadArchivos+"_"+fileName;
-              
-                // write the inputStream to a FileOutputStream
-                System.out.println("Creando archivo en directorio :"+directorioFinal);
-                System.out.println("Ubicacion final archivo :"+directorioFinal+"/"+fileName);
-                System.out.println("nombre final archivo :"+nombre_final_a);
-                OutputStream out = new FileOutputStream(new File(directorioFinal + nombre_final_a));
-              
-                int read = 0;
-                byte[] bytes = new byte[1024];
-              
-                while ((read = in.read(bytes)) != -1) {
-                    out.write(bytes, 0, read);
-                }
-              
-                in.close();
-                out.flush();
-                out.close();
-              
-                System.out.println("Archivo creado exitosamente!");
-                } catch (IOException e) {
+                                List<Archivo> obtenerArchivos = ejbFacade.obtenerArchivos(idIdentificadorArchivo,idAux);
+
+                                 int cantidadArchivos = obtenerArchivos.size();
+                                //Necesito obtener la cantidad de archivos actuales para que no se repitan...la consulta podría ser mejor.(OBTENER CANT_ARCHIVOS DONDE UNIDAD=UNIDAD_CURSO)
+
+
+
+                                    String nombre_final_a=cantidadArchivos+"_"+fileName;
+
+                                 // write the inputStream to a FileOutputStream
+                                 System.out.println("Creando archivo en directorio :"+directorioFinal);
+                                 System.out.println("Ubicacion final archivo :"+directorioFinal+"/"+fileName);
+                                 System.out.println("nombre final archivo :"+nombre_final_a);
+                                 OutputStream out = new FileOutputStream(new File(directorioFinal + nombre_final_a));
+
+                                 int read = 0;
+                                 byte[] bytes = new byte[1024];
+
+                                 while ((read = in.read(bytes)) != -1) {
+                                     out.write(bytes, 0, read);
+                                 }
+
+                                 in.close();
+                                 out.flush();
+                                 out.close();
+
+                                 System.out.println("Archivo creado exitosamente!");
+                
+               }
+                } 
+           
+           
+           catch (IOException e) {
                 System.out.println(e.getMessage());
                 }
     }
      
-         public void archivoSubido(int id_contenido,String extension,String nom_archivo,String ubicacion)
+         public void archivoSubido(int idIdentificador,String extension,String nom_archivo,String ubicacion,int idAux)
     {
         System.out.println("Antes de Crear");
           
@@ -480,7 +502,7 @@ public class ArchivoController implements Serializable {
             boolean no_autorizado = false;
             String descripcion ="Sin descripcion";
             
-                List<Archivo> obtenerArchivos = ejbFacade.obtenerArchivos(id_contenido);
+                List<Archivo> obtenerArchivos = ejbFacade.obtenerArchivos(idIdentificador,idAux);
                
                 int cantidadArchivos = obtenerArchivos.size();
         
@@ -521,8 +543,9 @@ public class ArchivoController implements Serializable {
                 sdf.applyPattern("yyyy/mm/dd");
                 Date fecha = new Date();
                 
-             Contenidos cont = new Contenidos();
-             cont.setIdContenido(id_contenido);
+           
+             IdentificadorArchivo Identificador_temp = new IdentificadorArchivo();
+             Identificador_temp.setIdIdentificadorArchivo(idIdentificador);
              
              TipoArchivo tip = new TipoArchivo();
              tip.setIdTipo(tipoArchivo);
@@ -535,7 +558,11 @@ public class ArchivoController implements Serializable {
    
              
              Archivo objArchivo = new Archivo();
-           
+             
+             System.out.println("Identificador seteado OK");
+             objArchivo.setIdIdentificadorArchivo(Identificador_temp);
+             
+             objArchivo.setIdAux(idAux);
              
             objArchivo.setIdTipoArchivo(tip);
             System.out.println("Tipo OK");
@@ -547,8 +574,6 @@ public class ArchivoController implements Serializable {
              System.out.println("Ubicacion OK");
              objArchivo.setAutorizado(no_autorizado);
              System.out.println("Autorizado OK");     
-             objArchivo.setIdContenido(cont);
-            System.out.println("Contenido OK");
             objArchivo.setFecha(fecha);
             System.out.println("Fecha OK");
                       

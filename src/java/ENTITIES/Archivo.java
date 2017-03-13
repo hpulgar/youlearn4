@@ -7,9 +7,7 @@ package ENTITIES;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,18 +18,16 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Zotindows
+ * @author Felipe
  */
 @Entity
 @Table(name = "archivo")
@@ -39,12 +35,14 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Archivo.findAll", query = "SELECT a FROM Archivo a"),
     @NamedQuery(name = "Archivo.findByIdArchivo", query = "SELECT a FROM Archivo a WHERE a.idArchivo = :idArchivo"),
+    @NamedQuery(name = "Archivo.findByIdAux", query = "SELECT a FROM Archivo a WHERE a.idAux = :idAux"),
     @NamedQuery(name = "Archivo.findByNomArchivo", query = "SELECT a FROM Archivo a WHERE a.nomArchivo = :nomArchivo"),
     @NamedQuery(name = "Archivo.findByUbicacion", query = "SELECT a FROM Archivo a WHERE a.ubicacion = :ubicacion"),
     @NamedQuery(name = "Archivo.findByAutorizado", query = "SELECT a FROM Archivo a WHERE a.autorizado = :autorizado"),
     @NamedQuery(name = "Archivo.findByNoAprobadoTodos", query = "SELECT c FROM Archivo c WHERE c.autorizado = 0"),
     @NamedQuery(name = "Archivo.findByAprobadoTodos", query = "SELECT c FROM Archivo c WHERE c.autorizado = 1"),
-    @NamedQuery(name = "Archivo.findByIdContenido", query = "SELECT a FROM Archivo a WHERE a.idContenido.idContenido = :idContenido"),
+    @NamedQuery(name = "Archivo.findByIdentyAux", query = "SELECT a FROM Archivo a WHERE a.idIdentificadorArchivo.idIdentificadorArchivo = :idIdentificadorArchivo AND a.idAux = :idAux"),
+    @NamedQuery(name = "Archivo.findByIdContenido", query = "SELECT a FROM Archivo a WHERE a.idIdentificadorArchivo.idIdentificadorArchivo = :idIdentificador AND a.idAux = :idAux"),
     @NamedQuery(name = "Archivo.findByFecha", query = "SELECT a FROM Archivo a WHERE a.fecha = :fecha")})
 public class Archivo implements Serializable {
 
@@ -54,6 +52,8 @@ public class Archivo implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_archivo")
     private Integer idArchivo;
+    @Column(name = "id_aux")
+    private Integer idAux;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -72,16 +72,14 @@ public class Archivo implements Serializable {
     private String ubicacion;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Autorizado")
+    @Column(name = "autorizado")
     private boolean autorizado;
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idArchivo")
-    private List<LogSubidas> logSubidasList;
-    @JoinColumn(name = "id_contenido", referencedColumnName = "id_contenido")
+    @JoinColumn(name = "id_identificador_archivo", referencedColumnName = "id_identificador_archivo")
     @ManyToOne(optional = false)
-    private Contenidos idContenido;
+    private IdentificadorArchivo idIdentificadorArchivo;
     @JoinColumn(name = "id_tipo_archivo", referencedColumnName = "id_tipo")
     @ManyToOne(optional = false)
     private TipoArchivo idTipoArchivo;
@@ -107,6 +105,14 @@ public class Archivo implements Serializable {
 
     public void setIdArchivo(Integer idArchivo) {
         this.idArchivo = idArchivo;
+    }
+
+    public Integer getIdAux() {
+        return idAux;
+    }
+
+    public void setIdAux(Integer idAux) {
+        this.idAux = idAux;
     }
 
     public String getNomArchivo() {
@@ -149,21 +155,12 @@ public class Archivo implements Serializable {
         this.fecha = fecha;
     }
 
-    @XmlTransient
-    public List<LogSubidas> getLogSubidasList() {
-        return logSubidasList;
+    public IdentificadorArchivo getIdIdentificadorArchivo() {
+        return idIdentificadorArchivo;
     }
 
-    public void setLogSubidasList(List<LogSubidas> logSubidasList) {
-        this.logSubidasList = logSubidasList;
-    }
-
-    public Contenidos getIdContenido() {
-        return idContenido;
-    }
-
-    public void setIdContenido(Contenidos idContenido) {
-        this.idContenido = idContenido;
+    public void setIdIdentificadorArchivo(IdentificadorArchivo idIdentificadorArchivo) {
+        this.idIdentificadorArchivo = idIdentificadorArchivo;
     }
 
     public TipoArchivo getIdTipoArchivo() {

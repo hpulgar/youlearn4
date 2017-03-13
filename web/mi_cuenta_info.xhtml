@@ -14,7 +14,10 @@
 	<!--Title-->
 	<title>Youlearn - Amigos</title>
 
-
+        <style>
+            
+       
+        </style>
 <script type="text/javascript">  
 PrimeFaces.locales['es'] = {
     closeText: 'Cerrar',
@@ -57,7 +60,13 @@ PrimeFaces.locales['es'] = {
         <!-- INICIO DE FORMULARIO CREACION -->
 
                     
-                 
+                    <p:outputLabel  value="Imagen de perfil"/>
+                    <img src="#{personaController.selected.idUsuario.imagen_foto_perfil}" width="25%" height="20%" />
+                       <p:fileUpload  cancelLabel="Cancelar" uploadLabel="Cargar" invalidFileMessage="Formato no permitido" fileUploadListener="#{archivoController.upload}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="1000000" label="Seleccione un archivo" update="@form">
+               <!--<f:attribute name="nombreCurso" value="#/{contenidosController.selected.idCurso.nomCurso}" />
+               <f:attribute name="nombreUnidad" value="#/{contenidosController.selected.nombreUnidad}" />
+               <f:attribute name="idContenido" value="#/{contenidosController.selected.idContenido}" />-->
+         </p:fileUpload>
                     <p:outputLabel  value="Nombre"/>
                     <p:inputText  value="#{personaController.selected.nombre}"/>
                     
@@ -92,7 +101,7 @@ PrimeFaces.locales['es'] = {
                         <br/>
 
                     <p:outputLabel  value="Descripcion"/>
-                    <p:inputTextarea value="#{personaController.selected.descripcion}" rows="5" cols="30" counter="display" maxlength="10" counterTemplate=" {0}." autoResize="false" />
+                    <p:inputTextarea value="#{personaController.selected.descripcion}" rows="5" cols="30" counter="display" maxlength="200" counterTemplate=" {0}." autoResize="false" />
                     <h:outputText id="display" />
 
                     

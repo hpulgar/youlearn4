@@ -7,7 +7,9 @@ package ENTITIES;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,11 +19,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,6 +41,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Sesion.findByIdUsuario", query = "SELECT s.idUsuario FROM Usuario s WHERE s.username = :username"),
     @NamedQuery(name = "Sesion.findByFecha", query = "SELECT s FROM Sesion s WHERE s.fecha = :fecha")})
 public class Sesion implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSesion")
+    private List<LogSubidas> logSubidasList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -116,6 +123,15 @@ public class Sesion implements Serializable {
     @Override
     public String toString() {
         return "ENTITIES.Sesion[ idSesion=" + idSesion + " ]";
+    }
+
+    @XmlTransient
+    public List<LogSubidas> getLogSubidasList() {
+        return logSubidasList;
+    }
+
+    public void setLogSubidasList(List<LogSubidas> logSubidasList) {
+        this.logSubidasList = logSubidasList;
     }
     
 }

@@ -43,16 +43,15 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Contenidos.findByFecha", query = "SELECT c FROM Contenidos c WHERE c.fecha = :fecha")})
 public class Contenidos implements Serializable {
 
+    @Column(name = "tipo_alumno")
+    private Integer tipoAlumno;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_contenido")
     private Integer idContenido;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "tipo_alumno")
-    private int tipoAlumno;
     @Basic(optional = false)
     @NotNull
     @Column(name = "unidad")
@@ -172,6 +171,12 @@ public class Contenidos implements Serializable {
     @Override
     public String toString() {
         return "ENTITIES.Contenidos[ idContenido=" + idContenido + " ]";
+    }
+
+ 
+
+    public void setTipoAlumno(Integer tipoAlumno) {
+        this.tipoAlumno = tipoAlumno;
     }
     
 }

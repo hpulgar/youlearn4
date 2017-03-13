@@ -6,7 +6,9 @@
 package ENTITIES;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,9 +16,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,6 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TipoPublicacion.findByIdTipoPublicacion", query = "SELECT t FROM TipoPublicacion t WHERE t.idTipoPublicacion = :idTipoPublicacion"),
     @NamedQuery(name = "TipoPublicacion.findByNombreTipo", query = "SELECT t FROM TipoPublicacion t WHERE t.nombreTipo = :nombreTipo")})
 public class TipoPublicacion implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoPublicacion")
+    private List<PublicacionPerfil> publicacionPerfilList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -87,6 +94,15 @@ public class TipoPublicacion implements Serializable {
     @Override
     public String toString() {
         return "ENTITIES.TipoPublicacion[ idTipoPublicacion=" + idTipoPublicacion + " ]";
+    }
+
+    @XmlTransient
+    public List<PublicacionPerfil> getPublicacionPerfilList() {
+        return publicacionPerfilList;
+    }
+
+    public void setPublicacionPerfilList(List<PublicacionPerfil> publicacionPerfilList) {
+        this.publicacionPerfilList = publicacionPerfilList;
     }
     
 }

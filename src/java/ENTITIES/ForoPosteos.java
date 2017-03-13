@@ -7,6 +7,7 @@ package ENTITIES;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,12 +19,14 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -42,6 +45,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ForoPosteos.findByFecha", query = "SELECT f FROM ForoPosteos f WHERE f.fecha = :fecha"),
     @NamedQuery(name = "ForoPosteos.findByAutorizado", query = "SELECT f FROM ForoPosteos f WHERE f.autorizado = :autorizado")})
 public class ForoPosteos implements Serializable {
+
+    @OneToMany(mappedBy = "idForo")
+    private List<PublicacionPerfil> publicacionPerfilList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -186,6 +192,15 @@ public class ForoPosteos implements Serializable {
     @Override
     public String toString() {
         return "ENTITIES.ForoPosteos[ idPost=" + idPost + " ]";
+    }
+
+    @XmlTransient
+    public List<PublicacionPerfil> getPublicacionPerfilList() {
+        return publicacionPerfilList;
+    }
+
+    public void setPublicacionPerfilList(List<PublicacionPerfil> publicacionPerfilList) {
+        this.publicacionPerfilList = publicacionPerfilList;
     }
     
 }

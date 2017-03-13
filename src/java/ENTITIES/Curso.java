@@ -56,6 +56,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Curso.findByFecha", query = "SELECT c FROM Curso c WHERE c.fecha = :fecha")})
 public class Curso implements Serializable {
 
+    @OneToMany(mappedBy = "idCurso")
+    private List<PublicacionPerfil> publicacionPerfilList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCurso")
+    private List<InscripcionCurso> inscripcionCursoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCurso")
+    private List<Tablero> tableroList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -271,6 +278,33 @@ public class Curso implements Serializable {
     @Override
     public String toString() {
         return "ENTITIES.Curso[ idCurso=" + idCurso + " ]";
+    }
+
+    @XmlTransient
+    public List<PublicacionPerfil> getPublicacionPerfilList() {
+        return publicacionPerfilList;
+    }
+
+    public void setPublicacionPerfilList(List<PublicacionPerfil> publicacionPerfilList) {
+        this.publicacionPerfilList = publicacionPerfilList;
+    }
+
+    @XmlTransient
+    public List<InscripcionCurso> getInscripcionCursoList() {
+        return inscripcionCursoList;
+    }
+
+    public void setInscripcionCursoList(List<InscripcionCurso> inscripcionCursoList) {
+        this.inscripcionCursoList = inscripcionCursoList;
+    }
+
+    @XmlTransient
+    public List<Tablero> getTableroList() {
+        return tableroList;
+    }
+
+    public void setTableroList(List<Tablero> tableroList) {
+        this.tableroList = tableroList;
     }
     
 }
