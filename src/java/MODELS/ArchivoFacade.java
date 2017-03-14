@@ -56,5 +56,14 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
         
         return q.getResultList();
     }
+           
+            public void updateUsuario(int idUsuario,String dir)
+    {
+         Query query = em.createQuery("UPDATE Usuario us SET us.imagen_foto_perfil='"+dir+"' where us.idUsuario="+idUsuario);
+             query.executeUpdate();
+        
+        
+       
+    }
     
 }

@@ -61,12 +61,15 @@ PrimeFaces.locales['es'] = {
 
                     
                     <p:outputLabel  value="Imagen de perfil"/>
-                    <img src="#{personaController.selected.idUsuario.imagen_foto_perfil}" width="25%" height="20%" />
-                       <p:fileUpload  cancelLabel="Cancelar" uploadLabel="Cargar" invalidFileMessage="Formato no permitido" fileUploadListener="#{archivoController.upload}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="1000000" label="Seleccione un archivo" update="@form">
-               <!--<f:attribute name="nombreCurso" value="#/{contenidosController.selected.idCurso.nomCurso}" />
-               <f:attribute name="nombreUnidad" value="#/{contenidosController.selected.nombreUnidad}" />
-               <f:attribute name="idContenido" value="#/{contenidosController.selected.idContenido}" />-->
+                    
+                        <img src="#{personaController.selected.idUsuario.imagen_foto_perfil}" width="25%" height="20%" />
+                       
+                       <p:fileUpload  cancelLabel="Cancelar" uploadLabel="Cargar" invalidFileMessage="Formato no permitido" fileUploadListener="#{archivoController.upload}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="1000000" label="Seleccione un archivo" >
+                           
+               <f:attribute name="tempDetalle" value="foto_perfil" />
+               <f:attribute name="idAux" value="#{personaController.selected.idUsuario.idUsuario}" />
          </p:fileUpload>
+                    <br></br>
                     <p:outputLabel  value="Nombre"/>
                     <p:inputText  value="#{personaController.selected.nombre}"/>
                     

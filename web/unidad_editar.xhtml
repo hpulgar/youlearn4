@@ -77,11 +77,11 @@
                              <p:fileUpload  cancelLabel="Cancelar" uploadLabel="Cargar" invalidFileMessage="Formato no permitido" fileUploadListener="#{archivoController.upload}" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|ppt|doc|docx|xls)$/" sizeLimit="1000000" label="Seleccione un archivo" update="@form">
                <f:attribute name="nombreCurso" value="#{contenidosController.selected.idCurso.nomCurso}" />
                <f:attribute name="nombreUnidad" value="#{contenidosController.selected.nombreUnidad}" />
-               <f:attribute name="idIdentificador" value="3" />
+               <f:attribute name="tempDetalle" value="archivo" />
                <f:attribute name="idAux" value="#{contenidosController.selected.idContenido}" />
          </p:fileUpload>
                <h:form id="archivosContenido">
-                      <ui:repeat var="c" value="#{archivoController.verArchivos(contenidosController.selected.idContenido)}">
+                      <ui:repeat var="c" value="#{archivoController.verArchivos(3,contenidosController.selected.idContenido)}">
                                    
    
                                             
