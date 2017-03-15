@@ -67,3 +67,4 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
     }
     
 }
+

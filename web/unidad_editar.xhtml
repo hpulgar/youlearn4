@@ -78,7 +78,7 @@
                <f:attribute name="nombreCurso" value="#{contenidosController.selected.idCurso.nomCurso}" />
                <f:attribute name="nombreUnidad" value="#{contenidosController.selected.nombreUnidad}" />
                <f:attribute name="tempDetalle" value="archivo" />
-               <f:attribute name="idAux" value="#{contenidosController.selected.idContenido}" />
+               <f:attribute name="idAux" value="#{usuarioController.id_user}" />
          </p:fileUpload>
                <h:form id="archivosContenido">
                       <ui:repeat var="c" value="#{archivoController.verArchivos(3,contenidosController.selected.idContenido)}">

@@ -13,7 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
+import java.util.concurrent.atomic.AtomicInteger;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.text.SimpleDateFormat;
@@ -57,8 +57,25 @@ public class ArchivoController implements Serializable {
     private boolean verCrear = false;
     private List<Archivo> arArchivo = new ArrayList();
     private List<Archivo> arArchivo2= new ArrayList();
+    private int subidArchivo=0;
+    private boolean value1;
+    
+    private boolean accepted;
+
+    public void viewReport() {
+       
+            accepted = true;
+        }
+    
+    
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+  
 
     public ArchivoController() {
+        subidArchivo=0;
     }
     
      public void prepararCrear()
@@ -238,6 +255,15 @@ public class ArchivoController implements Serializable {
     public void setVerCrear(boolean verCrear) {
         this.verCrear = verCrear;
     }
+
+    public int getSubidArchivo() {
+        return subidArchivo;
+    }
+
+    public void setSubidArchivo(int subidArchivo) {
+        this.subidArchivo = subidArchivo;
+    }
+    
     
     
       public void actualizaNombre(int id_archivo,String descripcion)
@@ -383,81 +409,94 @@ public class ArchivoController implements Serializable {
        ExternalContext extContext=FacesContext.getCurrentInstance().getExternalContext();
         //FacesMessage msg = new FacesMessage("Success! ", event.getFile().getFileName() + " is uploaded.");  
         //FacesContext.getCurrentInstance().addMessage(null, msg);
-            
+         AtomicInteger counter = new AtomicInteger();
+            counter.set(subidArchivo);
         try {
+                           
+                            counter.addAndGet(subidArchivo++);
+System.out.println ("COUNTER EX:" + counter.incrementAndGet()); 
             
-            
+                         int  tempsubid=0;
                         int idIdentificador=0;
-                       
+                       int  idAux = (int) event.getComponent().getAttributes().get("idAux");
                         String tempDetalle = (String) event.getComponent().getAttributes().get("tempDetalle");
                         
                         if(tempDetalle.equalsIgnoreCase("archivo"))
                                 {
                                     idIdentificador=3;
+                                   
                                 }
                         
                          if(tempDetalle.equalsIgnoreCase("foto_perfil"))
                                 {
                                     idIdentificador=2;
+                                    
                                 }
+                         if(tempsubid!=0)
+                         {
+                             tempsubid=0;
+                         }
                          
                            if(tempDetalle.equalsIgnoreCase("muro"))
                                 {
+                                   
+                                    tempsubid = (int) event.getComponent().getAttributes().get("tempSubid");
                                     idIdentificador=1;
+                                 
                                 }
                         
-                        int idAux =  (int) event.getComponent().getAttributes().get("idAux");
+                        
                         
                   
                          //Identificador Archivo Contenidos
                         if(idIdentificador==3){
-                    
-                         String nomcurso = (String) event.getComponent().getAttributes().get("nombreCurso"); 
-                        String nomunidad = (String) event.getComponent().getAttributes().get("nombreUnidad");
-                        
-                        
-                         //Path directorio .WAR de proyecto
-                         File dataDir = new File(extContext.getRealPath("//files//"));
-                        // File dataDir = new File(System.getProperty("jboss.server.home.url"), "uploads");
-                         
-                        // String directorio = ""+dataDir+"/"+nomcurso+"/"+nomunidad+"/";
-                       //String con nombre de curso y unidad separados para distintos usos
-                         String pathDatos = ""+nomcurso+"/"+nomunidad+"/";
-                         //Con este string se hara la insercion en la DB
-                         String directorioDB = "http://localhost/archivos/"+nomcurso+"/"+nomunidad+"/";
-                         
-                         //Configuracion con servidor apache
-                         String filepath="/archivos/";
-                         //Directorio root de Apache,soloa accesible por el aplicativo
-                         String apacheDir ="C://Apache24//htdocs//";    
-             
-                        String directorio = apacheDir+filepath+pathDatos;
-                         boolean existeDirectorio = new File(directorio).exists(); 
-            
 
-                         if(existeDirectorio==false)
-                         {
-                             System.out.println("El directorio "+directorio+" no existe, creando....");
-                         //new File(directorio).mkdirs();
-                         System.out.println("Prueba de creacion en directorio apache");
-                         System.out.println("En el directorio C:\\Apache24\\htdocs\\archivos"+pathDatos);
-                         new File(apacheDir+filepath+pathDatos).mkdirs();
-                         }
-                         else
-                         {
-                              System.out.println("El directorio "+directorio+" si existe");
+                                            String nomcurso = (String) event.getComponent().getAttributes().get("nombreCurso"); 
+                                           String nomunidad = (String) event.getComponent().getAttributes().get("nombreUnidad");
 
-                         }
 
-                         UploadedFile tfile = event.getFile();
-                         String str = tfile.getFileName();
-                         //String prefijo = FilenameUtils.getBaseName(str);
-                         String extension = FilenameUtils.getExtension(str);
-                  
-                         copyFile(nomunidad+"."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador);
-                         System.out.println("Archivos en directorio");
-                       // listFiles(directorio);
-                        archivoSubido(idIdentificador, extension, nomunidad, directorioDB,idAux);
+                                            //Path directorio .WAR de proyecto
+                                            File dataDir = new File(extContext.getRealPath("//files//"));
+                                           // File dataDir = new File(System.getProperty("jboss.server.home.url"), "uploads");
+
+                                           // String directorio = ""+dataDir+"/"+nomcurso+"/"+nomunidad+"/";
+                                          //String con nombre de curso y unidad separados para distintos usos
+                                            String pathDatos = ""+nomcurso+"/"+nomunidad+"/";
+                                            //Con este string se hara la insercion en la DB
+                                            String directorioDB = "http://localhost/archivos/"+nomcurso+"/"+nomunidad+"/";
+
+                                            //Configuracion con servidor apache
+                                            String filepath="/archivos/";
+                                            //Directorio root de Apache,soloa accesible por el aplicativo
+                                            String apacheDir ="C://Apache24//htdocs//";    
+
+                                           String directorio = apacheDir+filepath+pathDatos;
+                                            boolean existeDirectorio = new File(directorio).exists(); 
+
+
+                                            if(existeDirectorio==false)
+                                            {
+                                                System.out.println("El directorio "+directorio+" no existe, creando....");
+                                            //new File(directorio).mkdirs();
+                                            System.out.println("Prueba de creacion en directorio apache");
+                                            System.out.println("En el directorio C:\\Apache24\\htdocs\\archivos"+pathDatos);
+                                            new File(apacheDir+filepath+pathDatos).mkdirs();
+                                            }
+                                            else
+                                            {
+                                                 System.out.println("El directorio "+directorio+" si existe");
+
+                                            }
+
+                                            UploadedFile tfile = event.getFile();
+                                            String str = tfile.getFileName();
+                                            //String prefijo = FilenameUtils.getBaseName(str);
+                                            String extension = FilenameUtils.getExtension(str);
+
+                                            copyFile(nomunidad+"."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador);
+                                            System.out.println("Archivos en directorio");
+                                          // listFiles(directorio);
+                                           archivoSubido(idIdentificador, extension, nomunidad, directorioDB,idAux);
                         }
                         
                         
@@ -465,50 +504,91 @@ public class ArchivoController implements Serializable {
                          if(idIdentificador==2){
                     
                      
+                
+
+                                            String pathDatos = ""+idAux+"/";
+                                            //Con este string se hara la insercion en la DB
+                                            String directorioDB = "http://localhost/foto_perfil/"+idAux+"/";
+
+                                            //Configuracion con servidor apache
+                                            String filepath="/foto_perfil/";
+                                            //Directorio root de Apache,soloa accesible por el aplicativo
+                                            String apacheDir ="C://Apache24//htdocs//";    
+
+                                           String directorio = apacheDir+filepath+pathDatos;
+                                            boolean existeDirectorio = new File(directorio).exists(); 
+
+
+                                            if(existeDirectorio==false)
+                                            {
+                                                System.out.println("El directorio "+directorio+" no existe, creando....");
+                                            //new File(directorio).mkdirs();
+                                            System.out.println("Prueba de creacion en directorio apache");
+                                            System.out.println("En el directorio C:\\Apache24\\htdocs\\foto_perfil"+pathDatos);
+                                            new File(apacheDir+filepath+pathDatos).mkdirs();
+                                            }
+                                            else
+                                            {
+                                                 System.out.println("El directorio "+directorio+" si existe");
+
+                                            }
+
+                                            UploadedFile tfile = event.getFile();
+                                            String str = tfile.getFileName();
+                                            //String prefijo = FilenameUtils.getBaseName(str);
+                                            String extension = FilenameUtils.getExtension(str);
+
+                                            copyFile("."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador);
+                                            System.out.println("Archivos en directorio");
+                                          // listFiles(directorio);
+                                           archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux);
                         
                         
-                         //Path directorio .WAR de proyecto
-                         File dataDir = new File(extContext.getRealPath("//files//"));
-                        // File dataDir = new File(System.getProperty("jboss.server.home.url"), "uploads");
+                        }
                          
-                        // String directorio = ""+dataDir+"/"+nomcurso+"/"+nomunidad+"/";
-                       //String con nombre de curso y unidad separados para distintos usos
-                         String pathDatos = ""+idAux+"/";
-                         //Con este string se hara la insercion en la DB
-                         String directorioDB = "http://localhost/foto_perfil/"+idAux+"/";
                          
-                         //Configuracion con servidor apache
-                         String filepath="/foto_perfil/";
-                         //Directorio root de Apache,soloa accesible por el aplicativo
-                         String apacheDir ="C://Apache24//htdocs//";    
-             
-                        String directorio = apacheDir+filepath+pathDatos;
-                         boolean existeDirectorio = new File(directorio).exists(); 
-            
+                           if(idIdentificador==1){
+                    
+                     
+                 System.out.println("Cantidad subida "+tempsubid);
+                                            String pathDatos = ""+idAux+"/";
+                                            //Con este string se hara la insercion en la DB
+                                            String directorioDB = "http://localhost/muro/"+idAux+"/";
 
-                         if(existeDirectorio==false)
-                         {
-                             System.out.println("El directorio "+directorio+" no existe, creando....");
-                         //new File(directorio).mkdirs();
-                         System.out.println("Prueba de creacion en directorio apache");
-                         System.out.println("En el directorio C:\\Apache24\\htdocs\\foto_perfil"+pathDatos);
-                         new File(apacheDir+filepath+pathDatos).mkdirs();
-                         }
-                         else
-                         {
-                              System.out.println("El directorio "+directorio+" si existe");
+                                            //Configuracion con servidor apache
+                                            String filepath="/muro/";
+                                            //Directorio root de Apache,soloa accesible por el aplicativo
+                                            String apacheDir ="C://Apache24//htdocs//";    
 
-                         }
+                                           String directorio = apacheDir+filepath+pathDatos;
+                                            boolean existeDirectorio = new File(directorio).exists(); 
 
-                         UploadedFile tfile = event.getFile();
-                         String str = tfile.getFileName();
-                         //String prefijo = FilenameUtils.getBaseName(str);
-                         String extension = FilenameUtils.getExtension(str);
-                  
-                         copyFile("."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador);
-                         System.out.println("Archivos en directorio");
-                       // listFiles(directorio);
-                        archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux);
+
+                                            if(existeDirectorio==false)
+                                            {
+                                                System.out.println("El directorio "+directorio+" no existe, creando....");
+                                            //new File(directorio).mkdirs();
+                                            System.out.println("Prueba de creacion en directorio apache");
+                                            System.out.println("En el directorio C:\\Apache24\\htdocs\\muro"+pathDatos);
+                                            new File(apacheDir+filepath+pathDatos).mkdirs();
+                                            }
+                                            else
+                                            {
+                                                 System.out.println("El directorio "+directorio+" si existe");
+
+                                            }
+
+                                            UploadedFile tfile = event.getFile();
+                                            String str = tfile.getFileName();
+                                            //String prefijo = FilenameUtils.getBaseName(str);
+                                            String extension = FilenameUtils.getExtension(str);
+
+                                            copyFile("."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador);
+                                            System.out.println("Archivos en directorio");
+                                          // listFiles(directorio);
+                                           archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux);
+                        
+                        
                         }
                         
                          
@@ -520,6 +600,8 @@ public class ArchivoController implements Serializable {
  
     public void copyFile(String fileName, InputStream in,String directorioFinal,int idAux,int idIdentificadorArchivo) {
            try {
+               
+                
                
                if(idIdentificadorArchivo==3)
                {
@@ -590,6 +672,52 @@ public class ArchivoController implements Serializable {
                                  System.out.println("Archivo creado exitosamente!");
                 
                }
+                
+                
+                
+                   if(idIdentificadorArchivo==1)
+               {
+                
+                  
+                  
+                               
+
+                            List<Archivo> obtenerArchivos = ejbFacade.obtenerArchivos(idIdentificadorArchivo,idAux);
+
+                                 int cantidadArchivos = obtenerArchivos.size();
+                                 
+                           
+                                //Necesito obtener la cantidad de archivos actuales para que no se repitan...la consulta podría ser mejor.(OBTENER CANT_ARCHIVOS DONDE UNIDAD=UNIDAD_CURSO)
+
+
+
+                                    String nombre_final_a=cantidadArchivos+"_"+fileName;
+
+
+                                 // write the inputStream to a FileOutputStream
+                                 System.out.println("Creando archivo en directorio :"+directorioFinal);
+                                 System.out.println("Ubicacion final archivo :"+directorioFinal+"/"+fileName);
+                                 System.out.println("nombre final archivo :"+nombre_final_a);
+                                 OutputStream out = new FileOutputStream(new File(directorioFinal + nombre_final_a));
+
+                                 int read = 0;
+                                 byte[] bytes = new byte[1024];
+
+                                 while ((read = in.read(bytes)) != -1) {
+                                     out.write(bytes, 0, read);
+                                 }
+
+                                 in.close();
+                                 out.flush();
+                                 out.close();
+
+                                 System.out.println("Archivo creado exitosamente!");
+                                 
+                                 
+                                 
+                
+               }
+                
                 } 
            
            
@@ -625,6 +753,11 @@ public class ArchivoController implements Serializable {
                   {
                        nombre_final_a=nom_archivo+"."+extension;
                   }
+                  if(idIdentificador==1)
+                  {
+                nombre_final_a=cantidadArchivos+"_."+extension;
+                  }
+                  
             
                 if(null != extension){
              switch (extension) {
@@ -669,7 +802,7 @@ public class ArchivoController implements Serializable {
              
              
         
-             
+             System.out.println("Valor contador "+subidArchivo);
              System.out.println("Comienza seteo de variables en objeto current");
  
    

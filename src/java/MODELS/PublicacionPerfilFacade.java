@@ -39,4 +39,6 @@ public class PublicacionPerfilFacade extends AbstractFacade<PublicacionPerfil> {
         return q.getResultList();
     }
     
+      
+    
 }

@@ -47,9 +47,13 @@ public class PublicacionPerfilController extends AmigosController implements Ser
     private String metodoRedirect;
     private String link;
     private int largoArray = 9;
-    
+    private int subidarchivos =0;
 
     public PublicacionPerfilController() {
+        
+        
+        
+        subidarchivos++;
     }
 
     
@@ -97,6 +101,14 @@ public class PublicacionPerfilController extends AmigosController implements Ser
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public int getSubidarchivos() {
+        return subidarchivos;
+    }
+
+    public void setSubidarchivos(int subidarchivos) {
+        this.subidarchivos = subidarchivos;
     }
     
     
@@ -330,6 +342,7 @@ public class PublicacionPerfilController extends AmigosController implements Ser
                 current.setIdPublicador(ou);
                 current.setIdUsuario(ou2);     
                 current.setFechaPublicacion(dateFormat.parse(fecha));
+                
 
                     if(current.getPublicacion() != null)
                     {
@@ -475,6 +488,16 @@ public class PublicacionPerfilController extends AmigosController implements Ser
         List<PublicacionPerfil> arPerfil2 = ejbFacade.PublicacionesPerfil(idUsuario);
      
         return arPerfil2;
+        
+    }
+    
+     public int cantPublicacionesU(int idUsuario)
+    {
+      
+        int cant=0;
+        cant = ejbFacade.PublicacionesPerfil(idUsuario).size();
+     
+        return cant+1;
         
     }
     

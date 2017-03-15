@@ -13,7 +13,7 @@
         <title>Comentar</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        
+       
         
         
    </h:head>
@@ -24,12 +24,30 @@
         
         <h:panelGrid id="parametroBody" style="width: 100%" >
 
-    <h:form>
+  
+            <h:form>
         <p:outputPanel deferred="true">
         <div class="field-row" >
             <p:inputText  id="crearPublicacionPerfil" value="#{publicacionPerfilController.selected.publicacion}" a:placeholder="Publicar..." required="true"  style="border-color: #198752; width: 350px;float:left; margin-right: 45px">
+               
+         
+                <p:inplace class="button1" label="Añadir una imagen" effect="slide">
+            <h:form>
+        <p:fileUpload value="#{archivoController.subidArchivo=0}"  multiple="true" oncomplete="#{archivoController.subidArchivo=0}"  cancelLabel="Cancelar" uploadLabel="Cargar" invalidFileMessage="Formato no permitido" fileUploadListener="#{archivoController.upload}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="1000000" label="Seleccione un archivo" >
+                           
+               <f:attribute name="tempDetalle" value="muro" />
+               <f:attribute name="tempSubid" value="#{archivoController.subidArchivo}" />
+               <f:attribute name="idAux" value="#{usuarioController.id_user}" />
+         </p:fileUpload>
+    </h:form>
+        </p:inplace>
+                   <br></br>
+                   
+                   <br></br>
                 <p:commandButton id="btoCrearPublicacion" value="Publicar" update="parametroBody" process="@all"  action="#{publicacionPerfilController.crearPublicacion(usuarioController.id_user, usuarioController.id_usuario_amigo)}" > 
                 </p:commandButton>
+              
+             
                 
             </p:inputText>
         </div>
