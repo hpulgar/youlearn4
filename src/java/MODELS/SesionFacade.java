@@ -33,7 +33,7 @@ public class SesionFacade extends AbstractFacade<Sesion> {
       public int cargaID(String username)
     {
         EntityManager em3 = getEntityManager();
-        Query q= em3.createNamedQuery("Sesion.findByIdUsuario").setParameter("username",username);
+        Query q= em3.createNamedQuery("Sesion.findByIdUsuario").setParameter("correo",username);
       
         return (int)q.getResultList().get(0);
         

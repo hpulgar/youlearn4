@@ -408,10 +408,17 @@ public void cargaDatos(int id)
                     System.out.println("contenido arpersona2 "+arPersonas2.get(0).getNombre());
                 }else if(nbusqueda.equals(arPersonas.get(i).getNombre().toLowerCase()+" "+arPersonas.get(i).getApellido().toLowerCase()))
                 {
-                    
                     arPersonas2.add(arPersonas.get(i));
+                
+                }else if(nbusqueda.equals(arPersonas.get(i).getNombre().toLowerCase()))
+                {
+                    arPersonas2.add(arPersonas.get(i));
+                }else if(nbusqueda.equals(arPersonas.get(i).getApellido().toLowerCase()))
+                {
+                    arPersonas2.add(arPersonas.get(i)); 
                 }
-            }
+                    
+        }
             return arPersonas2;
         }
         
