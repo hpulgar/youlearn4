@@ -401,6 +401,32 @@ public class ArchivoController implements Serializable {
         return arArchivo2;
     }
         
+            public List<Archivo> verImagenes(int idIdentificador,int idAux)
+    {
+        arArchivo.clear();
+        arArchivo2.clear();
+        arArchivo = ejbFacade.findAll();        
+        
+        System.out.println("Viendo archivos...");
+        System.out.println("IDENTIFICADOR..."+idIdentificador);
+        System.out.println("AUX..."+idAux);
+        
+                for(int i=0;i<arArchivo.size();i++)
+                {
+                           System.out.println("Dentro del for......");
+                    if(arArchivo.get(i).getIdIdentificadorArchivo().getIdIdentificadorArchivo()== idIdentificador && arArchivo.get(i).getAutorizado()==false && arArchivo.get(i).getIdAux()== idAux )
+                    {
+                               System.out.println("Obtengo valores de imagen a mostrar...");
+                               System.out.println("URL..."+arArchivo.get(i).getUbicacion());
+                        arArchivo2.add(arArchivo.get(i));
+                    }
+                }        
+        
+        
+        
+        return arArchivo2;
+    }
+        
       
         
         
@@ -409,17 +435,15 @@ public class ArchivoController implements Serializable {
        ExternalContext extContext=FacesContext.getCurrentInstance().getExternalContext();
         //FacesMessage msg = new FacesMessage("Success! ", event.getFile().getFileName() + " is uploaded.");  
         //FacesContext.getCurrentInstance().addMessage(null, msg);
-         AtomicInteger counter = new AtomicInteger();
-            counter.set(subidArchivo);
+         
         try {
-                           
-                            counter.addAndGet(subidArchivo++);
-System.out.println ("COUNTER EX:" + counter.incrementAndGet()); 
-            
+                      int i = 1;
                          int  tempsubid=0;
+                         
                         int idIdentificador=0;
                        int  idAux = (int) event.getComponent().getAttributes().get("idAux");
                         String tempDetalle = (String) event.getComponent().getAttributes().get("tempDetalle");
+                        i++;
                         
                         if(tempDetalle.equalsIgnoreCase("archivo"))
                                 {
@@ -441,8 +465,15 @@ System.out.println ("COUNTER EX:" + counter.incrementAndGet());
                                 {
                                    
                                     tempsubid = (int) event.getComponent().getAttributes().get("tempSubid");
-                                    idIdentificador=1;
+                                    
+                                    idIdentificador=4;
+                                                   List<Archivo> largoArchivos = ejbFacade.obtenerArchivos(idIdentificador,idAux);
+                                                   int largo = largoArchivos.size();
+                                                  int tempTotal = i+largo;
+                      
                                  
+                 
+             
                                 }
                         
                         
@@ -493,10 +524,10 @@ System.out.println ("COUNTER EX:" + counter.incrementAndGet());
                                             //String prefijo = FilenameUtils.getBaseName(str);
                                             String extension = FilenameUtils.getExtension(str);
 
-                                            copyFile(nomunidad+"."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador);
+                                            copyFile(nomunidad+"."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador,i);
                                             System.out.println("Archivos en directorio");
                                           // listFiles(directorio);
-                                           archivoSubido(idIdentificador, extension, nomunidad, directorioDB,idAux);
+                                           archivoSubido(idIdentificador, extension, nomunidad, directorioDB,idAux,i);
                         }
                         
                         
@@ -538,19 +569,18 @@ System.out.println ("COUNTER EX:" + counter.incrementAndGet());
                                             //String prefijo = FilenameUtils.getBaseName(str);
                                             String extension = FilenameUtils.getExtension(str);
 
-                                            copyFile("."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador);
+                                            copyFile("."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador,i);
                                             System.out.println("Archivos en directorio");
                                           // listFiles(directorio);
-                                           archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux);
+                                           archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux,i);
                         
                         
                         }
                          
                          
-                           if(idIdentificador==1){
+                           if(idIdentificador==4){
                     
-                     
-                 System.out.println("Cantidad subida "+tempsubid);
+
                                             String pathDatos = ""+idAux+"/";
                                             //Con este string se hara la insercion en la DB
                                             String directorioDB = "http://localhost/muro/"+idAux+"/";
@@ -583,10 +613,10 @@ System.out.println ("COUNTER EX:" + counter.incrementAndGet());
                                             //String prefijo = FilenameUtils.getBaseName(str);
                                             String extension = FilenameUtils.getExtension(str);
 
-                                            copyFile("."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador);
+                                            copyFile("."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador,i);
                                             System.out.println("Archivos en directorio");
                                           // listFiles(directorio);
-                                           archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux);
+                                           archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux,i);
                         
                         
                         }
@@ -598,7 +628,7 @@ System.out.println ("COUNTER EX:" + counter.incrementAndGet());
  
     }  
  
-    public void copyFile(String fileName, InputStream in,String directorioFinal,int idAux,int idIdentificadorArchivo) {
+    public void copyFile(String fileName, InputStream in,String directorioFinal,int idAux,int idIdentificadorArchivo,int cant) {
            try {
                
                 
@@ -675,7 +705,7 @@ System.out.println ("COUNTER EX:" + counter.incrementAndGet());
                 
                 
                 
-                   if(idIdentificadorArchivo==1)
+                   if(idIdentificadorArchivo==4)
                {
                 
                   
@@ -690,8 +720,9 @@ System.out.println ("COUNTER EX:" + counter.incrementAndGet());
                                 //Necesito obtener la cantidad de archivos actuales para que no se repitan...la consulta podría ser mejor.(OBTENER CANT_ARCHIVOS DONDE UNIDAD=UNIDAD_CURSO)
 
 
-
-                                    String nombre_final_a=cantidadArchivos+"_"+fileName;
+                                     int tempVar=cantidadArchivos+cant;
+       
+                                    String nombre_final_a=tempVar+"_"+fileName;
 
 
                                  // write the inputStream to a FileOutputStream
@@ -726,7 +757,7 @@ System.out.println ("COUNTER EX:" + counter.incrementAndGet());
                 }
     }
      
-         public void archivoSubido(int idIdentificador,String extension,String nom_archivo,String ubicacion,int idAux)
+         public void archivoSubido(int idIdentificador,String extension,String nom_archivo,String ubicacion,int idAux,int cantemp)
     {
         System.out.println("Antes de Crear");
           
@@ -753,9 +784,11 @@ System.out.println ("COUNTER EX:" + counter.incrementAndGet());
                   {
                        nombre_final_a=nom_archivo+"."+extension;
                   }
-                  if(idIdentificador==1)
+                  if(idIdentificador==4)
                   {
-                nombre_final_a=cantidadArchivos+"_."+extension;
+                      
+              int tempVar=cantidadArchivos+cantemp;
+                nombre_final_a=tempVar+"_."+extension;
                   }
                   
             
