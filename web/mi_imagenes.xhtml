@@ -15,7 +15,9 @@
 	<title>Youlearn - Amigos</title>
 
         <style>
-            
+            .ui-dialog {
+    width: auto !important;
+}
        
         </style>
 <script type="text/javascript">  
@@ -65,7 +67,16 @@ PrimeFaces.locales['es'] = {
          </p:fileUpload>
                 
                  <ui:repeat var="c" value="#{archivoController.verImagenes(4,usuarioController.id_user)}">
-                    <h:graphicImage width="100" height="100"  value="#{c.ubicacion}" rendered="#{c.idTipoArchivo.idTipo eq '1' or c.idTipoArchivo.idTipo eq '2' or c.idTipoArchivo.idTipo eq '3'}" />
+                     <h:graphicImage onclick="PF('#{c.idArchivo}').show();" width="20%" height="30%"  value="#{c.ubicacion}" rendered="#{c.idTipoArchivo.idTipo eq '1' or c.idTipoArchivo.idTipo eq '2' or c.idTipoArchivo.idTipo eq '3'}" />
+                
+                     <p:dialog  header="#{c.descripcion}" widgetVar="#{c.idArchivo}" modal="true" width="50%" height="50%">
+                                              
+       
+                                             <h:graphicImage  value="#{c.ubicacion}" rendered="#{c.idTipoArchivo.idTipo eq '1' or c.idTipoArchivo.idTipo eq '2' or c.idTipoArchivo.idTipo eq '3'}" />
+
+                                                 
+                                                  
+                                          </p:dialog> 
                  </ui:repeat>             
                
     </h:form>

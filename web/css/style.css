@@ -236,6 +236,16 @@ a {
 	min-height: 14px;
 }
 
+.imagenNormal {
+    border: solid 1px red;
+    margin-right:5px;
+}
+
+.imagenActiva{
+     border: solid 1px green;
+}
+
+
 .email-icon {
 	background: url(../images/email_icon_01.png) center left no-repeat;
 	padding: 0 0 0 20px;

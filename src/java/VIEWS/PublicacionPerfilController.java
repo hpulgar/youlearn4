@@ -48,6 +48,7 @@ public class PublicacionPerfilController extends AmigosController implements Ser
     private String link;
     private int largoArray = 9;
     private int subidarchivos =0;
+    String archivosTemp;
 
     public PublicacionPerfilController() {
         
@@ -56,6 +57,15 @@ public class PublicacionPerfilController extends AmigosController implements Ser
         subidarchivos++;
     }
 
+    public String getArchivosTemp() {
+        return archivosTemp;
+    }
+
+    public void setArchivosTemp(String archivosTemp) {
+        this.archivosTemp = archivosTemp;
+    }
+
+    
     
     
     public int getLargoArray() {

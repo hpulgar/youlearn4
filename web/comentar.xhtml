@@ -14,12 +14,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
        
+      #{archivoController.setCantidadImagen(0)} 
+      #{archivoController.setTempImagen(null)} 
         
-        
+       
    </h:head>
+    
+   
     <h:body >
 
-            
+        <script type="text/javascript">
+  $("img").on("click",
+            function(){
+                $(this).toggleClass("imagenActiva");
+            });
+</script>    
+        
+        
         
         
         <h:panelGrid id="parametroBody" style="width: 100%" >
@@ -28,8 +39,8 @@
             <h:form>
         <p:outputPanel deferred="true">
         <div class="field-row" >
-            <p:inputText  id="crearPublicacionPerfil" value="#{publicacionPerfilController.selected.publicacion}" a:placeholder="Publicar..." required="true"  style="border-color: #198752; width: 350px;float:left; margin-right: 45px">
-               
+            <p:inputText  id="crearPublicacionPerfil" value="#{publicacionPerfilController.selected.publicacion}#{archivoController.tempImagen}" a:placeholder="Publicar..." required="true"  style="border-color: #198752; width: 350px;float:left; margin-right: 45px">
+              
          
               
                 <br></br><br></br>
@@ -37,6 +48,23 @@
                    <br></br>
                 <p:commandButton id="btoCrearPublicacion" value="Publicar" update="parametroBody" process="@all"  action="#{publicacionPerfilController.crearPublicacion(usuarioController.id_user, usuarioController.id_usuario_amigo)}" > 
                 </p:commandButton>
+                    <p:commandButton id="btoCrearImagen" value="Imagen" onclick="PF('dlgImagenes').show();"/> 
+                  <p:dialog  header="Mis imagenes" widgetVar="dlgImagenes" modal="true">
+                      <p:outputPanel autoUpdate="true">
+                      <h:outputText value="Imagenes seleccionadas : #{archivoController.cantidadImagen}"/><br/>
+                       </p:outputPanel>                   
+        <ui:repeat var="c" value="#{archivoController.verImagenes(4,usuarioController.id_user)}">
+       
+                
+            <p:commandLink>
+                <f:ajax event="click" listener="#{archivoController.agregarImageGaleria(c.ubicacion)}"/>
+                <h:graphicImage class="imagenNormal" width="100" height="100"  value="#{c.ubicacion}" rendered="#{c.idTipoArchivo.idTipo eq '1' or c.idTipoArchivo.idTipo eq '2' or c.idTipoArchivo.idTipo eq '3'}" />
+          </p:commandLink>
+           
+                     
+                 </ui:repeat>             
+                      <br></br><p:commandButton id="btoImagenAdjuntar" value="Adjuntar" update="@form" onclick="PF('dlgImagenes').hide();" />                    
+                                          </p:dialog> 
               
              
                 

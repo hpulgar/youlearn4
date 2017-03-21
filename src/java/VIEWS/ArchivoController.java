@@ -31,6 +31,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -59,8 +60,9 @@ public class ArchivoController implements Serializable {
     private List<Archivo> arArchivo2= new ArrayList();
     private int subidArchivo=0;
     private boolean value1;
-    
+    private int cantidadImagen;
     private boolean accepted;
+    private String tempImagen;
 
     public void viewReport() {
        
@@ -72,11 +74,29 @@ public class ArchivoController implements Serializable {
         return accepted;
     }
 
+    public String getTempImagen() {
+        return tempImagen;
+    }
+
+    public void setTempImagen(String tempImagen) {
+        this.tempImagen = tempImagen;
+    }
+
   
 
     public ArchivoController() {
         subidArchivo=0;
     }
+
+    public int getCantidadImagen() {
+        return cantidadImagen;
+    }
+
+    public void setCantidadImagen(int cantidadImagen) {
+        this.cantidadImagen = cantidadImagen;
+    }
+    
+    
     
      public void prepararCrear()
     {
@@ -426,6 +446,17 @@ public class ArchivoController implements Serializable {
         
         return arArchivo2;
     }
+            
+     public void agregarImageGaleria(String url)
+{
+ cantidadImagen++;
+    System.out.println("Cantidad archivos seleccionados "+cantidadImagen);
+    System.out.println("Url imagen "+url);
+   this.setTempImagen(url);
+    
+    
+   
+}
         
       
         
