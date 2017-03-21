@@ -61,9 +61,20 @@ public class ArchivoController implements Serializable {
     private int subidArchivo=0;
     private boolean value1;
     private int cantidadImagen;
+    private List<String> names ;
+  
     private boolean accepted;
     private String tempImagen;
 
+    public List<String> getNames() {
+        return names;
+    }
+
+    public void setNames(List<String> names) {
+        this.names = names;
+    }
+
+    
     public void viewReport() {
        
             accepted = true;
@@ -428,16 +439,16 @@ public class ArchivoController implements Serializable {
         arArchivo = ejbFacade.findAll();        
         
         System.out.println("Viendo archivos...");
-        System.out.println("IDENTIFICADOR..."+idIdentificador);
-        System.out.println("AUX..."+idAux);
+        //System.out.println("IDENTIFICADOR..."+idIdentificador);
+        //System.out.println("AUX..."+idAux);
         
                 for(int i=0;i<arArchivo.size();i++)
                 {
-                           System.out.println("Dentro del for......");
+                           System.out.println("Dentro del for......" +i);
                     if(arArchivo.get(i).getIdIdentificadorArchivo().getIdIdentificadorArchivo()== idIdentificador && arArchivo.get(i).getAutorizado()==false && arArchivo.get(i).getIdAux()== idAux )
                     {
-                               System.out.println("Obtengo valores de imagen a mostrar...");
-                               System.out.println("URL..."+arArchivo.get(i).getUbicacion());
+                               //System.out.println("Obtengo valores de imagen a mostrar...");
+                               //System.out.println("URL..."+arArchivo.get(i).getUbicacion());
                         arArchivo2.add(arArchivo.get(i));
                     }
                 }        
@@ -460,19 +471,61 @@ public class ArchivoController implements Serializable {
         
       
         
-        
+        public void upload2(FileUploadEvent event)
+        {
+            try{
+          //y q se sho
+          
+            int  idAux = (int) event.getComponent().getAttributes().get("idAux");
+            String pathDatos = ""+idAux+"/";
+            //Con este string se hara la insercion en la DB
+            String directorioDB = "http://localhost/muro/"+idAux+"/";
+
+            //Configuracion con servidor apache
+            String filepath="/muro/";
+            //Directorio root de Apache,soloa accesible por el aplicativo
+            String apacheDir ="C://Apache24//htdocs//";    
+
+           String directorio = apacheDir+filepath+pathDatos;
+            boolean existeDirectorio = new File(directorio).exists(); 
+            
+            
+            
+            FileUploadEvent asd = event;
+            List<FileUploadEvent> fpe = new ArrayList();
+            fpe.add(asd);
+            System.out.println("CUANTO LLEGA >>>>>>>>>>>>> "+fpe.size());
+            System.out.println("Q NOMBRE LLEGA "+fpe.get(0).getFile().getFileName());
+            for(int e=0;e<fpe.size();e++)
+            {
+                UploadedFile tfile = fpe.get(e).getFile();
+                String str = tfile.getFileName();
+                String extension = FilenameUtils.getExtension(str);
+
+
+                copyFile("."+extension, fpe.get(e).getFile().getInputstream(),directorio,idAux,4,0);
+
+                System.out.println("Archivos en directorio");
+                archivoSubido(4, extension, "imagen", directorioDB,idAux,0);
+
+
+            }
+            
+            }       catch (IOException e) {
+                        e.printStackTrace();
+                }
+        }
      
       public void upload(FileUploadEvent event) {  
        ExternalContext extContext=FacesContext.getCurrentInstance().getExternalContext();
         //FacesMessage msg = new FacesMessage("Success! ", event.getFile().getFileName() + " is uploaded.");  
         //FacesContext.getCurrentInstance().addMessage(null, msg);
-         
+         System.out.println("ENTRO AL CODIGO DE UPLOAD");
         try {
-                      int i = 1;
-                         int  tempsubid=0;
-                         
+                        int i = 1;
+                        int  tempsubid=0;
                         int idIdentificador=0;
-                       int  idAux = (int) event.getComponent().getAttributes().get("idAux");
+                        int  idAux = (int) event.getComponent().getAttributes().get("idAux");
                         String tempDetalle = (String) event.getComponent().getAttributes().get("tempDetalle");
                         i++;
                         
@@ -595,6 +648,8 @@ public class ArchivoController implements Serializable {
 
                                             }
 
+                                            
+                                            
                                             UploadedFile tfile = event.getFile();
                                             String str = tfile.getFileName();
                                             //String prefijo = FilenameUtils.getBaseName(str);
@@ -610,6 +665,9 @@ public class ArchivoController implements Serializable {
                          
                          
                            if(idIdentificador==4){
+                               
+                               
+                               System.out.println("ENTRO AL CODIGO IDENTIFICADOR 4");
                     
 
                                             String pathDatos = ""+idAux+"/";
@@ -628,26 +686,64 @@ public class ArchivoController implements Serializable {
                                             if(existeDirectorio==false)
                                             {
                                                 System.out.println("El directorio "+directorio+" no existe, creando....");
-                                            //new File(directorio).mkdirs();
-                                            System.out.println("Prueba de creacion en directorio apache");
-                                            System.out.println("En el directorio C:\\Apache24\\htdocs\\muro"+pathDatos);
-                                            new File(apacheDir+filepath+pathDatos).mkdirs();
-                                            }
-                                            else
+                                                //new File(directorio).mkdirs();
+                                                System.out.println("Prueba de creacion en directorio apache");
+                                                System.out.println("En el directorio C:\\Apache24\\htdocs\\muro"+pathDatos);
+                                                new File(apacheDir+filepath+pathDatos).mkdirs();
+                                                
+                                                 //y q se sho
+                                                FileUploadEvent asd = event;
+                                                List<FileUploadEvent> fpe = new ArrayList();
+                                                fpe.add(asd);
+                                                System.out.println("CUANTO LLEGA >>>>>>>>>>>>> "+fpe.size());
+                                                
+                                                for(int e=0;e<fpe.size();e++)
+                                                {
+                                                    UploadedFile tfile = fpe.get(e).getFile();
+                                                    //UploadedFile tfile = event.getFile(); //ORIGINAL
+                                                    String str = tfile.getFileName();
+                                                    //String prefijo = FilenameUtils.getBaseName(str);
+                                                    String extension = FilenameUtils.getExtension(str);
+
+
+                                                    copyFile("."+extension, fpe.get(e).getFile().getInputstream(),directorio,idAux,idIdentificador,i);
+                                                    
+                                                    //opyFile("."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador,i);
+                                                    
+                                                    System.out.println("Archivos en directorio");
+                                                    // listFiles(directorio);
+                                                    archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux,i);
+                                                }
+                                                
+                                               
+                                            }else
                                             {
-                                                 System.out.println("El directorio "+directorio+" si existe");
+                                                 //y q se sho
+                                                FileUploadEvent asd = event;
+                                                List<FileUploadEvent> fpe = new ArrayList();
+                                                fpe.add(asd);
+                                                System.out.println("CUANTO LLEGA >>>>>>>>>>>>> "+fpe.size());
+                                                
+                                                for(int e=0;e<fpe.size();e++)
+                                                {
+                                                    UploadedFile tfile = fpe.get(e).getFile();
+                                                    //UploadedFile tfile = event.getFile();
+                                                    String str = tfile.getFileName();
+                                                    //String prefijo = FilenameUtils.getBaseName(str);
+                                                    String extension = FilenameUtils.getExtension(str);
 
+
+                                                    //copyFile("."+extension, fpe.get(e).getFile().getInputstream(),directorio,idAux,idIdentificador,i);
+                                                    
+                                                    //opyFile("."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador,i);
+                                                    
+                                                    System.out.println("Archivos en directorio");
+                                                    // listFiles(directorio);
+                                                    archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux,i);
+                                                }
                                             }
 
-                                            UploadedFile tfile = event.getFile();
-                                            String str = tfile.getFileName();
-                                            //String prefijo = FilenameUtils.getBaseName(str);
-                                            String extension = FilenameUtils.getExtension(str);
-
-                                            copyFile("."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador,i);
-                                            System.out.println("Archivos en directorio");
-                                          // listFiles(directorio);
-                                           archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux,i);
+                                                
                         
                         
                         }
