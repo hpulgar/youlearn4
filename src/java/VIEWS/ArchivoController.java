@@ -458,6 +458,30 @@ public class ArchivoController implements Serializable {
         return arArchivo2;
     }
             
+            
+            public List<Archivo> traerImagenesMuro(int idPublicacion)
+            {
+                arArchivo.clear();
+                arArchivo = ejbFacade.findAll();
+                arArchivo2.clear();
+                for(int i=0;i<arArchivo.size();i++)
+                {
+                    if(arArchivo.get(i).getIdAux()== idPublicacion)
+                    {
+                        arArchivo2.add(arArchivo.get(i));
+                    }
+                }
+                return arArchivo2;
+                
+            }
+            
+            
+            public boolean verGaleria(int idPublicacion)
+            {
+                return !traerImagenesMuro(idPublicacion).isEmpty();
+            }
+            
+            
      public void agregarImageGaleria(String url)
 {
  cantidadImagen++;

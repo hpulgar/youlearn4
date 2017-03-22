@@ -56,20 +56,14 @@ PrimeFaces.locales['es'] = {
 <!-- BEGIN body -->
 <h:body >
     
-    <h:form id="yqsesho">
+        <h:form id="yqsesho">
 
                 <p:galleria  value="#{archivoController.verImagenes(4,usuarioController.id_user)}" var="image" panelWidth="500" panelHeight="313"  rendered="true">
                    <p:graphicImage value="#{image.ubicacion}"   title="#{image.nomArchivo}"/>
                 </p:galleria>
         </h:form>
+    
         <h:form>
-          
-            
-              
-           
-          
-          
-          
             <p:fileUpload  dragDropSupport="true" multiple="true" update="yqsesho" process="@all" mode="advanced" auto="true" fileLimitMessage="Solo puede subir una imagen a la vez"  fileLimit="20"  cancelLabel="Cancelar" uploadLabel="Cargar" 
                                invalidFileMessage="Formato no permitido" 
                                sequential="true" fileUploadListener="#{archivoController.upload2}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="1000000" label="Seleccione un archivo"  >
