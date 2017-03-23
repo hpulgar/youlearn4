@@ -445,7 +445,7 @@ public class ArchivoController implements Serializable {
         
                 for(int i=0;i<arArchivo.size();i++)
                 {
-                           System.out.println("Dentro del for......" +i);
+                           //System.out.println("Dentro del for......" +i);
                     if(arArchivo.get(i).getIdIdentificadorArchivo().getIdIdentificadorArchivo()== idIdentificador && arArchivo.get(i).getAutorizado()==false && arArchivo.get(i).getIdAux()== idAux )
                     {
                                //System.out.println("Obtengo valores de imagen a mostrar...");
@@ -505,7 +505,7 @@ System.out.println("Largo actual "+arImagenes.size());
       3-Recorrer los archivos y asignarles la id de la publicacion EDITAR MEDIANTE UPDATE
     
     */
-
+System.out.println("Parametro IDPublicacion "+idPublicacion);
                 for(int i=0;i<arImagenes.size();i++)
                 {
                      ejbFacade.updateArchivo(arImagenes.get(i).getIdArchivo(), idPublicacion);

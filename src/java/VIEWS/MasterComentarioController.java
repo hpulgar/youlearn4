@@ -410,6 +410,21 @@ public class MasterComentarioController implements Serializable {
         
     }
     
+    public String btoAgregarImagen(int idPub)
+    {
+        return "add"+idPub;
+    }
+    public String btoAgregarImagen2(int idPub)
+    {
+        return "add2"+idPub;
+    }
+    
+    public String btoDialogImagen(int idPub)
+    {
+        return "dialog"+idPub;
+    }
+    
+    
     
     
     

@@ -68,10 +68,11 @@
                         <div class="comment-right clearfix">
                             
                             <h:form  >
-                                <p:commandButton id="btoCrearImagen" value="+" onclick="PF('dlgImagenes').show();" rendered="#{usuarioController.id_user == pu.idPublicador.idUsuario}"/> 
+                                <p:commandButton id="#{masterComentarioController.btoAgregarImagen(pu.idPublicacion)}" value="+" onclick="PF('#{masterComentarioController.btoDialogImagen(pu.idPublicacion)}').show();" rendered="#{usuarioController.id_user == pu.idPublicador.idUsuario}"/> 
                                    <p:commandButton id="btoEditar" value="Editar" rendered="#{usuarioController.id_user == pu.idPublicador.idUsuario}"/> 
                                    <p:commandButton id="btoEliminar" value="Eliminar" rendered="#{usuarioController.id_user == pu.idPublicador.idUsuario}"/> 
-                  <p:dialog  header="Mis imagenes" widgetVar="dlgImagenes" modal="true">
+                  
+                                   <p:dialog  header="Mis imagenes" widgetVar="#{masterComentarioController.btoDialogImagen(pu.idPublicacion)}" modal="true">
                       <p:outputPanel autoUpdate="true">
                       <h:outputText value="Imagenes seleccionadas : #{archivoController.cantidadImagen}"/><br/>
                        </p:outputPanel>                   
@@ -85,8 +86,9 @@
            
                      
                  </ui:repeat>             
-                      <br></br><p:commandButton id="btoImagenAdjuntar" actionListener="#{archivoController.agregarImagenPost(pu.idPublicacion)}" value="Adjuntar" update="@form" onclick="PF('dlgImagenes').hide();" />                    
+                      <br></br><p:commandButton id="#{masterComentarioController.btoAgregarImagen2(pu.idPublicacion)}" actionListener="#{archivoController.agregarImagenPost(pu.idPublicacion)}" value="Adjuntar" update="@form" onclick="PF('#{masterComentarioController.btoDialogImagen(pu.idPublicacion)}').hide();" />                    
                                           </p:dialog> 
+                                   
                                 <p class="comment-info"><h:commandLink  value="#{pu.idPublicador.username}"  action="perfil.xhtml" actionListener="#{usuarioController.setId_usuario_amigo(pu.idPublicador.idUsuario)}"/>  <span> #{pu.fechaPublicacion} </span></p>
                                 <div style="word-wrap: break-word; width: 400px">
                                     <p class="comment-info"/><h:outputText value="#{pu.publicacion}" escape="false" />
@@ -111,7 +113,7 @@
                             </h:form>
                             
                          
-                            
+                         
                            
                         </div> 
                     </li>
