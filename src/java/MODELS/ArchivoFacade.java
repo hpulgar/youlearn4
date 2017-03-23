@@ -65,6 +65,17 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
         
        
     }
+            
+                 public void updateArchivo(int idArchivo,int aux)
+    {
+        System.out.println("Inicio update archivo");
+        System.out.println("Parametro idArchivo-> "+idArchivo+"  Parametro Aux-> "+aux);
+         Query query = em.createQuery("UPDATE Archivo us SET us.idAux="+aux+" where us.idArchivo="+idArchivo);
+             query.executeUpdate();
+        
+        
+       
+    }
     
 }
 

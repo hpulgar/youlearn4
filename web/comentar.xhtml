@@ -23,12 +23,7 @@
    
     <h:body >
 
-        <script type="text/javascript">
-  $("img").on("click",
-            function(){
-                $(this).toggleClass("imagenActiva");
-            });
-</script>    
+       
         
         
         
@@ -46,28 +41,8 @@
                 <br></br><br></br>
                    
                    <br></br>
-                <p:commandButton id="btoCrearPublicacion" value="Publicar" update="parametroBody" process="@all"  action="#{publicacionPerfilController.crearPublicacion(usuarioController.id_user, usuarioController.id_usuario_amigo)}" > 
-                </p:commandButton>
-                    <p:commandButton id="btoCrearImagen" value="Imagen" onclick="PF('dlgImagenes').show();"/> 
-                  <p:dialog  header="Mis imagenes" widgetVar="dlgImagenes" modal="true">
-                      <p:outputPanel autoUpdate="true">
-                      <h:outputText value="Imagenes seleccionadas : #{archivoController.cantidadImagen}"/><br/>
-                       </p:outputPanel>                   
-        <ui:repeat var="c" value="#{archivoController.verImagenes(4,usuarioController.id_user)}">
-       
-                
-            <p:commandLink>
-                <f:ajax event="click" listener="#{archivoController.agregarImageGaleria(c.ubicacion)}"/>
-                <h:graphicImage class="imagenNormal" width="100" height="100"  value="#{c.ubicacion}" rendered="#{c.idTipoArchivo.idTipo eq '1' or c.idTipoArchivo.idTipo eq '2' or c.idTipoArchivo.idTipo eq '3'}" />
-          </p:commandLink>
-           
-                     
-                 </ui:repeat>             
-                      <br></br><p:commandButton id="btoImagenAdjuntar" value="Adjuntar" update="@form" onclick="PF('dlgImagenes').hide();" />                    
-                                          </p:dialog> 
-              
-             
-                
+                <p:commandButton id="btoCrearPublicacion" value="Publicar" update="parametroBody" process="@all"  action="#{publicacionPerfilController.crearPublicacion(usuarioController.id_user, usuarioController.id_usuario_amigo)}" />
+        
             </p:inputText>
         </div>
             </p:outputPanel>
@@ -93,6 +68,25 @@
                         <div class="comment-right clearfix">
                             
                             <h:form  >
+                                <p:commandButton id="btoCrearImagen" value="+" onclick="PF('dlgImagenes').show();" rendered="#{usuarioController.id_user == pu.idPublicador.idUsuario}"/> 
+                                   <p:commandButton id="btoEditar" value="Editar" rendered="#{usuarioController.id_user == pu.idPublicador.idUsuario}"/> 
+                                   <p:commandButton id="btoEliminar" value="Eliminar" rendered="#{usuarioController.id_user == pu.idPublicador.idUsuario}"/> 
+                  <p:dialog  header="Mis imagenes" widgetVar="dlgImagenes" modal="true">
+                      <p:outputPanel autoUpdate="true">
+                      <h:outputText value="Imagenes seleccionadas : #{archivoController.cantidadImagen}"/><br/>
+                       </p:outputPanel>                   
+        <ui:repeat var="c" value="#{archivoController.verImagenes(4,usuarioController.id_user)}">
+       
+                
+            <p:commandLink>
+                <f:ajax event="click" listener="#{archivoController.agregarImageGaleria(c.idArchivo)}"/>
+                <h:graphicImage width="100" height="100"  value="#{c.ubicacion}" rendered="#{c.idTipoArchivo.idTipo eq '1' or c.idTipoArchivo.idTipo eq '2' or c.idTipoArchivo.idTipo eq '3'}" />
+          </p:commandLink>
+           
+                     
+                 </ui:repeat>             
+                      <br></br><p:commandButton id="btoImagenAdjuntar" actionListener="#{archivoController.agregarImagenPost(pu.idPublicacion)}" value="Adjuntar" update="@form" onclick="PF('dlgImagenes').hide();" />                    
+                                          </p:dialog> 
                                 <p class="comment-info"><h:commandLink  value="#{pu.idPublicador.username}"  action="perfil.xhtml" actionListener="#{usuarioController.setId_usuario_amigo(pu.idPublicador.idUsuario)}"/>  <span> #{pu.fechaPublicacion} </span></p>
                                 <div style="word-wrap: break-word; width: 400px">
                                     <p class="comment-info"/><h:outputText value="#{pu.publicacion}" escape="false" />
@@ -101,7 +95,7 @@
                                     <h:commandLink value="#{pu.idCurso.nomCurso}"  action="#{cursoController.verCurs(pu.idCurso.idCurso)}" style="color: #209b60" />
                                
                                    <!-- galeria oculta--> 
-                                    
+                                   <br/>         
                         <ui:repeat var="d" value="#{archivoController.traerImagenesMuro(pu.idPublicacion)}" rendered="#{archivoController.verGaleria(pu.idPublicacion)}">
                             <h:graphicImage  onclick="PF('#{d.idArchivo}').show();" width="20%" height="30%"  value="#{d.ubicacion}" rendered="#{archivoController.verGaleria(pu.idPublicacion)}" />
 
@@ -183,6 +177,7 @@
                                    
                                 </div>
                             </li>
+                                
                             </h:form>
                   
                         </h:panelGroup>
@@ -200,6 +195,7 @@
                                         <p:commandButton  id="#{masterComentarioController.nombreBoton(pu.idPublicacion)}"   actionListener="#{masterComentarioController.CrearComentario(usuarioController.id_user,pu.idPublicacion,1)}"  update="#{masterComentarioController.nombreForm5(pu.idPublicacion)}" process="@all" value="Comentar"  style="float:right ;margin-right:30px; visibility: hidden" >
                                            
                                         </p:commandButton>
+                                    
                                   
                                 </div>
                             </li>

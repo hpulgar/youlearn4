@@ -58,6 +58,7 @@ public class ArchivoController implements Serializable {
     private boolean verCrear = false;
     private List<Archivo> arArchivo = new ArrayList();
     private List<Archivo> arArchivo2= new ArrayList();
+    private List<Archivo> arImagenes= new ArrayList();
     private int subidArchivo=0;
     private boolean value1;
     private int cantidadImagen;
@@ -482,12 +483,41 @@ public class ArchivoController implements Serializable {
             }
             
             
-     public void agregarImageGaleria(String url)
+     public void agregarImageGaleria(int idArchivo)
 {
  cantidadImagen++;
     System.out.println("Cantidad archivos seleccionados "+cantidadImagen);
-    System.out.println("Url imagen "+url);
-   this.setTempImagen(url);
+Archivo ar = ejbFacade.find(idArchivo);
+arImagenes.add(ar);
+System.out.println("Archivo agregado al arraylist "+idArchivo);
+System.out.println("Largo actual "+arImagenes.size());
+   
+   
+    
+    
+   
+}
+     
+        public void agregarImagenPost(int idPublicacion)
+{
+    /*1-Obtener archivos seleccionados para subir
+      2-Almacenar archivos seleccionados en una lista
+      3-Recorrer los archivos y asignarles la id de la publicacion EDITAR MEDIANTE UPDATE
+    
+    */
+
+                for(int i=0;i<arImagenes.size();i++)
+                {
+                     ejbFacade.updateArchivo(arImagenes.get(i).getIdArchivo(), idPublicacion);
+                    
+                }
+                
+                arImagenes.clear();
+                
+          
+           
+   
+   
     
     
    
