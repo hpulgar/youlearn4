@@ -439,7 +439,7 @@ public class ArchivoController implements Serializable {
         arArchivo2.clear();
         arArchivo = ejbFacade.findAll();        
         
-        System.out.println("Viendo archivos...");
+       
         //System.out.println("IDENTIFICADOR..."+idIdentificador);
         //System.out.println("AUX..."+idAux);
         
@@ -465,7 +465,7 @@ public class ArchivoController implements Serializable {
         arArchivo2.clear();
         arArchivo = ejbFacade.findAll();        
         
-        System.out.println("Viendo archivos...");
+       
         //System.out.println("IDENTIFICADOR..."+idIdentificador);
         //System.out.println("AUX..."+idAux);
         
@@ -510,19 +510,17 @@ public class ArchivoController implements Serializable {
             
             
      public void agregarImageGaleria(int idArchivo)
-{
- cantidadImagen++;
-    System.out.println("Cantidad archivos seleccionados "+cantidadImagen);
-Archivo ar = ejbFacade.find(idArchivo);
-arImagenes.add(ar);
-System.out.println("Archivo agregado al arraylist "+idArchivo);
-System.out.println("Largo actual "+arImagenes.size());
-   
-   
-    
-    
-   
-}
+        {
+            cantidadImagen++;
+            System.out.println("Cantidad archivos seleccionados "+cantidadImagen);
+            
+            Archivo ar = ejbFacade.find(idArchivo);
+            arImagenes.add(ar);
+            
+            System.out.println("Archivo agregado al arraylist "+idArchivo);
+            System.out.println("Largo actual "+arImagenes.size());
+
+        }
      
         public void agregarImagenPost(int idPublicacion)
 {
@@ -530,14 +528,28 @@ System.out.println("Largo actual "+arImagenes.size());
       2-Almacenar archivos seleccionados en una lista
       3-Recorrer los archivos y asignarles la id de la publicacion EDITAR MEDIANTE UPDATE
     
-    */
-System.out.println("Parametro IDPublicacion "+idPublicacion);
-                for(int i=0;i<arImagenes.size();i++)
-                {
-                     ejbFacade.updateArchivo(arImagenes.get(i).getIdArchivo(), idPublicacion);
+    */  
+        for(int e=0;e<arImagenes.size();e++)
+        {
+            if(arImagenes.get(e).getIdAux() == 0)
+            {
+                 System.out.println("entra a Editar");
+                    System.out.println("Parametro IDPublicacion "+idPublicacion);
+                    ejbFacade.updateArchivo(arImagenes.get(e).getIdArchivo(), idPublicacion);
                     
-                }
+            }else
+            {
+                System.out.println("entra a Insertar");
                 
+                IdentificadorArchivo objIA = new IdentificadorArchivo();
+                Archivo objAr = arImagenes.get(e);
+                objAr.setIdAux(idPublicacion);
+                objIA.setIdIdentificadorArchivo(1);
+                objAr.setIdIdentificadorArchivo(objIA);
+                objAr.setIdArchivo(null);
+                ejbFacade.crear(objAr);
+            }
+        }       
                 arImagenes.clear();
                 
           
@@ -1052,7 +1064,7 @@ System.out.println("Parametro IDPublicacion "+idPublicacion);
              System.out.println("Identificador seteado OK");
              objArchivo.setIdIdentificadorArchivo(Identificador_temp);
              
-             objArchivo.setIdAux(idAux);
+             objArchivo.setIdAux(0);
              
             objArchivo.setIdTipoArchivo(tip);
             System.out.println("Tipo OK");

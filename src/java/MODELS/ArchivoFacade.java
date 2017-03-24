@@ -66,7 +66,7 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
        
     }
             
-                 public void updateArchivo(int idArchivo,int aux)
+    public void updateArchivo(int idArchivo,int aux)
     {
         System.out.println("Inicio update archivo");
         System.out.println("Parametro idArchivo-> "+idArchivo+"  Parametro Aux-> "+aux);
@@ -76,6 +76,8 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
         
        
     }
+    
+   
     
 }
 
