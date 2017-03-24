@@ -433,7 +433,7 @@ public class ArchivoController implements Serializable {
         return arArchivo2;
     }
         
-            public List<Archivo> verImagenes(int idIdentificador,int idAux)
+            public List<Archivo> verImagenes(int idIdentificador,int idAux,int idUsuario)
     {
         arArchivo.clear();
         arArchivo2.clear();
@@ -446,7 +446,33 @@ public class ArchivoController implements Serializable {
                 for(int i=0;i<arArchivo.size();i++)
                 {
                            //System.out.println("Dentro del for......" +i);
-                    if(arArchivo.get(i).getIdIdentificadorArchivo().getIdIdentificadorArchivo()== idIdentificador && arArchivo.get(i).getAutorizado()==false && arArchivo.get(i).getIdAux()== idAux )
+                    if(arArchivo.get(i).getIdUsuario()==idUsuario && arArchivo.get(i).getIdAux()==idAux)
+                    {
+                               //System.out.println("Obtengo valores de imagen a mostrar...");
+                               //System.out.println("URL..."+arArchivo.get(i).getUbicacion());
+                        arArchivo2.add(arArchivo.get(i));
+                    }
+                }        
+        
+        
+        
+        return arArchivo2;
+    }
+            
+               public List<Archivo> verImagenes2(int idIdentificador,int idAux)
+    {
+        arArchivo.clear();
+        arArchivo2.clear();
+        arArchivo = ejbFacade.findAll();        
+        
+        System.out.println("Viendo archivos...");
+        //System.out.println("IDENTIFICADOR..."+idIdentificador);
+        //System.out.println("AUX..."+idAux);
+        
+                for(int i=0;i<arArchivo.size();i++)
+                {
+                           //System.out.println("Dentro del for......" +i);
+                    if(arArchivo.get(i).getIdIdentificadorArchivo().getIdIdentificadorArchivo()==idIdentificador && arArchivo.get(i).getIdUsuario()==idAux)
                     {
                                //System.out.println("Obtengo valores de imagen a mostrar...");
                                //System.out.println("URL..."+arArchivo.get(i).getUbicacion());
@@ -560,7 +586,7 @@ System.out.println("Parametro IDPublicacion "+idPublicacion);
                 copyFile("."+extension, fpe.get(e).getFile().getInputstream(),directorio,idAux,4,0);
 
                 System.out.println("Archivos en directorio");
-                archivoSubido(4, extension, "imagen", directorioDB,idAux,0);
+                archivoSubido(4, extension, "imagen", directorioDB,idAux,0,idAux);
 
 
             }
@@ -665,7 +691,7 @@ System.out.println("Parametro IDPublicacion "+idPublicacion);
                                             copyFile(nomunidad+"."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador,i);
                                             System.out.println("Archivos en directorio");
                                           // listFiles(directorio);
-                                           archivoSubido(idIdentificador, extension, nomunidad, directorioDB,idAux,i);
+                                           archivoSubido(idIdentificador, extension, nomunidad, directorioDB,idAux,i,idAux);
                         }
                         
                         
@@ -712,7 +738,7 @@ System.out.println("Parametro IDPublicacion "+idPublicacion);
                                             copyFile("."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador,i);
                                             System.out.println("Archivos en directorio");
                                           // listFiles(directorio);
-                                           archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux,i);
+                                           archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux,i,idAux);
                         
                         
                         }
@@ -766,7 +792,7 @@ System.out.println("Parametro IDPublicacion "+idPublicacion);
                                                     
                                                     System.out.println("Archivos en directorio");
                                                     // listFiles(directorio);
-                                                    archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux,i);
+                                                    archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux,i,idAux);
                                                 }
                                                 
                                                
@@ -793,7 +819,7 @@ System.out.println("Parametro IDPublicacion "+idPublicacion);
                                                     
                                                     System.out.println("Archivos en directorio");
                                                     // listFiles(directorio);
-                                                    archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux,i);
+                                                    archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux,i,idAux);
                                                 }
                                             }
 
@@ -938,7 +964,7 @@ System.out.println("Parametro IDPublicacion "+idPublicacion);
                 }
     }
      
-         public void archivoSubido(int idIdentificador,String extension,String nom_archivo,String ubicacion,int idAux,int cantemp)
+         public void archivoSubido(int idIdentificador,String extension,String nom_archivo,String ubicacion,int idAux,int cantemp,int idUsuario)
     {
         System.out.println("Antes de Crear");
           
@@ -1040,6 +1066,7 @@ System.out.println("Parametro IDPublicacion "+idPublicacion);
              System.out.println("Autorizado OK");     
             objArchivo.setFecha(fecha);
             System.out.println("Fecha OK");
+            objArchivo.setIdUsuario(idUsuario);
                       
            if(idIdentificador==2)
            {

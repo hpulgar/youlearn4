@@ -8,7 +8,7 @@
       xmlns:p="http://primefaces.org/ui">
  <h:head>
 
-
+n
 	<!--Meta Tags-->
       
 	<!--Title-->
@@ -58,7 +58,7 @@ PrimeFaces.locales['es'] = {
     
         <h:form id="yqsesho">
 
-                <p:galleria  value="#{archivoController.verImagenes(4,usuarioController.id_user)}" var="image" panelWidth="500" panelHeight="313"  rendered="true">
+            <p:galleria  value="#{archivoController.verImagenes(4,usuarioController.id_user,usuarioController.id_user)}" var="image" panelWidth="500" panelHeight="313"  rendered="true">
                    <p:graphicImage value="#{image.ubicacion}"   title="#{image.nomArchivo}"/>
                 </p:galleria>
         </h:form>
@@ -71,9 +71,10 @@ PrimeFaces.locales['es'] = {
                <f:attribute name="tempDetalle" value="muro" />
                <f:attribute name="tempSubid" value="#{archivoController.subidArchivo}" />
                <f:attribute name="idAux" value="#{usuarioController.id_user}" />
+               <f:attribute name="idUsuario" value="#{usuarioController.id_user}" />
          </p:fileUpload>
                 
-                 <ui:repeat var="c" value="#{archivoController.verImagenes(4,usuarioController.id_user)}">
+            <ui:repeat var="c" value="#{archivoController.verImagenes2(4, usuarioController.id_user)}">
                      <h:graphicImage onclick="PF('#{c.idArchivo}').show();" width="20%" height="30%"  value="#{c.ubicacion}" rendered="#{c.idTipoArchivo.idTipo eq '1' or c.idTipoArchivo.idTipo eq '2' or c.idTipoArchivo.idTipo eq '3'}" />
                 
                      <p:dialog  header="#{c.descripcion}" widgetVar="#{c.idArchivo}" modal="true" width="50%" height="50%">

@@ -46,6 +46,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Archivo.findByFecha", query = "SELECT a FROM Archivo a WHERE a.fecha = :fecha")})
 public class Archivo implements Serializable {
 
+    @Column(name = "id_usuario")
+    private Integer idUsuario;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -194,6 +197,14 @@ public class Archivo implements Serializable {
     @Override
     public String toString() {
         return "ENTITIES.Archivo[ idArchivo=" + idArchivo + " ]";
+    }
+
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
     
 }
