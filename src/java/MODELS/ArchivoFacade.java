@@ -77,7 +77,7 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
        
     }
     
-    public void updateArchivoPub(int idUsuario)
+    public void updateArchivoPub(int idUsuario,int idArchivo)
     {
         
         System.out.println("Inicio update archivo");
@@ -85,7 +85,7 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
         System.out.println("Ultima id "+ultimaid);
       
         
-         Query query = em.createQuery("UPDATE Archivo us SET us.idAux="+ultimaid.getSingleResult()+" where us.idAux=0");
+         Query query = em.createQuery("UPDATE Archivo us SET us.idAux="+ultimaid.getSingleResult()+" where us.idArchivo="+idArchivo+" AND us.idUsuario="+idUsuario);
              query.executeUpdate();
         
         

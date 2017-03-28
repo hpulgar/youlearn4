@@ -583,7 +583,7 @@ public class ArchivoController implements Serializable {
             {
                  System.out.println("entra a Editar");
                     System.out.println("Parametro IDPublicacion "+arImagenes.get(e).getIdAux());
-                    ejbFacade.updateArchivoPub(idUsuario);
+                    ejbFacade.updateArchivoPub(idUsuario,arImagenes.get(e).getIdArchivo());
                     
             }else
             {
@@ -596,7 +596,7 @@ public class ArchivoController implements Serializable {
                 objAr.setIdIdentificadorArchivo(objIA);
                 objAr.setIdArchivo(null);
                 ejbFacade.crear(objAr);
-                 ejbFacade.updateArchivoPub(idUsuario);
+                 ejbFacade.updateArchivo(idUsuario,arImagenes.get(e).getIdArchivo());
             }
         }       
                 arImagenes.clear();
