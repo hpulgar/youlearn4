@@ -68,7 +68,7 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
             
     public void updateArchivo(int idArchivo,int aux)
     {
-        System.out.println("Inicio update archivo");
+        System.out.println("Inicio update archivo no primera publicacion");
         System.out.println("Parametro idArchivo-> "+idArchivo+"  Parametro Aux-> "+aux);
          Query query = em.createQuery("UPDATE Archivo us SET us.idAux="+aux+" where us.idArchivo="+idArchivo);
              query.executeUpdate();
@@ -83,11 +83,11 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
         System.out.println("Inicio update archivo");
         Query ultimaid = em.createQuery("SELECT max(us.idPublicacion+1) FROM PublicacionPerfil us where us.idPublicador="+idUsuario);
         System.out.println("Ultima id "+ultimaid);
-        System.out.println("ID Usuario"+idUsuario);
-        System.out.println("ID idArchivo"+idArchivo);
+        System.out.println("ID archivo"+idUsuario);
+        System.out.println("ID idUsuario"+idArchivo);
       
         
-         Query query = em.createQuery("UPDATE Archivo us SET us.idAux="+ultimaid.getSingleResult()+" where us.idArchivo="+idArchivo+" AND us.idUsuario="+idUsuario);
+         Query query = em.createQuery("UPDATE Archivo us SET us.idAux="+ultimaid.getSingleResult()+" where us.idArchivo="+idArchivo);
              query.executeUpdate();
         
         

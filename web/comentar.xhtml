@@ -131,7 +131,7 @@
            
                      
                  </ui:repeat>             
-                      <br></br><p:commandButton id="#{masterComentarioController.btoAgregarImagen2(pu.idPublicacion)}" actionListener="#{archivoController.agregarImagenPost(pu.idPublicacion)}" value="Adjuntar" update="@form" onclick="PF('#{masterComentarioController.btoDialogImagen(pu.idPublicacion)}').hide();" />                    
+                                       <br></br><p:commandButton id="#{masterComentarioController.btoAgregarImagen2(pu.idPublicacion)}" actionListener="#{archivoController.agregarImagenPost(pu.idPublicacion)}" value="Adjuntar" update="@form" onclick="PF('#{masterComentarioController.btoDialogImagen(pu.idPublicacion)}').hide();" />                    
                                           </p:dialog> 
                                    
                                 <p class="comment-info"><h:commandLink  value="#{pu.idPublicador.username}"  action="perfil.xhtml" actionListener="#{usuarioController.setId_usuario_amigo(pu.idPublicador.idUsuario)}"/>  <span> #{pu.fechaPublicacion} </span></p>

@@ -497,6 +497,7 @@ public class ArchivoController implements Serializable {
             
             public List<Archivo> traerImagenesMuro(int idPublicacion)
             {
+                
                 arArchivo.clear();
                 arArchivo = ejbFacade.findAll();
                 arArchivo2.clear();
@@ -543,8 +544,7 @@ public class ArchivoController implements Serializable {
             if(arImagenes.get(e).getIdAux() == 0)
             {
                  System.out.println("entra a Editar");
-                    System.out.println("Parametro IDPublicacion "+idPublicacion);
-                    ejbFacade.updateArchivo(arImagenes.get(e).getIdArchivo(), idPublicacion);
+                    ejbFacade.updateArchivo(arImagenes.get(e).getIdArchivo(),arImagenes.get(e).getIdUsuario());
                     
             }else
             {
@@ -596,7 +596,7 @@ public class ArchivoController implements Serializable {
                 objAr.setIdIdentificadorArchivo(objIA);
                 objAr.setIdArchivo(null);
                 ejbFacade.crear(objAr);
-                 ejbFacade.updateArchivo(idUsuario,arImagenes.get(e).getIdArchivo());
+                
             }
         }       
                 arImagenes.clear();
