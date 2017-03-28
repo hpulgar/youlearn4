@@ -73,7 +73,8 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
          Query query = em.createQuery("UPDATE Archivo us SET us.idAux="+aux+" where us.idArchivo="+idArchivo);
              query.executeUpdate();
         
-        
+       
+             
        
     }
     
