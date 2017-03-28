@@ -16,6 +16,7 @@
        
       #{archivoController.setCantidadImagen(0)} 
       #{archivoController.setTempImagen(null)} 
+  
         
        
    </h:head>
@@ -32,6 +33,10 @@
 
   
             <h:form>
+                
+                <p:outputPanel autoUpdate="true">
+                    <h:outputText value="Imagenes seleccionadas : #{archivoController.arImagenes.size()}" rendered="#{archivoController.arImagenes.size()>=1}"/><br/>
+                </p:outputPanel>
         <p:outputPanel deferred="true">
         <div class="field-row" >
             <p:inputText  id="crearPublicacionPerfil" value="#{publicacionPerfilController.selected.publicacion}" a:placeholder="Publicar..." required="true"  style="border-color: #198752; width: 350px;float:left; margin-right: 45px">
@@ -41,8 +46,48 @@
                 <br></br><br></br>
                    
                    <br></br>
-                <p:commandButton id="btoCrearPublicacion" value="Publicar" update="parametroBody" process="@all"  action="#{publicacionPerfilController.crearPublicacion(usuarioController.id_user, usuarioController.id_usuario_amigo)}" />
-        
+                   <p:commandButton id="btoCrearPublicacion" value="Publicar" update="parametroBody" process="@all"  action="#{publicacionPerfilController.crearPublicacion(usuarioController.id_user, usuarioController.id_usuario_amigo)}" actionListener="#{archivoController.agregarImagenPub(usuarioController.id_user)}" />
+                <p:commandButton id="btoAdjuntar" value="+" onclick="PF('dlgAdjuntar').show();"/>
+         <p:dialog  header="Adjuntar un archivo" widgetVar="dlgAdjuntar" modal="true" width="50%" height="50%">
+                                <h:form id="yqsesho">
+            <p:fileUpload  dragDropSupport="true" multiple="true" update="yqsesho" process="@all" mode="advanced" auto="true" fileLimitMessage="Solo puede subir una imagen a la vez"  fileLimit="20"  cancelLabel="Cancelar" uploadLabel="Cargar" 
+                               invalidFileMessage="Formato no permitido" 
+                               sequential="true" fileUploadListener="#{archivoController.upload2}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="1000000" label="Seleccione un archivo"  >
+                           
+               <f:attribute name="tempDetalle" value="muro" />
+               <f:attribute name="tempSubid" value="#{archivoController.subidArchivo}" />
+               <f:attribute name="idAux" value="#{usuarioController.id_user}" />
+               <f:attribute name="idUsuario" value="#{usuarioController.id_user}" />
+         </p:fileUpload>
+                                    <br/>
+                                       <p:outputPanel autoUpdate="true">
+                <h:outputText value="Imagenes seleccionadas : #{archivoController.arImagenes.size()}"/><br/>
+                </p:outputPanel><br/>
+                
+                   
+                 <!--<ui:repeat var="c" value="#/{archivoController.verImagenes(4,usuarioController.id_user)}">-->
+                    
+                    <!-- <h:graphicImage width="100" height="100"  value="#/{c.ubicacion}" rendered="#/{c.idTipoArchivo.idTipo eq '1' or c.idTipoArchivo.idTipo eq '2' or c.idTipoArchivo.idTipo eq '3'}" />-->
+                
+                    
+                 
+                 
+                 <!--</ui:repeat> -->            
+                 
+               
+                         <ui:repeat var="c" value="#{archivoController.verImagenes2(4, usuarioController.id_user)}">
+       
+                
+            <p:commandLink>
+                <f:ajax event="click" listener="#{archivoController.agregarImageGaleria(c.idArchivo)}"/>
+                <h:graphicImage width="100" height="100"  value="#{c.ubicacion}" rendered="#{c.idTipoArchivo.idTipo eq '1' or c.idTipoArchivo.idTipo eq '2' or c.idTipoArchivo.idTipo eq '3'}" />
+          </p:commandLink>
+           
+                     
+                 </ui:repeat>
+                 
+    </h:form>
+                            </p:dialog> 
             </p:inputText>
         </div>
             </p:outputPanel>
@@ -68,13 +113,12 @@
                         <div class="comment-right clearfix">
                             
                             <h:form  >
-                                <p:commandButton id="#{masterComentarioController.btoAgregarImagen(pu.idPublicacion)}" value="+" onclick="PF('#{masterComentarioController.btoDialogImagen(pu.idPublicacion)}').show();" rendered="#{usuarioController.id_user == pu.idPublicador.idUsuario}"/> 
-                                   <p:commandButton id="btoEditar" value="Editar" rendered="#{usuarioController.id_user == pu.idPublicador.idUsuario}"/> 
+                                <p:commandButton id="#{masterComentarioController.btoAgregarImagen(pu.idPublicacion)}" value="Imagenes" onclick="PF('#{masterComentarioController.btoDialogImagen(pu.idPublicacion)}').show();" rendered="#{usuarioController.id_user == pu.idPublicador.idUsuario}"/>                            
                                    <p:commandButton id="btoEliminar" value="Eliminar" rendered="#{usuarioController.id_user == pu.idPublicador.idUsuario}"/> 
                   
                                    <p:dialog  header="Mis imagenes" widgetVar="#{masterComentarioController.btoDialogImagen(pu.idPublicacion)}" modal="true">
                       <p:outputPanel autoUpdate="true">
-                      <h:outputText value="Imagenes seleccionadas : #{archivoController.cantidadImagen}"/><br/>
+                      <h:outputText value="Imagenes seleccionadas : #{archivoController.arImagenes.size()}"/><br/>
                        </p:outputPanel>                   
                                        <ui:repeat var="c" value="#{archivoController.verImagenes2(4, usuarioController.id_user)}">
        

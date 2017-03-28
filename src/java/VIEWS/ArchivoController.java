@@ -59,6 +59,7 @@ public class ArchivoController implements Serializable {
     private List<Archivo> arArchivo = new ArrayList();
     private List<Archivo> arArchivo2= new ArrayList();
     private List<Archivo> arImagenes= new ArrayList();
+    private List<Archivo> arImagenes2= new ArrayList();
     private int subidArchivo=0;
     private boolean value1;
     private int cantidadImagen;
@@ -92,6 +93,14 @@ public class ArchivoController implements Serializable {
 
     public void setTempImagen(String tempImagen) {
         this.tempImagen = tempImagen;
+    }
+
+    public List<Archivo> getArImagenes() {
+        return arImagenes;
+    }
+
+    public void setArImagenes(List<Archivo> arImagenes) {
+        this.arImagenes = arImagenes;
     }
 
   
@@ -548,6 +557,45 @@ public class ArchivoController implements Serializable {
                 objAr.setIdIdentificadorArchivo(objIA);
                 objAr.setIdArchivo(null);
                 ejbFacade.crear(objAr);
+            }
+        }       
+                arImagenes.clear();
+                
+          
+           
+   
+   
+    
+    
+   
+}
+        
+        
+         
+          public void agregarImagenPub(int idUsuario)
+{
+  int idPublicacion=0;
+    
+        for(int e=0;e<arImagenes.size();e++)
+        {
+            if(arImagenes.get(e).getIdAux() == 0)
+            {
+                 System.out.println("entra a Editar");
+                    System.out.println("Parametro IDPublicacion "+arImagenes.get(e).getIdAux());
+                    ejbFacade.updateArchivoPub(idUsuario);
+                    
+            }else
+            {
+                System.out.println("entra a Insertar");
+                
+                IdentificadorArchivo objIA = new IdentificadorArchivo();
+                Archivo objAr = arImagenes.get(e);
+                objAr.setIdAux(idPublicacion);
+                objIA.setIdIdentificadorArchivo(1);
+                objAr.setIdIdentificadorArchivo(objIA);
+                objAr.setIdArchivo(null);
+                ejbFacade.crear(objAr);
+                 ejbFacade.updateArchivoPub(idUsuario);
             }
         }       
                 arImagenes.clear();
@@ -1064,8 +1112,8 @@ public class ArchivoController implements Serializable {
              System.out.println("Identificador seteado OK");
              objArchivo.setIdIdentificadorArchivo(Identificador_temp);
              
-             objArchivo.setIdAux(0);
-             
+             //objArchivo.setIdAux(0);
+             objArchivo.setIdAux(idAux);
             objArchivo.setIdTipoArchivo(tip);
             System.out.println("Tipo OK");
              objArchivo.setNomArchivo(nom_archivo);
