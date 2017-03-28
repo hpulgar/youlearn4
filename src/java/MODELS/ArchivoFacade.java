@@ -82,6 +82,7 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
         
         System.out.println("Inicio update archivo");
         Query ultimaid = em.createQuery("SELECT max(us.idPublicacion+1) FROM PublicacionPerfil us where us.idPublicador="+idUsuario);
+        System.out.println("Ultima id "+ultimaid);
       
          Query query = em.createQuery("UPDATE Archivo us SET us.idAux="+ultimaid.getSingleResult()+" where us.idAux=0");
              query.executeUpdate();
