@@ -493,6 +493,32 @@ public class ArchivoController implements Serializable {
         
         return arArchivo2;
     }
+               
+                    public List<Archivo> verImagenes3(int idIdentificador,int idAux)
+    {
+        arArchivo.clear();
+        arArchivo2.clear();
+        arArchivo = ejbFacade.findAll();        
+        
+       
+        //System.out.println("IDENTIFICADOR..."+idIdentificador);
+        //System.out.println("AUX..."+idAux);
+        
+                for(int i=0;i<arArchivo.size();i++)
+                {
+                           //System.out.println("Dentro del for......" +i);
+                    if(arArchivo.get(i).getIdIdentificadorArchivo().getIdIdentificadorArchivo()==idIdentificador && arArchivo.get(i).getIdUsuario()==idAux &&arArchivo.get(i).getIdAux()==0)
+                    {
+                               //System.out.println("Obtengo valores de imagen a mostrar...");
+                               //System.out.println("URL..."+arArchivo.get(i).getUbicacion());
+                        arArchivo2.add(arArchivo.get(i));
+                    }
+                }        
+        
+        
+        
+        return arArchivo2;
+    }
             
             
             public List<Archivo> traerImagenesMuro(int idPublicacion)
