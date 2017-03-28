@@ -647,7 +647,7 @@ public class ArchivoController implements Serializable {
                 copyFile("."+extension, fpe.get(e).getFile().getInputstream(),directorio,idAux,4,0);
 
                 System.out.println("Archivos en directorio");
-                archivoSubido(4, extension, "imagen", directorioDB,idAux,0,idAux);
+                archivoSubido(4, extension, "imagen", directorioDB,0,0,idAux);
 
 
             }
@@ -1037,7 +1037,7 @@ public class ArchivoController implements Serializable {
             boolean no_autorizado = false;
             String descripcion ="Sin descripcion";
             
-                List<Archivo> obtenerArchivos = ejbFacade.obtenerArchivos(idIdentificador,idAux);
+                List<Archivo> obtenerArchivos = ejbFacade.obtenerArchivos(idIdentificador,idUsuario);
                
                 int cantidadArchivos = obtenerArchivos.size();
         

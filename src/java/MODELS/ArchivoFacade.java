@@ -34,7 +34,7 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
        public List<Archivo> obtenerArchivos(int idIdentificador,int idAux)
     {
         EntityManager t2= getEntityManager();
-        Query q = t2.createNamedQuery("Archivo.findByIdContenido").setParameter("idIdentificador", idIdentificador).setParameter("idAux", idAux);   
+        Query q = t2.createNamedQuery("Archivo.findByIdContenido").setParameter("idIdentificador", idIdentificador).setParameter("idUsuario", idAux);   
         
        return q.getResultList(); 
     }
@@ -84,6 +84,7 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
         Query ultimaid = em.createQuery("SELECT max(us.idPublicacion+1) FROM PublicacionPerfil us where us.idPublicador="+idUsuario);
         System.out.println("Ultima id "+ultimaid);
       
+        
          Query query = em.createQuery("UPDATE Archivo us SET us.idAux="+ultimaid.getSingleResult()+" where us.idAux=0");
              query.executeUpdate();
         

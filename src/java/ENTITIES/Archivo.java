@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Archivo.findByNoAprobadoTodos", query = "SELECT c FROM Archivo c WHERE c.autorizado = 0"),
     @NamedQuery(name = "Archivo.findByAprobadoTodos", query = "SELECT c FROM Archivo c WHERE c.autorizado = 1"),
     @NamedQuery(name = "Archivo.findByIdentyAux", query = "SELECT a FROM Archivo a WHERE a.idIdentificadorArchivo.idIdentificadorArchivo = :idIdentificadorArchivo AND a.idAux = :idAux"),
-    @NamedQuery(name = "Archivo.findByIdContenido", query = "SELECT a FROM Archivo a WHERE a.idIdentificadorArchivo.idIdentificadorArchivo = :idIdentificador AND a.idAux = :idAux"),
+    @NamedQuery(name = "Archivo.findByIdContenido", query = "SELECT a FROM Archivo a WHERE a.idIdentificadorArchivo.idIdentificadorArchivo = :idIdentificador AND a.idUsuario = :idUsuario"),
     @NamedQuery(name = "Archivo.findByFecha", query = "SELECT a FROM Archivo a WHERE a.fecha = :fecha")})
 public class Archivo implements Serializable {
 
