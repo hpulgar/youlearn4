@@ -559,6 +559,7 @@ public class ArchivoController implements Serializable {
                 ejbFacade.crear(objAr);
             }
         }       
+        
                 arImagenes.clear();
                 
           
