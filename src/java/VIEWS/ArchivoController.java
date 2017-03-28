@@ -1088,9 +1088,7 @@ public class ArchivoController implements Serializable {
            }
      
             ejbFacade.create(objArchivo);
-            
-           
-         
+        
             
         }catch(Exception e)
         {
