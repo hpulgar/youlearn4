@@ -425,6 +425,12 @@ public class MasterComentarioController implements Serializable {
     }
     
     
+    public String idRepeat(int idpub)
+    {
+        return "repeat"+idpub;
+    }
+    
+    
     
     
     

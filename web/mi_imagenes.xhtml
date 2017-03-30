@@ -69,7 +69,7 @@ PrimeFaces.locales['es'] = {
                <f:attribute name="idUsuario" value="#{usuarioController.id_user}" />
          </p:fileUpload>
                 
-            <ui:repeat var="c" value="#{archivoController.verImagenes2(4, usuarioController.id_user)}">
+            <ui:repeat var="c" value="#{archivoController.verImagenes3(4, usuarioController.id_user)}">
                      <h:graphicImage onclick="PF('#{c.idArchivo}').show();" width="20%" height="30%"  value="#{c.ubicacion}" rendered="#{c.idTipoArchivo.idTipo eq '1' or c.idTipoArchivo.idTipo eq '2' or c.idTipoArchivo.idTipo eq '3'}" />
                 
                      <p:dialog  header="#{c.descripcion}" widgetVar="#{c.idArchivo}" modal="true" width="50%" height="50%">

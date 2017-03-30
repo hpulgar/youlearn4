@@ -82,7 +82,7 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
     {
         
         System.out.println("Inicio update archivo");
-        Query ultimaid = em.createQuery("SELECT max(us.idPublicacion+1) FROM PublicacionPerfil us where us.idPublicador="+idUsuario);
+        Query ultimaid = em.createQuery("SELECT max(us.idPublicacion+1) FROM PublicacionPerfil us ");
         System.out.println("Ultima id "+ultimaid);
         System.out.println("ID archivo"+idUsuario);
         System.out.println("ID idUsuario"+idArchivo);
@@ -95,6 +95,14 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
        
     }
     
+    public int retornaUltimaPub()
+    {
+        
+        Query ultimaid = em.createQuery("SELECT max(us.idPublicacion+1) FROM PublicacionPerfil us ");
+        
+        return  (int)ultimaid.getSingleResult();
+        
+    }
    
     
 }

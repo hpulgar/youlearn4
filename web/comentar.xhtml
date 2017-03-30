@@ -121,16 +121,13 @@
                       <p:outputPanel autoUpdate="true">
                       <h:outputText value="Imagenes seleccionadas : #{archivoController.arImagenes.size()}"/><br/>
                        </p:outputPanel>                   
-                                       <ui:repeat var="c" value="#{archivoController.verImagenes2(4, usuarioController.id_user)}">
-       
-                
-            <p:commandLink>
-                <f:ajax event="click" listener="#{archivoController.agregarImageGaleria(c.idArchivo)}"/>
-                <h:graphicImage width="100" height="100"  value="#{c.ubicacion}" rendered="#{c.idTipoArchivo.idTipo eq '1' or c.idTipoArchivo.idTipo eq '2' or c.idTipoArchivo.idTipo eq '3'}" />
-          </p:commandLink>
-           
-                     
-                 </ui:repeat>             
+                                       <ui:repeat id="#{masterComentarioController.idRepeat(pu.idPublicacion)}" var="c" value="#{archivoController.verImagenes2(4, usuarioController.id_user,pu.idPublicacion)}">
+                                            <p:commandLink>
+                                                <f:ajax event="click" listener="#{archivoController.agregarImageGaleria(c.idArchivo)}"/>
+                                                <h:graphicImage width="100" height="100"  value="#{c.ubicacion}" rendered="#{c.idTipoArchivo.idTipo eq '1' or c.idTipoArchivo.idTipo eq '2' or c.idTipoArchivo.idTipo eq '3'}" />
+                                            </p:commandLink>
+                                        </ui:repeat> 
+                                       
                                        <br></br><p:commandButton id="#{masterComentarioController.btoAgregarImagen2(pu.idPublicacion)}" actionListener="#{archivoController.agregarImagenPost(pu.idPublicacion)}" value="Adjuntar" update="@form" onclick="PF('#{masterComentarioController.btoDialogImagen(pu.idPublicacion)}').hide();" />                    
                                           </p:dialog> 
                                    

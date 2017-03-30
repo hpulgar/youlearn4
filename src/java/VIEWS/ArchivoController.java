@@ -467,8 +467,75 @@ public class ArchivoController implements Serializable {
         
         return arArchivo2;
     }
+                  public List<Archivo> verImagenes1(int idIdentificador,int idUser)
+    {
+        arArchivo.clear();
+        arArchivo2.clear();
+        arArchivo = ejbFacade.findAll();        
+        
+       
+        //System.out.println("IDENTIFICADOR..."+idIdentificador);
+        //System.out.println("AUX..."+idAux);
+        
+        
+        
+                for(int i=0;i<arArchivo.size();i++)
+                {
+                           //System.out.println("Dentro del for......" +i);
+                    if(arArchivo.get(i).getIdIdentificadorArchivo().getIdIdentificadorArchivo()==idIdentificador && arArchivo.get(i).getIdUsuario()==idUser)
+                    {
+                        
+                           
+                            arArchivo2.add(arArchivo.get(i));
+                        
+                               
+                        
+                    }
+                }        
+        
+        
+        
+        return arArchivo2;
+    }
             
-               public List<Archivo> verImagenes2(int idIdentificador,int idAux)
+            
+               public List<Archivo> verImagenes2(int idIdentificador,int idUser,int idPublicacion)
+    {
+        arArchivo.clear();
+        arArchivo2.clear();
+        arArchivo = ejbFacade.findAll();     
+        
+                for(int i=0;i<arArchivo.size();i++)
+                {
+                           //System.out.println("Dentro del for......" +i);
+//                    if(arArchivo.get(i).getIdIdentificadorArchivo().getIdIdentificadorArchivo()==idIdentificador )
+//                    {
+//                        if(arArchivo.get(i).getIdUsuario()==idUser)
+//                        {
+//                            if(arArchivo.get(i).getIdAux() != idPublicacion)
+//                            {
+//                                System.out.println("idpub"+idPublicacion);
+//                                arArchivo2.add(arArchivo.get(i));
+//                            }
+//                        }
+//                    }
+                    
+                    
+                    if(arArchivo.get(i).getIdAux() != idPublicacion && arArchivo.get(i).getIdUsuario()==idUser )
+                    {
+                        if(arArchivo.get(i).getIdIdentificadorArchivo().getIdIdentificadorArchivo()==idIdentificador )
+                        {
+                            arArchivo2.add(arArchivo.get(i));
+                        }
+                    }
+                }        
+        
+        
+        
+        return arArchivo2;
+    }
+               
+     public List<Archivo> verImagenes3(int idIdentificador,int idAux)
     {
         arArchivo.clear();
         arArchivo2.clear();
@@ -482,32 +549,6 @@ public class ArchivoController implements Serializable {
                 {
                            //System.out.println("Dentro del for......" +i);
                     if(arArchivo.get(i).getIdIdentificadorArchivo().getIdIdentificadorArchivo()==idIdentificador && arArchivo.get(i).getIdUsuario()==idAux)
-                    {
-                               //System.out.println("Obtengo valores de imagen a mostrar...");
-                               //System.out.println("URL..."+arArchivo.get(i).getUbicacion());
-                        arArchivo2.add(arArchivo.get(i));
-                    }
-                }        
-        
-        
-        
-        return arArchivo2;
-    }
-               
-                    public List<Archivo> verImagenes3(int idIdentificador,int idAux)
-    {
-        arArchivo.clear();
-        arArchivo2.clear();
-        arArchivo = ejbFacade.findAll();        
-        
-       
-        //System.out.println("IDENTIFICADOR..."+idIdentificador);
-        //System.out.println("AUX..."+idAux);
-        
-                for(int i=0;i<arArchivo.size();i++)
-                {
-                           //System.out.println("Dentro del for......" +i);
-                    if(arArchivo.get(i).getIdIdentificadorArchivo().getIdIdentificadorArchivo()==idIdentificador && arArchivo.get(i).getIdUsuario()==idAux &&arArchivo.get(i).getIdAux()==0)
                     {
                                //System.out.println("Obtengo valores de imagen a mostrar...");
                                //System.out.println("URL..."+arArchivo.get(i).getUbicacion());
@@ -601,10 +642,16 @@ public class ArchivoController implements Serializable {
          
           public void agregarImagenPub(int idUsuario)
 {
-  int idPublicacion=0;
+    
+    
+  int idPublicacion= ejbFacade.retornaUltimaPub();
+  System.out.println("que llega ?????????????"+idPublicacion);
+    if(idPublicacion != 0)
+    {
     
         for(int e=0;e<arImagenes.size();e++)
         {
+            System.out.println("Valor del aux "+arImagenes.get(e).getIdAux());
             if(arImagenes.get(e).getIdAux() == 0)
             {
                  System.out.println("entra a Editar");
@@ -629,7 +676,7 @@ public class ArchivoController implements Serializable {
                 
           
            
-   
+    }
    
     
     
