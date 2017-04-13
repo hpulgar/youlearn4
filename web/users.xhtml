@@ -32,7 +32,7 @@
                     <h:panelGroup id="formulario_busqueda" >
                         <h:form style="margin-top: 20px">
                             <div style="text-align: left">
-                                <label for="Buscar Por nombre">Busca Amigos</label>
+                                <label for="Buscar Por nombre">Busca Amigos en YouLearn</label>
                                 <h:inputText  value="#{personaController.nombreBusqueda}" required="false" />
                                 <p:commandButton  value="Buscar"  update="usuarios"  process="@all" />
                             </div>
@@ -50,25 +50,67 @@
 					<li>
                                             
                                             <h:form>
-                                            <img src="#{u.idUsuario.imagen_foto_perfil}"  style=" width: 100%;height: 150px; object-fit: cover "  />
+                                            <img src="#{u.idUsuario.imagen_foto_perfil}"  style=" width: 100%;height: 50%"  />
                                                 <div style=" width: 100%">
                                                     <h3 class="teacher-title">#{u.nombre} #{u.apellido}<span><h2><h:commandLink style="color:white" value="#{u.idUsuario.username}" action="perfil.xhtml" actionListener="#{usuarioController.setId_usuario_amigo(u.idUsuario.idUsuario)}"/></h2> #{u.idUsuario.idPerfil.nomPerfil}</span></h3>
                                                 </div>
-                                                <div style=" width: 100%; height: 220px">
-                                                    <p style="height: 220px">#{u.descripcion}</p>
-                                                </div>
+                                                
                                             </h:form>
                                         </li>
                                        
                                     </ui:repeat>
 				</ul>
-                            
+            
+            
+                        
+           
+			
+			
+          
 				
 			<!-- END .inner-content-wrapper -->
 			
 		<!-- END .main-content-full -->
 		
                 	<!-- END .content-wrapper -->
+	
+	<!-- BEGIN #footer-wrapper -->
+	
+        </h:form></h:panelGrid>
+    
+    <h:panelGrid><h:form>
+	
+		
+		<!-- BEGIN .main-content-full -->
+		<div class="main-content-full page-content">
+                    <h3>Mis amigos</h3><br></br>
+			
+                            
+				<ul class="teacher-4">
+                                    <ui:repeat value="#{amigosController.listAmigos(usuarioController.id_user)}" var="u">
+                                   
+					<li>
+                                            
+                                           
+                                            <img src="#{u.imagen_foto_perfil}"  style=" width: 100%;height: 50%"  />
+                                                <div style=" width: 100%;height: 50%">
+                                                    <h3 class="teacher-title"><span><h2><h:commandLink style="color:white" value="#{u.username}" action="perfil.xhtml" actionListener="#{usuarioController.setId_usuario_amigo(u.idUsuario)}"/></h2> #{u.idPerfil.nomPerfil}</span></h3>
+                                                </div>
+                                               
+                                            
+                                        </li>
+                                       
+                                    </ui:repeat>
+				</ul>
+                            
+				
+			
+			
+			
+		<!-- END .main-content-full -->
+		</div>
+	
+	<!-- END .content-wrapper -->
 	
 	<!-- BEGIN #footer-wrapper -->
 	
