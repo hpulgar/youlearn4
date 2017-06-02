@@ -38,7 +38,7 @@
 		
 		<div class="page-header-inner clearfix">
                     <div class="page-title">	
-                            <h2>Mi Perfil</h2>
+                            <h2>Mantenedor</h2>
                             <div class="page-title-block"></div>
                     </div>
 		</div>
@@ -56,7 +56,7 @@
                         <p:layoutUnit position="west" resizable="true" size="350" minSize="40" maxSize="200">
                             <h:form id="men">
                                 <p:menu >
-                                    <p:submenu label="Ajax" >
+                                    <p:submenu label="Opciones" >
                                         <c:forEach items="#{menuController.cargarMenu()}" var="menu">
                                             <p:menuitem value="#{menu.nombre}"  actionListener="#{menuController.setNombreMenu(menu.url)}" update="paginas" process="@all" action="#{util.setVerCrearMasTabla(false)}"/>
                                             

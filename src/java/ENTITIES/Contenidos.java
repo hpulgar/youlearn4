@@ -7,6 +7,7 @@ package ENTITIES;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,12 +19,14 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -42,6 +45,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Contenidos.findByidCurso", query = "SELECT c FROM Contenidos c WHERE c.idCurso.idCurso = :idCurso"),
     @NamedQuery(name = "Contenidos.findByFecha", query = "SELECT c FROM Contenidos c WHERE c.fecha = :fecha")})
 public class Contenidos implements Serializable {
+
+    @OneToMany(mappedBy = "idContenido")
+    private List<Archivo> archivoList;
 
     @Column(name = "tipo_alumno")
     private Integer tipoAlumno;
@@ -177,6 +183,15 @@ public class Contenidos implements Serializable {
 
     public void setTipoAlumno(Integer tipoAlumno) {
         this.tipoAlumno = tipoAlumno;
+    }
+
+    @XmlTransient
+    public List<Archivo> getArchivoList() {
+        return archivoList;
+    }
+
+    public void setArchivoList(List<Archivo> archivoList) {
+        this.archivoList = archivoList;
     }
     
 }

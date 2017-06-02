@@ -7,7 +7,9 @@ package ENTITIES;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,12 +20,14 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -45,6 +49,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Archivo.findByIdContenido", query = "SELECT a FROM Archivo a WHERE a.idIdentificadorArchivo.idIdentificadorArchivo = :idIdentificador AND a.idUsuario = :idUsuario"),
     @NamedQuery(name = "Archivo.findByFecha", query = "SELECT a FROM Archivo a WHERE a.fecha = :fecha")})
 public class Archivo implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idArchivo")
+    private List<LogSubidas> logSubidasList;
+    @JoinColumn(name = "id_contenido", referencedColumnName = "id_contenido")
+    @ManyToOne
+    private Contenidos idContenido;
 
     @Column(name = "id_usuario")
     private Integer idUsuario;
@@ -205,6 +215,23 @@ public class Archivo implements Serializable {
 
     public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    @XmlTransient
+    public List<LogSubidas> getLogSubidasList() {
+        return logSubidasList;
+    }
+
+    public void setLogSubidasList(List<LogSubidas> logSubidasList) {
+        this.logSubidasList = logSubidasList;
+    }
+
+    public Contenidos getIdContenido() {
+        return idContenido;
+    }
+
+    public void setIdContenido(Contenidos idContenido) {
+        this.idContenido = idContenido;
     }
     
 }

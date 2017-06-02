@@ -40,7 +40,7 @@
 		<div class="page-header-inner clearfix">
 		
 		<div class="page-title">	
-			<h2>Título
+                    <br/><h2>Título
                             #{contenidosController.cargarCont(contenidosController.idContenido)}
                                 #{contenidosController.selected.nombreUnidad}
                           
@@ -115,7 +115,7 @@
                                             
                                              <h:form>
         
-                                                 <ui:repeat var="c" value="#{archivoController.verArchivos(contenidosController.selected.idContenido)}">
+                                                 <ui:repeat var="c" value="#{archivoController.verArchivos(contenidosController.selected.idContenido, cursoController.idCurso )}">
                                    
     
                                                      <h:outputText value="#{c.descripcion}" />
@@ -146,7 +146,7 @@
                                               <br></br>
                                         
                                        </ui:repeat>
-                                                 <h:outputText value="Aun no hay archivos en esta unidad" rendered="#{empty archivoController.verArchivos(contenidosController.selected.idContenido)}"></h:outputText>
+                                                 <h:outputText value="Aun no hay archivos en esta unidad" rendered="#{empty archivoController.verArchivos(contenidosController.selected.idContenido, cursoController.idCurso)}"></h:outputText>
                                     </h:form>
                                          
 						
