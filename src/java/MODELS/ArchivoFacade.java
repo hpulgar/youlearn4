@@ -105,5 +105,15 @@ public class ArchivoFacade extends AbstractFacade<Archivo> {
     }
    
     
+    public List<Archivo> archivosContenido(int idContenido)
+    {
+        EntityManager m2 = getEntityManager();
+        Query q=m2.createNamedQuery("Archivo.idcont").setParameter("idContenido", idContenido);
+        
+        
+        return q.getResultList();
+    }
+    
+    
 }
 

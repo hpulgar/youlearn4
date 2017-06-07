@@ -422,7 +422,7 @@ public class ArchivoController implements Serializable {
         }
     }
      
-        public List<Archivo> verArchivos(int idIdentificador,int idAux)
+    public List<Archivo> verArchivos(int idIdentificador,int idAux)
     {
         arArchivo.clear();
         arArchivo2.clear();
@@ -436,13 +436,31 @@ public class ArchivoController implements Serializable {
                         arArchivo2.add(arArchivo.get(i));
                     }
                 }        
+         return arArchivo2;
+    }
+    
+    public List<Archivo> verArchivoContenido(int idContenido)
+    {
+        System.out.println("asdasdasd conte"+ idContenido);
+//        arArchivo.clear();
+//        arArchivo2.clear();
+        arArchivo = ejbFacade.archivosContenido(idContenido);        
         
         
-        
-        return arArchivo2;
+//                for(int i=0;i<arArchivo.size();i++)
+//                {
+//                    if(arArchivo.get(i).getIdContenido().getIdContenido() != null)
+//                    {
+//                        if(arArchivo.get(i).getIdContenido().getIdContenido() == idContenido)
+//                        {
+//                            arArchivo2.add(arArchivo.get(i));
+//                        }
+//                    }
+//                }        
+         return arArchivo;
     }
         
-            public List<Archivo> verImagenes(int idIdentificador,int idAux,int idUsuario)
+    public List<Archivo> verImagenes(int idIdentificador,int idAux,int idUsuario)
     {
         arArchivo.clear();
         arArchivo2.clear();
@@ -720,7 +738,7 @@ public class ArchivoController implements Serializable {
                 copyFile("."+extension, fpe.get(e).getFile().getInputstream(),directorio,idAux,4,0);
 
                 System.out.println("Archivos en directorio");
-                archivoSubido(4, extension, "imagen", directorioDB,0,0,idAux);
+                archivoSubido(4, extension, "imagen", directorioDB,0,0,idAux,0);
 
 
             }
@@ -780,8 +798,10 @@ public class ArchivoController implements Serializable {
                          //Identificador Archivo Contenidos
                         if(idIdentificador==3){
 
+                                            
                                             String nomcurso = (String) event.getComponent().getAttributes().get("nombreCurso"); 
                                            String nomunidad = (String) event.getComponent().getAttributes().get("nombreUnidad");
+                                            int idContenido = (int)event.getComponent().getAttributes().get("idContenido");
 
 
                                             //Path directorio .WAR de proyecto
@@ -825,7 +845,7 @@ public class ArchivoController implements Serializable {
                                             copyFile(nomunidad+"."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador,i);
                                             System.out.println("Archivos en directorio");
                                           // listFiles(directorio);
-                                           archivoSubido(idIdentificador, extension, nomunidad, directorioDB,idAux,i,idAux);
+                                           archivoSubido(idIdentificador, extension, nomunidad, directorioDB,idAux,i,idAux,idContenido);
                         }
                         
                         
@@ -872,7 +892,7 @@ public class ArchivoController implements Serializable {
                                             copyFile("."+extension, event.getFile().getInputstream(),directorio,idAux,idIdentificador,i);
                                             System.out.println("Archivos en directorio");
                                           // listFiles(directorio);
-                                           archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux,i,idAux);
+                                           archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux,i,idAux,0);
                         
                         
                         }
@@ -926,7 +946,7 @@ public class ArchivoController implements Serializable {
                                                     
                                                     System.out.println("Archivos en directorio");
                                                     // listFiles(directorio);
-                                                    archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux,i,idAux);
+                                                    archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux,i,idAux,0);
                                                 }
                                                 
                                                
@@ -953,7 +973,7 @@ public class ArchivoController implements Serializable {
                                                     
                                                     System.out.println("Archivos en directorio");
                                                     // listFiles(directorio);
-                                                    archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux,i,idAux);
+                                                    archivoSubido(idIdentificador, extension, "imagen", directorioDB,idAux,i,idAux,0);
                                                 }
                                             }
 
@@ -1098,7 +1118,7 @@ public class ArchivoController implements Serializable {
                 }
     }
      
-         public void archivoSubido(int idIdentificador,String extension,String nom_archivo,String ubicacion,int idAux,int cantemp,int idUsuario)
+    public void archivoSubido(int idIdentificador,String extension,String nom_archivo,String ubicacion,int idAux,int cantemp,int idUsuario, int idContenido)
     {
         System.out.println("Antes de Crear");
           
@@ -1180,7 +1200,7 @@ public class ArchivoController implements Serializable {
              System.out.println("Comienza seteo de variables en objeto current");
  
    
-             
+             Contenidos objContenidos = new Contenidos();
              Archivo objArchivo = new Archivo();
              
              System.out.println("Identificador seteado OK");
@@ -1201,6 +1221,16 @@ public class ArchivoController implements Serializable {
             objArchivo.setFecha(fecha);
             System.out.println("Fecha OK");
             objArchivo.setIdUsuario(idUsuario);
+            if(idIdentificador==3)
+            {
+                System.out.println("ENTRA A IDENTIFICADOR 3");
+                objContenidos.setIdContenido(idContenido);
+                objArchivo.setIdContenido(objContenidos);
+                System.out.println("ID DE CONTENIDO Q LLEGA "+idContenido);
+                System.out.println("ID CONT OK OK");
+               
+            }
+            
                       
            if(idIdentificador==2)
            {

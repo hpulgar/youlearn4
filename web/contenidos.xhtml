@@ -115,7 +115,7 @@
                                             
                                              <h:form>
         
-                                                 <ui:repeat var="c" value="#{archivoController.verArchivos(contenidosController.selected.idContenido, cursoController.idCurso )}">
+                                                 <ui:repeat var="c" value="#{archivoController.verArchivoContenido(contenidosController.idContenido)}">
                                    
     
                                                      <h:outputText value="#{c.descripcion}" />
@@ -146,7 +146,7 @@
                                               <br></br>
                                         
                                        </ui:repeat>
-                                                 <h:outputText value="Aun no hay archivos en esta unidad" rendered="#{empty archivoController.verArchivos(contenidosController.selected.idContenido, cursoController.idCurso)}"></h:outputText>
+                                                 <h:outputText value="Aun no hay archivos en esta unidad" rendered="#{empty archivoController.verArchivoContenido(contenidosController.idContenido)}"></h:outputText>
                                     </h:form>
                                          
 						
