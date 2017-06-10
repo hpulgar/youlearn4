@@ -459,6 +459,23 @@ public class ArchivoController implements Serializable {
 //                }        
          return arArchivo;
     }
+    
+    public List<Archivo> verImagenesContenido(int idContenido)
+    {
+        arArchivo.clear();
+        arArchivo2.clear();
+        arArchivo = ejbFacade.archivosContenido(idContenido);
+        
+        for(int i = 0;i<arArchivo.size();i++)
+        {
+            if(arArchivo.get(i).getIdTipoArchivo().getIdTipo() == 1 || arArchivo.get(i).getIdTipoArchivo().getIdTipo() == 2 || arArchivo.get(i).getIdTipoArchivo().getIdTipo() == 3 ) 
+            {
+                arArchivo2.add(arArchivo.get(i));
+            }
+        }
+        
+        return arArchivo2;
+    }
         
     public List<Archivo> verImagenes(int idIdentificador,int idAux,int idUsuario)
     {

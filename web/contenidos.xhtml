@@ -96,44 +96,47 @@
 					
 					<div class="blog-content blog-content-single">	
                                         
-                                                <img src="http://img.pandawhale.com/post-19984-maria-sharapova-hot-bikini-swi-H5lF.jpeg" alt="" class="blog-image" />
-						
-                                                <p>
-                                                  
-                                                       
-                                                    <h:outputText value="#{contenidosController.selected.contenido}" escape="false" />
-                                                    
-                                                </p>
                                                 
-						
-						
-					</div>
-				
-					<div class="clearboth"></div>
-					
-					<div class="news-social-links">
-                                            
-                                             <h:form>
+                                                <p>
+                                                   <h:form>
+                                                        <h:panelGroup>
+                                                            
+                                                            <p:contentFlow value="#{archivoController.verImagenesContenido(contenidosController.idContenido)}" var="b" >
+                                                                <p:graphicImage   url="#{b.ubicacion}" styleClass="content" />
+                                                                <div class="caption">#{b.descripcion}</div>
+                                                            </p:contentFlow>
+                                                       </h:panelGroup>
+                                                    <br></br>
+                                                       
+                                                           <ui:repeat var="d" value="#{archivoController.verArchivoContenido(contenidosController.idContenido)}">
+                                                      
+                                                                <h:panelGroup id="formatoPDF"  rendered="#{d.idTipoArchivo.idTipo eq '4'}">
+
+                                                                    <h3>PDF</h3>
+                                                                    <object type="application/pdf" data="/showcase/resources/demo/media/guide.pdf?pfdrid_c=true" height="5px" width="100%" internalinstanceid="4">
+                                                                               Your browser can't display pdf, <a href="#{d.ubicacion}">click</a> to download pdf instead.
+                                                                    </object>
+
+                                                                    <object  type="application/pdf" data="#{d.ubicacion}" height="600" width="100%" internalinstanceid="3">
+                                                                    Su navegador no puede mostrar este archivo. haga , <a href="#{d.ubicacion}">click</a> para descargarlo.
+                                                                    </object>
+                                                                </h:panelGroup>
+                                                           </ui:repeat>
         
                                                  <ui:repeat var="c" value="#{archivoController.verArchivoContenido(contenidosController.idContenido)}">
-                                   
     
                                                      <h:outputText value="#{c.descripcion}" />
-                                                                          
+                                                     
                                               <p:commandButton value="Ver archivo" type="button" onclick="PF('#{c.idArchivo}').show();" />    
                                       
                          
+                                             
                                               <p:dialog header="#{c.descripcion}" widgetVar="#{c.idArchivo}" modal="true">
                                               
                                              <!-- Si es una imagen -->     
                                              <h:graphicImage  value="#{c.ubicacion}" rendered="#{c.idTipoArchivo.idTipo eq '1' or c.idTipoArchivo.idTipo eq '2' or c.idTipoArchivo.idTipo eq '3'}" />
                                               <!-- Si es un PDF -->  
-                                                  <h:panelGroup id="formatoPDF"  rendered="#{c.idTipoArchivo.idTipo eq '4'}">
-                                                 
-                                                  <object  type="application/pdf" data="#{c.ubicacion}" height="auto" width="100%" internalinstanceid="3">
-                                                        Su navegador no puede mostrar este archivo. haga , <a href="#{c.ubicacion}">click</a> para descargarlo.
-                                                    </object>
-                                                  </h:panelGroup>
+                                                  
                                                 
                                                       <!-- Si es un word,excel o ppt -->  
                                                     <h:outputLink rendered="#{c.idTipoArchivo.idTipo eq '5' or c.idTipoArchivo.idTipo eq '6' or c.idTipoArchivo.idTipo eq '7'}" value="#{c.ubicacion}">
@@ -148,6 +151,21 @@
                                        </ui:repeat>
                                                  <h:outputText value="Aun no hay archivos en esta unidad" rendered="#{empty archivoController.verArchivoContenido(contenidosController.idContenido)}"></h:outputText>
                                     </h:form>
+                                                    
+                                                    
+                                                
+                                                    
+                                                </p>
+                                                
+						
+						
+					</div>
+				
+					<div class="clearboth"></div>
+					
+					<div class="news-social-links">
+                                            
+                                            
                                          
 						
 					</div>
